@@ -6,3 +6,6 @@
   <link rel="stylesheet" href="{{asset('template/vendors/css/vendor.bundle.base.css')}}">
   <link rel="stylesheet" href="{{asset('template/css/vertical-layout-light/style.css')}}">
   <link rel="shortcut icon" href="{{asset('template/images/favicon.png')}}" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="sweetalert2.min.js"></script>
+<link rel="stylesheet" href="sweetalert2.min.css">

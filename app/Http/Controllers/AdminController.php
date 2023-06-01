@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Role;
 
-class PetugasController extends Controller
+class AdminController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -23,6 +25,9 @@ class PetugasController extends Controller
      */
     public function index()
     {
-        return view('admin.kelolaPetugas');
+        $user = User::All();
+        $role = Role::All();
+        
+        return view('admin.kelolaPetugas', compact('user','role'));
     }
 }

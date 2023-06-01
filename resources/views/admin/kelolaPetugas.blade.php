@@ -32,7 +32,9 @@
                                         <div class="col-sm-12">
                                              <div class="statistics-details d-flex align-items-center justify-content-between">
                                                   <h4 class="card-title" >Kelola Petugas</h4>
-                                                  <button type="submit" class="btn btn-primary">Tambah Data Petugas</button>
+                                                  <button type="button" class="btn btn-primary btn-rounded" data-bs-toggle="modal" data-bs-target="#tambah">
+                                                       Tambah Data Petugas
+                                                  </button>
                                              </div>
                                         </div>
                                    </div>
@@ -44,40 +46,30 @@
                                                   <tr class="text-center">
                                                        <th>No</th>
                                                        <th>Nama</th>
-                                                       <th>JK</th>
-                                                       <th>Password</th>
+                                                       <th>Jenis Kelamin</th>
+                                                       <th>Role</th>
                                                        <th>Kontak</th>
-                                                       <th>Tanggal</th>
+                                                       <th>Tanggal Dibuat</th>
                                                        <th>Opsi</th>
                                                   </tr>
                                              </thead>
                                              <tbody>
-                                                  <tr>
-                                                       <td>1</td>
-                                                       <td>Angga Saepul Rivian</td>
-                                                       <td>Laki-Laki</td>
-                                                       <td>terserah</td>
-                                                       <td>gtalowpc@gmail.com</td>
-                                                       <td>11-23-2032</td>
-                                                       <td>
-                                                            <button type="button" class="btn btn-sm btn-warning btn-rounded" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                                                 Edit
-                                                            </button>
-                                                            <button class="btn btn-sm btn-danger btn-rounded">Delete</button>
-                                                       </td>
-                                                  </tr>
-                                                  <tr>
-                                                       <td>2</td>
-                                                       <td>Saepul Rivian</td>
-                                                       <td>Perempuan</td>
-                                                       <td>terserah</td>
-                                                       <td>awdasdwfgg@gmail.com</td>
-                                                       <td>13-23-2322</td>
-                                                       <td>
-                                                            <button class="btn btn-sm btn-warning btn-rounded">Edit</button>
-                                                            <button class="btn btn-sm btn-danger btn-rounded">Delete</button>
-                                                       </td>
-                                                  </tr>
+                                                  @foreach($user as $users)
+                                                       <tr>
+                                                            <td>{{$loop->iteration}}</td>
+                                                            <td>{{$users->nama}}</td>
+                                                            <td>{{$users->jenis_kelamin}}</td>
+                                                            <td>{{$users->roles_id}}</td>
+                                                            <td>{{$users->kontak}}</td>
+                                                            <td>{{$users->created_at}}</td>
+                                                            <td>
+                                                                 <button type="button" class="btn btn-sm btn-warning btn-rounded" data-bs-toggle="modal" data-bs-target="#edit">
+                                                                      Edit
+                                                                 </button>
+                                                                 <button class="btn btn-sm btn-danger btn-rounded">Delete</button>
+                                                            </td>
+                                                       </tr>
+                                                  @endforeach
                                              </tbody>
                                         </table>
                                    </div>
@@ -93,12 +85,12 @@
 <!-- End Content Main -->
 </div>
 
-<!-- Edit Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Tambah Modal -->
+<div class="modal fade" id="tambah" tabindex="-1" aria-labelledby="tambahModal" aria-hidden="true">
      <div class="modal-dialog">
           <div class="modal-content">
                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Data Petugas</h1>
+                    <h1 class="modal-title fs-5" id="tambahModal">Tambah Data Petugas</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                </div>
                <div class="modal-body">
@@ -124,6 +116,44 @@
                               <button type="button" class="btn btn-primary btn-rounded">Simpan Perubahan</button>
                          </div>
                     </form>
+               </div>
+          </div>
+     </div>
+</div>
+<!-- End Modal -->
+
+<!-- Edit Modal -->
+<div class="modal fade" id="edit" tabindex="-1" aria-labelledby="editModal" aria-hidden="true">
+     <div class="modal-dialog">
+          <div class="modal-content">
+               <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="editModal">Edit Data Petugas</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               </div>
+               <div class="modal-body">
+                    <form class="forms-sample">
+                         <div class="form-group">
+                              <label for="exampleInputUsername1">Username</label>
+                              <input type="text" class="form-control rounded" id="exampleInputUsername1" placeholder="Username">
+                         </div>
+                         <div class="form-group">
+                              <label for="exampleInputEmail1">Email address</label>
+                              <input type="email" class="form-control rounded" id="exampleInputEmail1" placeholder="Email">
+                         </div>
+                         <div class="form-group">
+                              <label for="exampleInputPassword1">Password</label>
+                              <input type="password" class="form-control rounded" id="exampleInputPassword1" placeholder="Password">
+                         </div>
+                         <div class="form-group">
+                              <label for="exampleInputConfirmPassword1">Confirm Password</label>
+                              <input type="password" class="form-control rounded" id="exampleInputConfirmPassword1" placeholder="Password">
+                         </div>
+                         <div class="modal-footer justify-content-center">
+                              <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">Batal</button>
+                              <button type="button" class="btn btn-primary btn-rounded">Simpan Perubahan</button>
+                         </div>
+                    </form>
+               </div>
           </div>
      </div>
 </div>

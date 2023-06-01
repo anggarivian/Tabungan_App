@@ -70,6 +70,8 @@
         <!-- Script -->
         @include('layouts.script')
 
+        <script>
+            Swal.fire('Any fool can use a computer')
+        </script>
 </body>
-
 </html>

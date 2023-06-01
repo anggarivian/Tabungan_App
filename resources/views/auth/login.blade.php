@@ -15,7 +15,7 @@
     <div class="content-wrapper d-flex align-items-center auth px-0">
         <div class="row w-100 mx-0">
             <div class="col-lg-4 mx-auto">
-                    <div class="card">
+                    <div class="card pt-2 pb-5">
                         <div class="card-body">
                             <div class="brand-logo">
                                 <img src="{{asset('template/images/SITASU.png')}}" alt="logo">

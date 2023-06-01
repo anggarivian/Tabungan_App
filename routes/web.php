@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PetugasController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,4 +25,4 @@ Route::get('/home', function () {
 Auth::routes();
 
 Route::get('/admin', [HomeController::class, 'index'])->name('admin');
-Route::get('/admin/petugas', [PetugasController::class, 'index'])->name('admin.petugas');
+Route::get('/admin/petugas', [AdminController::class, 'index'])->name('admin.petugas');
