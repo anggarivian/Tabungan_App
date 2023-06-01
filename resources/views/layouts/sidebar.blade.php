@@ -1,7 +1,7 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <ul class="nav">
     <li class="nav-item">
-          <a class="nav-link" href="#"">
+          <a class="nav-link" href="{{ route('admin')}}">
         <i class="mdi mdi-grid-large menu-icon"></i>
         <span class="menu-title">Beranda</span>
       </a>
@@ -56,7 +56,7 @@
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">
+      <a class="nav-link" href="{{ route('admin.petugas')}}">
         <i class="menu-icon mdi mdi-account-tie"></i>
         <span class="menu-title">Data Petugas</span>
       </a>

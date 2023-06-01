@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PetugasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,8 +18,11 @@ use App\Http\Controllers\HomeController;
 Route::get('/', function () {
     return view('auth.login');
 });
+Route::get('/home', function () {
+    return redirect()->route('admin');
+});
 
 Auth::routes();
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-
+Route::get('/admin', [HomeController::class, 'index'])->name('admin');
+Route::get('/admin/petugas', [PetugasController::class, 'index'])->name('admin.petugas');
