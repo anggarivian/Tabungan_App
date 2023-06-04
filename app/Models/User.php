@@ -46,4 +46,23 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public static function getDataUsers(){
+
+        $user = User::all();
+
+        $user_filter = [];
+
+        $no = 1;
+
+        for($i = 0; $i < $user->count(); $i++){
+            $user_filter[$i]['no'] = $no++ ;
+            $user_filter[$i]['name'] = $user[$i]->name ;
+            $user_filter[$i]['email'] = $user[$i]->email ;
+            $user_filter[$i]['password'] = $user[$i]->password ;
+            $user_filter[$i]['jenis_kelamin'] = $user[$i]->jenis_kelamin ;
+        }
+
+        return $user_filter;
+    }
 }

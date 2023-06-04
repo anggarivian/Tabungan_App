@@ -25,4 +25,5 @@ Route::get('/home', function () {
 Auth::routes();
 
 Route::get('/admin', [HomeController::class, 'index'])->name('admin');
-Route::get('/admin/petugas', [AdminController::class, 'index'])->name('admin.petugas');
+
+Route::resource('/admin/petugas', AdminController::class);

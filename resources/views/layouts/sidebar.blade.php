@@ -56,7 +56,7 @@
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="{{ route('admin.petugas')}}">
+      <a class="nav-link" href="{{ route('petugas.index')}}">
         <i class="menu-icon mdi mdi-account-tie"></i>
         <span class="menu-title">Data Petugas</span>
       </a>

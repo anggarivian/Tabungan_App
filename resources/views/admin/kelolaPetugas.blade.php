@@ -32,7 +32,7 @@
                                         <div class="col-sm-12">
                                              <div class="statistics-details d-flex align-items-center justify-content-between">
                                                   <h4 class="card-title" >Kelola Petugas</h4>
-                                                  <button type="button" class="btn btn-primary btn-rounded" data-bs-toggle="modal" data-bs-target="#tambah">
+                                                  <button type="button" class="btn btn-primary btn-rounded" data-bs-toggle="modal" data-bs-target="#tambahModal">
                                                        Tambah Data Petugas
                                                   </button>
                                              </div>
@@ -63,10 +63,12 @@
                                                             <td>{{$users->kontak}}</td>
                                                             <td>{{$users->created_at}}</td>
                                                             <td>
-                                                                 <button type="button" class="btn btn-sm btn-warning btn-rounded" data-bs-toggle="modal" data-bs-target="#edit">
+                                                                 <button type="button" class="btn btn-warning btn-rounded" data-id="{{ $users->id }}" id="btn-edit-user" data-bs-toggle="modal" data-bs-target="#editModal">
                                                                       Edit
                                                                  </button>
-                                                                 <button class="btn btn-sm btn-danger btn-rounded">Delete</button>
+                                                                 <button type="button" class="btn btn-danger btn-rounded">
+                                                                      Hapus
+                                                                 </button>
                                                             </td>
                                                        </tr>
                                                   @endforeach
@@ -81,39 +83,41 @@
                </div>
           </div>
      </div>
-
 <!-- End Content Main -->
-</div>
 
 <!-- Tambah Modal -->
-<div class="modal fade" id="tambah" tabindex="-1" aria-labelledby="tambahModal" aria-hidden="true">
+<div class="modal fade" id="tambahModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
      <div class="modal-dialog">
           <div class="modal-content">
                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="tambahModal">Tambah Data Petugas</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Data Petugas</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                </div>
                <div class="modal-body">
-                    <form class="forms-sample">
+                    <form method="post" action="{{ route('petugas.store')}}" enctype="multipart/form-data">
+                         @csrf
                          <div class="form-group">
-                              <label for="exampleInputUsername1">Username</label>
-                              <input type="text" class="form-control rounded" id="exampleInputUsername1" placeholder="Username">
+                              <label for="exampleInputUsername1">Nama</label>
+                              <input type="text" class="form-control rounded" id="nama" name="nama" placeholder="Nama">
                          </div>
                          <div class="form-group">
-                              <label for="exampleInputEmail1">Email address</label>
-                              <input type="email" class="form-control rounded" id="exampleInputEmail1" placeholder="Email">
+                              <label for="exampleInputEmail1">Email Address</label>
+                              <input type="email" class="form-control rounded" id="email" name="email" placeholder="Email">
                          </div>
                          <div class="form-group">
                               <label for="exampleInputPassword1">Password</label>
-                              <input type="password" class="form-control rounded" id="exampleInputPassword1" placeholder="Password">
+                              <input type="password" class="form-control rounded" id="password" name="password" placeholder="Password">
                          </div>
                          <div class="form-group">
-                              <label for="exampleInputConfirmPassword1">Confirm Password</label>
-                              <input type="password" class="form-control rounded" id="exampleInputConfirmPassword1" placeholder="Password">
+                              <label for="jenis_kelamin">Jenis Kelamin</label>
+                              <select name="jenis_kelamin" class="form-select form-select-sm" id="jenis_kelamin">
+                                   <option value="Laki - Laki">Laki - Laki</option>
+                                   <option value="Perempuan">Perempuan</option>
+                              </select>
                          </div>
                          <div class="modal-footer justify-content-center">
                               <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">Batal</button>
-                              <button type="button" class="btn btn-primary btn-rounded">Simpan Perubahan</button>
+                              <button type="submit" class="btn btn-primary btn-rounded">Tambah</button>
                          </div>
                     </form>
                </div>
@@ -121,38 +125,45 @@
      </div>
 </div>
 <!-- End Modal -->
-
 <!-- Edit Modal -->
-<div class="modal fade" id="edit" tabindex="-1" aria-labelledby="editModal" aria-hidden="true">
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
      <div class="modal-dialog">
           <div class="modal-content">
                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="editModal">Edit Data Petugas</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Data Petugas</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                </div>
                <div class="modal-body">
-                    <form class="forms-sample">
+                    {{-- <form method="post" action="{{ route('petugas.update','update')}}" enctype="multipart/form-data">
+                         @csrf --}}
                          <div class="form-group">
-                              <label for="exampleInputUsername1">Username</label>
-                              <input type="text" class="form-control rounded" id="exampleInputUsername1" placeholder="Username">
+                              <label for="exampleInputUsername1">ID</label>
+                              <input type="text" class="form-control rounded" id="edit-id" name="id" placeholder="Id">
                          </div>
                          <div class="form-group">
-                              <label for="exampleInputEmail1">Email address</label>
-                              <input type="email" class="form-control rounded" id="exampleInputEmail1" placeholder="Email">
+                              <label for="exampleInputUsername1">Nama</label>
+                              <input type="text" class="form-control rounded" id="edit-nama" name="nama" placeholder="Nama">
+                         </div>
+                         <div class="form-group">
+                              <label for="exampleInputEmail1">Email Address</label>
+                              <input type="email" class="form-control rounded" id="edit-email" name="email" placeholder="Email">
                          </div>
                          <div class="form-group">
                               <label for="exampleInputPassword1">Password</label>
-                              <input type="password" class="form-control rounded" id="exampleInputPassword1" placeholder="Password">
+                              <input type="password" class="form-control rounded" id="edit-password" name="password" placeholder="Password">
                          </div>
                          <div class="form-group">
-                              <label for="exampleInputConfirmPassword1">Confirm Password</label>
-                              <input type="password" class="form-control rounded" id="exampleInputConfirmPassword1" placeholder="Password">
+                              <label for="jenis_kelamin">Jenis Kelamin</label>
+                              <select name="jenis_kelamin" class="form-select form-select-sm" id="edit-jenis_kelamin">
+                                   <option value="Laki - Laki">Laki - Laki</option>
+                                   <option value="Perempuan">Perempuan</option>
+                              </select>
                          </div>
                          <div class="modal-footer justify-content-center">
                               <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">Batal</button>
-                              <button type="button" class="btn btn-primary btn-rounded">Simpan Perubahan</button>
+                              <button type="submit" class="btn btn-primary btn-rounded">Simpan</button>
                          </div>
-                    </form>
+                    {{-- </form> --}}
                </div>
           </div>
      </div>
@@ -162,5 +173,26 @@
 <!-- Script -->
 @include('layouts.script')
 
+<script>
+     $(function(){
+          $(document).on('click','#btn-edit-user', function(){
+
+               let id = $(this).data('id');
+
+               $.ajax({
+                    type: "get",
+                    url: "{{url('/admin/petugas')}}/"+id, 
+                    dataType: 'json',
+                    success: function(res){
+                         $('#edit-id').val(res.id);
+                         $('#edit-nama').val(res.nama);
+                         $('#edit-email').val(res.email);
+                         $('#edit-password').val(res.password);
+                         $('#edit-jenis_kelamin').val(res.jenis_kelamin);
+                    },
+               });
+          });
+     });
+</script>
 </body>
 </html>
