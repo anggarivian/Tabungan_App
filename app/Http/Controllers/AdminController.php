@@ -61,7 +61,8 @@ class AdminController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
-     */
+    */}
+    
     public function store(Request $req)
     {
         $user = new User;
@@ -91,13 +92,6 @@ class AdminController extends Controller
         $notification = array(
             'message' =>'Data User berhasil ditambahkan', 'alert-type' =>'success'
         );
-
-        return redirect()->route('petugas')->with($notification);
-    }
-
-        $user->save();
-
-        $user = User::find($id);
 
         return redirect()->route('petugas')->with($notification);
     }
