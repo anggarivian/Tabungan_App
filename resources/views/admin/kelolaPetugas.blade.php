@@ -206,7 +206,7 @@
 
                $.ajax({
                     type: "get",
-                    url: "{{url('/admin/ajaxadmin/dataPetugas')}}/"+id,
+                    url: "{{url('/admin/ajaxadmin/dataUser')}}/"+id,
                     dataType: 'json',
                     success: function(res){
                          $('#edit-id').val(res.id);
