@@ -46,6 +46,7 @@ class AdminController extends Controller
     {
         $user = new User;
 
+<<<<<<< HEAD
         return view('admin.kelolaPetugas', compact('user','role'));
     }
 
@@ -123,6 +124,62 @@ class AdminController extends Controller
 
         $user->save();
 
+=======
+        $validate = $req->validate([
+            'nama' => 'required|max:255',
+            'email' => 'required',
+            'password' => 'required',
+            'jenis_kelamin' => 'required',
+        ]);
+
+        $user->nama = $req->get('nama');
+        $user->email = $req->get('email');
+        $user->jenis_kelamin = $req->get('jenis_kelamin');
+        $user->password = Hash::make($req->get('password'));
+        $user->roles_id = 2 ;
+
+        $user->save();
+
+        $notification = array(
+            'message' =>'Data User berhasil ditambahkan', 'alert-type' =>'success'
+        );
+
+        return redirect()->route('petugas')->with($notification);
+    }
+
+    public function getDataUser($id){
+
+        $user = User::find($id);
+
+        return response()->json($user);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Request $req)
+    {
+        $user = User::find($req->get('id'));
+
+        $validate = $req->validate([
+            'nama' => 'required|max:255',
+            'email' => 'required',
+            'password' => 'required',
+            'jenis_kelamin' => 'required',
+        ]);
+
+        $user->nama = $req->get('nama');
+        $user->email = $req->get('email');
+        $user->jenis_kelamin = $req->get('jenis_kelamin');
+        $user->password = $req->get('password');
+        $user->roles_id = 2 ;
+
+        $user->save();
+
+>>>>>>> parent of 3a6a495 (Edit Update Petugas)
         $notification = array(
             'message' => 'Data User berhasil diubah',
             'alert-type' => 'success'

@@ -49,7 +49,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public static function getDataPetugas(){
+    public static function getDataUsers(){
 
         $user = User::all();
 
