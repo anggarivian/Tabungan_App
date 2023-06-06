@@ -46,28 +46,32 @@ class AdminController extends Controller
     {
         $user = new User;
 
-            $validate = $req->validate([
-                'nama' => 'required|max:255',
-                'email' => 'required',
-                'password' => 'required',
-                'jenis_kelamin' => 'required',
-            ]);
+        return view('admin.kelolaPetugas', compact('user','role'));
+    }
 
-            $user->nama = $req->get('nama');
-            $user->email = $req->get('email');
-            $user->jenis_kelamin = $req->get('jenis_kelamin');
-            $user->password = Hash::make($req->get('password'));
-            $user->roles_id = 2 ;
+    public function laporan()
+    {
+        $user = User::All();
+        $role = Role::All();
 
         $user->save();
 
-            $notification = array(
-                'message' =>'Data User berhasil ditambahkan', 'alert-type' =>'success'
-            );
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $req)
+    {
+        $user = new User;
 
-            return redirect()->route('petugas')->with($notification);
-        }
-        public function getDataPetugas($id){
+        $validate = $req->validate([
+            'nama' => 'required|max:255',
+            'email' => 'required',
+            'password' => 'required',
+            'jenis_kelamin' => 'required',
+        ]);
 
         $user = User::find($id);
 
@@ -84,25 +88,16 @@ class AdminController extends Controller
     {
         $user = User::find($req->get('id'));
 
-            $validate = $req->validate([
-                'nama' => 'required|max:255',
-                'email' => 'required',
-                'password' => 'required',
-                'jenis_kelamin' => 'required',
-            ]);
+        $notification = array(
+            'message' =>'Data User berhasil ditambahkan', 'alert-type' =>'success'
+        );
 
-            $user->nama = $req->get('nama');
-            $user->email = $req->get('email');
-            $user->jenis_kelamin = $req->get('jenis_kelamin');
-            $user->password = $req->get('password');
-            $user->roles_id = 2 ;
+        return redirect()->route('petugas')->with($notification);
+    }
 
         $user->save();
 
-            $notification = array(
-                'message' => 'Data User berhasil diubah',
-                'alert-type' => 'success'
-            );
+        $user = User::find($id);
 
         return redirect()->route('petugas')->with($notification);
     }
@@ -119,14 +114,46 @@ class AdminController extends Controller
 
         $user->delete();
 
-            $notification = array(
-                'message' => 'Data User berhasil dihapus',
-                'alert-type' => 'success'
-            );
+        $validate = $req->validate([
+            'nama' => 'required|max:255',
+            'email' => 'required',
+            'password' => 'required',
+            'jenis_kelamin' => 'required',
+        ]);
 
-            return redirect()->route('petugas')->with($notification);
-        }
+        $user->nama = $req->get('nama');
+        $user->email = $req->get('email');
+        $user->jenis_kelamin = $req->get('jenis_kelamin');
+        $user->password = $req->get('password');
+        $user->roles_id = 2 ;
 
-    //  Kelola Akun Siswa ----------------------------------------------------------------
+        $user->save();
 
+        $notification = array(
+            'message' => 'Data User berhasil diubah',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('petugas')->with($notification);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $user = User::find($id);
+
+        $user->delete();
+
+        $notification = array(
+            'message' => 'Data User berhasil dihapus',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('petugas')->with($notification);
+    }
 }
