@@ -26,4 +26,13 @@ Auth::routes();
 
 Route::get('/admin', [HomeController::class, 'index'])->name('admin');
 
-Route::resource('/admin/petugas', AdminController::class);
+
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/admin/petugas', [AdminController::class, 'index'])->name('petugas');
+    Route::post('/admin/petugas/add', [AdminController::class, 'store'])->name('petugas.store');
+    Route::get('admin/ajaxadmin/dataUser/{id}', [AdminController::class, 'getDataUser']);
+    Route::patch('admin/petugas/update', [AdminController::class, 'edit'])->name('petugas.ubah');
+    Route::get('admin/petugas/delete/{id}', [AdminController::class,'destroy'])->name('petugas.hapus');
+    Route::get('/admin/laporan/petugas', [AdminController::class, 'laporan'])->name('laporan.petugas');
+});

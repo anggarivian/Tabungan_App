@@ -44,7 +44,7 @@
           <li class="nav-item "> <a class="nav-link" href="{{asset('template/pages/ui-features/buttons.html')}}">Transaksi</a></li>
           <li class="nav-item"> <a class="nav-link" href="{{asset('template/pages/ui-features/dropdowns.html')}}">Pengajuan</a></li>
           <li class="nav-item"> <a class="nav-link" href="{{asset('template/pages/ui-features/dropdowns.html')}}">Siswa</a></li>
-          <li class="nav-item"> <a class="nav-link" href="{{asset('template/pages/ui-features/dropdowns.html')}}">Petugas</a></li>
+          <li class="nav-item"> <a class="nav-link" href="{{route('laporan.petugas')}}">Petugas</a></li>
         </ul>`
       </div>
     </li>
@@ -56,9 +56,17 @@
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="{{ route('petugas.index')}}">
+      <a class="nav-link" href="{{route('petugas')}}">
         <i class="menu-icon mdi mdi-account-tie"></i>
         <span class="menu-title">Data Petugas</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{{ route('logout') }}"
+          onclick="event.preventDefault();
+          document.getElementById('logout-form').submit();">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span class="menu-title">Logout</span>
       </a>
     </li>
   </ul>

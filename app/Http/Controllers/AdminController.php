@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -13,6 +14,12 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $user = User::All();
@@ -21,14 +28,12 @@ class AdminController extends Controller
         return view('admin.kelolaPetugas', compact('user','role'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function laporan()
     {
-        //
+        $user = User::All();
+        $role = Role::All();
+
+        return view('laporan.laporanPetugas', compact('user','role'));
     }
 
     /**
@@ -51,7 +56,7 @@ class AdminController extends Controller
         $user->nama = $req->get('nama');
         $user->email = $req->get('email');
         $user->jenis_kelamin = $req->get('jenis_kelamin');
-        $user->password = $req->get('password');
+        $user->password = Hash::make($req->get('password'));
         $user->roles_id = 2 ;
 
         $user->save();
@@ -60,23 +65,15 @@ class AdminController extends Controller
             'message' =>'Data User berhasil ditambahkan', 'alert-type' =>'success'
         );
 
-        return redirect()->route('petugas.index')->with($notification);
+        return redirect()->route('petugas')->with($notification);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-$user = User::getDataUser($id);
+    public function getDataUser($id){
+
+        $user = User::find($id);
 
         return response()->json($user);
     }
-
-
 
     /**
      * Show the form for editing the specified resource.
@@ -84,21 +81,31 @@ $user = User::getDataUser($id);
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $req)
     {
-        //
-    }
+        $user = User::find($req->get('id'));
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+        $validate = $req->validate([
+            'nama' => 'required|max:255',
+            'email' => 'required',
+            'password' => 'required',
+            'jenis_kelamin' => 'required',
+        ]);
+
+        $user->nama = $req->get('nama');
+        $user->email = $req->get('email');
+        $user->jenis_kelamin = $req->get('jenis_kelamin');
+        $user->password = $req->get('password');
+        $user->roles_id = 2 ;
+
+        $user->save();
+
+        $notification = array(
+            'message' => 'Data User berhasil diubah',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('petugas')->with($notification);
     }
 
     /**
@@ -109,6 +116,15 @@ $user = User::getDataUser($id);
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+
+        $user->delete();
+
+        $notification = array(
+            'message' => 'Data User berhasil dihapus',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('petugas')->with($notification);
     }
 }

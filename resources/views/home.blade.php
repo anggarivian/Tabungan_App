@@ -53,6 +53,10 @@
                                                     <p class="statistics-title">Data Kelas</p>
                                                     <h3 class="rate-percentage">10</h3>
                                                 </div>
+                                                <div class="d-none d-md-block">
+                                                    <p class="statistics-title">Data Petugas</p>
+                                                    <h3 class="rate-percentage">3</h3>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -70,8 +74,6 @@
         <!-- Script -->
         @include('layouts.script')
 
-        <script>
-            Swal.fire('Any fool can use a computer')
-        </script>
+
 </body>
 </html>

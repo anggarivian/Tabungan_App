@@ -47,7 +47,7 @@
                                                        <th>No</th>
                                                        <th>Nama</th>
                                                        <th>Jenis Kelamin</th>
-                                                       <th>Role</th>
+                                                       <th>Email</th>
                                                        <th>Kontak</th>
                                                        <th>Tanggal Dibuat</th>
                                                        <th>Opsi</th>
@@ -55,22 +55,24 @@
                                              </thead>
                                              <tbody>
                                                   @foreach($user as $users)
+                                                  @if ($users->relationToRole->id == '2')
                                                        <tr>
                                                             <td>{{$loop->iteration}}</td>
                                                             <td>{{$users->nama}}</td>
                                                             <td>{{$users->jenis_kelamin}}</td>
-                                                            <td>{{$users->roles_id}}</td>
+                                                            <td>{{$users->email}}</td>
                                                             <td>{{$users->kontak}}</td>
                                                             <td>{{$users->created_at}}</td>
                                                             <td>
                                                                  <button type="button" class="btn btn-warning btn-rounded" data-id="{{ $users->id }}" id="btn-edit-user" data-bs-toggle="modal" data-bs-target="#editModal">
                                                                       Edit
                                                                  </button>
-                                                                 <button type="button" class="btn btn-danger btn-rounded">
+                                                                 <a type="button" href="/admin/petugas/delete/{{$users->id}}" class="btn btn-danger btn-rounded">
                                                                       Hapus
-                                                                 </button>
+                                                                 </a>
                                                             </td>
                                                        </tr>
+                                                       @endif
                                                   @endforeach
                                              </tbody>
                                         </table>
@@ -134,27 +136,28 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                </div>
                <div class="modal-body">
-                    {{-- <form method="post" action="{{ route('petugas.update','update')}}" enctype="multipart/form-data">
-                         @csrf --}}
+                    <form method="post" action="{{ route('petugas.ubah')}}" enctype="multipart/form-data">
+                         @method ('PATCH')
+                         @csrf
                          <div class="form-group">
-                              <label for="exampleInputUsername1">ID</label>
-                              <input type="text" class="form-control rounded" id="edit-id" name="id" placeholder="Id">
+                              <label for="id">ID</label>
+                              <input type="text" class="form-control rounded" id="edit-id" name="id" placeholder="Id" readonly>
                          </div>
                          <div class="form-group">
-                              <label for="exampleInputUsername1">Nama</label>
+                              <label for="nama">Nama</label>
                               <input type="text" class="form-control rounded" id="edit-nama" name="nama" placeholder="Nama">
                          </div>
                          <div class="form-group">
-                              <label for="exampleInputEmail1">Email Address</label>
+                              <label for="email">Email Address</label>
                               <input type="email" class="form-control rounded" id="edit-email" name="email" placeholder="Email">
                          </div>
                          <div class="form-group">
-                              <label for="exampleInputPassword1">Password</label>
-                              <input type="password" class="form-control rounded" id="edit-password" name="password" placeholder="Password">
+                              <label for="password">Password</label>
+                              <input type="text" class="form-control rounded" id="edit-password" name="password" placeholder="Password">
                          </div>
                          <div class="form-group">
                               <label for="jenis_kelamin">Jenis Kelamin</label>
-                              <select name="jenis_kelamin" class="form-select form-select-sm" id="edit-jenis_kelamin">
+                              <select name="jenis_kelamin" class="form-select form-select rounded" id="edit-jenis_kelamin">
                                    <option value="Laki - Laki">Laki - Laki</option>
                                    <option value="Perempuan">Perempuan</option>
                               </select>
@@ -163,7 +166,7 @@
                               <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">Batal</button>
                               <button type="submit" class="btn btn-primary btn-rounded">Simpan</button>
                          </div>
-                    {{-- </form> --}}
+                    </form>
                </div>
           </div>
      </div>
@@ -181,7 +184,7 @@
 
                $.ajax({
                     type: "get",
-                    url: "{{url('/admin/petugas')}}/"+id, 
+                    url: "{{url('/admin/ajaxadmin/dataUser')}}/"+id,
                     dataType: 'json',
                     success: function(res){
                          $('#edit-id').val(res.id);
