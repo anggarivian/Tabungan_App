@@ -50,7 +50,7 @@
     </li>
     <li class="nav-item nav-category">Pengelolaan Pengguna</li>
     <li class="nav-item">
-      <a class="nav-link" href="#">
+      <a class="nav-link" href="{{route('siswa')}}">
         <i class="menu-icon mdi mdi-account-group"></i>
         <span class="menu-title">Data Siswa</span>
       </a>

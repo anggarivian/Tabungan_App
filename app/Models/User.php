@@ -22,11 +22,13 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    // protected $fillable = [
+    //     'name',
+    //     'email',
+    //     'password',
+    // ];
+
+    protected $guarded=[];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -47,7 +49,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public static function getDataPetugas(){
+    public static function getDatauser(){
 
         $user = User::all();
 
@@ -57,8 +59,10 @@ class User extends Authenticatable
 
         for($i = 0; $i < $user->count(); $i++){
             $user_filter[$i]['no'] = $no++ ;
+            $user_filter[$i]['username'] = $user[$i]->username ;
             $user_filter[$i]['name'] = $user[$i]->name ;
             $user_filter[$i]['email'] = $user[$i]->email ;
+            $user_filter[$i]['kontak'] = $user[$i]->kontak ;
             $user_filter[$i]['password'] = $user[$i]->password ;
             $user_filter[$i]['jenis_kelamin'] = $user[$i]->jenis_kelamin ;
         }

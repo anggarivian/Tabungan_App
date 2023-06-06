@@ -7,9 +7,9 @@ use App\Models\User;
 use App\Models\Role;
 use Illuminate\Support\Facades\Hash;
 
-class AdminController extends Controller
+class PetugasController extends Controller
 {
-    //  Kelola Akun Petugas ----------------------------------------------------------------
+    // Kelola Siswa --------------------------------
         public function __construct(){
             $this->middleware('auth');
         }
@@ -17,15 +17,10 @@ class AdminController extends Controller
             $user = User::All();
             $role = Role::All();
 
-            return view('admin.kelolaPetugas', compact('user','role'));
-        }
-        public function laporan(){
-            $user = User::All();
-            $role = Role::All();
-
-            return view('laporan.laporanPetugas', compact('user','role'));
+            return view('petugas.kelolaSiswa', compact('user','role'));
         }
         public function store(Request $req){
+
             $user = new User;
 
             $validate = $req->validate([
@@ -34,6 +29,9 @@ class AdminController extends Controller
                 'email' => 'required',
                 'kontak' => 'required',
                 'password' => 'required',
+                'kelas' => 'required',
+                'orang_tua' => 'required',
+                'alamat' => 'required',
                 'jenis_kelamin' => 'required',
             ]);
 
@@ -41,24 +39,21 @@ class AdminController extends Controller
             $user->username = $req->get('username');
             $user->email = $req->get('email');
             $user->kontak = $req->get('kontak');
-            $user->jenis_kelamin = $req->get('jenis_kelamin');
-            $user->kelas = '-' ;
+            $user->kelas = $req->get('kelas');
+            $user->orang_tua = $req->get('orang_tua');
+            $user->alamat = $req->get('alamat');
+            $user->jenis_kelamin =  $req->get('jenis_kelamin');
+            $user->kelas = $req->get('kelas'); ;
             $user->password = Hash::make($req->get('password'));
-            $user->roles_id = 2 ;
+            $user->roles_id = 3 ;
 
             $user->save();
 
             $notification = array(
-                'message' =>'Data Petugas berhasil ditambahkan', 'alert-type' =>'success'
+                'message' =>'Data Siswa berhasil ditambahkan', 'alert-type' =>'success'
             );
 
-            return redirect()->route('petugas')->with($notification);
-        }
-        public function getDataUser($id){
-
-            $user = User::find($id);
-
-            return response()->json($user);
+            return redirect()->route('siswa')->with($notification);
         }
         public function edit(Request $req){
             $user = User::find($req->get('id'));
@@ -67,8 +62,11 @@ class AdminController extends Controller
                 'nama' => 'required|max:255',
                 'username' => 'required',
                 'email' => 'required',
-                'password' => 'required',
                 'kontak' => 'required',
+                'password' => 'required',
+                'kelas' => 'required',
+                'orang_tua' => 'required',
+                'alamat' => 'required',
                 'jenis_kelamin' => 'required',
             ]);
 
@@ -76,10 +74,13 @@ class AdminController extends Controller
             $user->username = $req->get('username');
             $user->email = $req->get('email');
             $user->kontak = $req->get('kontak');
-            $user->jenis_kelamin = $req->get('jenis_kelamin');
-            $user->kelas = '-' ;
-            $user->password = $req->get('password');
-            $user->roles_id = 2 ;
+            $user->kelas = $req->get('kelas');
+            $user->orang_tua = $req->get('orang_tua');
+            $user->alamat = $req->get('alamat');
+            $user->jenis_kelamin =  $req->get('jenis_kelamin');
+            $user->kelas = $req->get('kelas'); ;
+            $user->password = Hash::make($req->get('password'));
+            $user->roles_id = 3 ;
 
             $user->save();
 
@@ -88,18 +89,6 @@ class AdminController extends Controller
                 'alert-type' => 'success'
             );
 
-            return redirect()->route('petugas')->with($notification);
-        }
-        public function destroy($id){
-            $user = User::find($id);
-
-            $user->delete();
-
-            $notification = array(
-                'message' => 'Data petugas berhasil dihapus',
-                'alert-type' => 'success'
-            );
-
-            return redirect()->route('petugas')->with($notification);
+            return redirect()->route('siswa')->with($notification);
         }
 }

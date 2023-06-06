@@ -4,7 +4,7 @@
 <head>
      <meta charset="utf-8">
      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-     <title>Beranda - SITASU</title>
+     <title>Kelola Petugas - SITASU</title>
 
      @include('layouts.head')
 
@@ -41,10 +41,12 @@
                               </div>
                               <div class="card">
                                    <div class="card-body">
-                                        <table id="table-data" class="table table-striped text-center">
+                                        <table id="table-data" class="table table-striped">
                                              <thead>
                                                   <tr class="text-center">
                                                        <th>No</th>
+                                                       <th>ID</th>
+                                                       <th>Username</th>
                                                        <th>Nama</th>
                                                        <th>Jenis Kelamin</th>
                                                        <th>Email</th>
@@ -54,20 +56,23 @@
                                                   </tr>
                                              </thead>
                                              <tbody>
+                                                  @php $no=1; @endphp
                                                   @foreach($user as $users)
                                                   @if ($users->relationToRole->id == '2')
                                                        <tr>
-                                                            <td>{{$loop->iteration}}</td>
+                                                            <td class="text-center">{{$no++}}</td>
+                                                            <td class="text-center">{{$users->id}}</td>
+                                                            <td>{{$users->username}}</td>
                                                             <td>{{$users->nama}}</td>
-                                                            <td>{{$users->jenis_kelamin}}</td>
+                                                            <td >{{$users->jenis_kelamin}}</td>
                                                             <td>{{$users->email}}</td>
                                                             <td>{{$users->kontak}}</td>
                                                             <td>{{$users->created_at}}</td>
-                                                            <td>
-                                                                 <button type="button" class="btn btn-warning btn-rounded" data-id="{{ $users->id }}" id="btn-edit-user" data-bs-toggle="modal" data-bs-target="#editModal">
+                                                            <td class="text-center">
+                                                                 <button type="button" class="btn btn-warning btn-sm btn-rounded" data-id="{{ $users->id }}" id="btn-edit-user" data-bs-toggle="modal" data-bs-target="#editModal">
                                                                       Edit
                                                                  </button>
-                                                                 <a type="button" href="/admin/petugas/delete/{{$users->id}}" class="btn btn-danger btn-rounded">
+                                                                 <a type="button" href="/admin/petugas/delete/{{$users->id}}" class="btn btn-danger btn-rounded btn-sm">
                                                                       Hapus
                                                                  </a>
                                                             </td>
@@ -99,15 +104,23 @@
                     <form method="post" action="{{ route('petugas.store')}}" enctype="multipart/form-data">
                          @csrf
                          <div class="form-group">
-                              <label for="exampleInputUsername1">Nama</label>
+                              <label for="nama">Nama</label>
                               <input type="text" class="form-control rounded" id="nama" name="nama" placeholder="Nama">
                          </div>
                          <div class="form-group">
-                              <label for="exampleInputEmail1">Email Address</label>
+                              <label for="username">Username</label>
+                              <input type="text" class="form-control rounded" id="username" name="username" placeholder="Username">
+                         </div>
+                         <div class="form-group">
+                              <label for="email">Email Address</label>
                               <input type="email" class="form-control rounded" id="email" name="email" placeholder="Email">
                          </div>
                          <div class="form-group">
-                              <label for="exampleInputPassword1">Password</label>
+                              <label for="kontak">Nomor Telepon</label>
+                              <input type="text" class="form-control rounded" id="kontak" name="kontak" placeholder="Kontak">
+                         </div>
+                         <div class="form-group">
+                              <label for="password">Password</label>
                               <input type="password" class="form-control rounded" id="password" name="password" placeholder="Password">
                          </div>
                          <div class="form-group">
@@ -144,6 +157,10 @@
                               <input type="text" class="form-control rounded" id="edit-id" name="id" placeholder="Id" readonly>
                          </div>
                          <div class="form-group">
+                              <label for="username">Username</label>
+                              <input type="text" class="form-control rounded" id="edit-username" name="username" placeholder="Username" readonly>
+                         </div>
+                         <div class="form-group">
                               <label for="nama">Nama</label>
                               <input type="text" class="form-control rounded" id="edit-nama" name="nama" placeholder="Nama">
                          </div>
@@ -152,12 +169,17 @@
                               <input type="email" class="form-control rounded" id="edit-email" name="email" placeholder="Email">
                          </div>
                          <div class="form-group">
+                              <label for="kontak">Nomor Telepon</label>
+                              <input type="text" class="form-control rounded" id="edit-kontak" name="kontak" placeholder="Kontak">
+                         </div>
+                         <div class="form-group">
                               <label for="password">Password</label>
                               <input type="text" class="form-control rounded" id="edit-password" name="password" placeholder="Password">
                          </div>
                          <div class="form-group">
                               <label for="jenis_kelamin">Jenis Kelamin</label>
                               <select name="jenis_kelamin" class="form-select form-select rounded" id="edit-jenis_kelamin">
+                                   <option id="edit-jenis_kelamin" value="Laki - Laki"></option>
                                    <option value="Laki - Laki">Laki - Laki</option>
                                    <option value="Perempuan">Perempuan</option>
                               </select>
@@ -188,8 +210,10 @@
                     dataType: 'json',
                     success: function(res){
                          $('#edit-id').val(res.id);
+                         $('#edit-username').val(res.username);
                          $('#edit-nama').val(res.nama);
                          $('#edit-email').val(res.email);
+                         $('#edit-kontak').val(res.kontak);
                          $('#edit-password').val(res.password);
                          $('#edit-jenis_kelamin').val(res.jenis_kelamin);
                     },
