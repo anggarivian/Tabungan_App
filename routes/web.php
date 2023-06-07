@@ -46,4 +46,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/admin/siswa', [PetugasController::class, 'index'])->name('siswa');
     Route::post('/admin/siswa/add', [PetugasController::class, 'store'])->name('siswa.store');
     Route::patch('admin/siswa/update', [PetugasController::class, 'edit'])->name('siswa.ubah');
+    Route::get('admin/siswa/delete/{id}', [PetugasController::class,'destroy'])->name('siswa.hapus');
+    Route::get('/admin/laporan/siswa', [PetugasController::class, 'laporan'])->name('laporan.siswa');
 });

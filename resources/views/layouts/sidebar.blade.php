@@ -43,7 +43,7 @@
         <ul class="nav flex-column sub-menu">
           <li class="nav-item "> <a class="nav-link" href="{{asset('template/pages/ui-features/buttons.html')}}">Transaksi</a></li>
           <li class="nav-item"> <a class="nav-link" href="{{asset('template/pages/ui-features/dropdowns.html')}}">Pengajuan</a></li>
-          <li class="nav-item"> <a class="nav-link" href="{{asset('template/pages/ui-features/dropdowns.html')}}">Siswa</a></li>
+          <li class="nav-item"> <a class="nav-link" href="{{route('laporan.siswa')}}">Siswa</a></li>
           <li class="nav-item"> <a class="nav-link" href="{{route('laporan.petugas')}}">Petugas</a></li>
         </ul>`
       </div>
