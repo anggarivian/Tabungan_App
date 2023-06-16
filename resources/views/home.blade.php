@@ -25,40 +25,105 @@
             <!-- Content -->
             <div class="main-panel">
                 <div class="content-wrapper">
+                    <h4 class="card-title">Beranda</h4>
+                    <hr>
                     <div class="row">
-                        <div class="col-lg-12 grid-margin">
+                        <div class="col-lg-4 grid-margin">
                             <div class="card">
                                 <div class="card-body">
-                                    <h4 class="card-title">Beranda</h4>
-                                    <div class="row container">
                                         <div class="col-sm-12">
                                             <div class="statistics-details d-flex align-items-center justify-content-between">
                                                 <div>
-                                                    <p class="statistics-title">Jumlah Pemasukan</p>
+                                                    <p class="statistics-title">Jumlah Saldo Keseluruhan</p>
                                                     <h3 class="rate-percentage">Rp. 1.500.000</h3>
-                                                </div>
-                                                <div>
-                                                    <p class="statistics-title">Jumlah Pengeluaran</p>
-                                                    <h3 class="rate-percentage">Rp. 1.999.000</h3>
-                                                </div>
-                                                <div>
-                                                    <p class="statistics-title">Total Saldo</p>
-                                                    <h3 class="rate-percentage">Rp. 3.230.000</h3>
-                                                </div>
-                                                <div class="d-none d-md-block">
-                                                    <p class="statistics-title">Data Siswa</p>
-                                                    <h3 class="rate-percentage">156</h3>
-                                                </div>
-                                                <div class="d-none d-md-block">
-                                                    <p class="statistics-title">Data Kelas</p>
-                                                    <h3 class="rate-percentage">10</h3>
-                                                </div>
-                                                <div class="d-none d-md-block">
-                                                    <p class="statistics-title">Data Petugas</p>
-                                                    <h3 class="rate-percentage">3</h3>
                                                 </div>
                                             </div>
                                         </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 grid-margin">
+                            <div class="card">
+                                <div class="card-body">
+                                        <div class="col-sm-12">
+                                            <div class="statistics-details d-flex align-items-center justify-content-between">
+                                                <div>
+                                                    <p class="statistics-title">Jumlah Pemasukan 1 Bulan Terakhir</p>
+                                                    <h3 class="rate-percentage">Rp. 1.500.000</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 grid-margin">
+                            <div class="card">
+                                <div class="card-body">
+                                        <div class="col-sm-12">
+                                            <div class="statistics-details d-flex align-items-center justify-content-between">
+                                                <div>
+                                                    <p class="statistics-title">Jumlah Pemasukan 1 Bulan Terakhir</p>
+                                                    <h3 class="rate-percentage">Rp. 1.500.000</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-2 grid-margin">
+                            <div class="card">
+                                <div class="card-body">
+                                        <div class="col-sm-12">
+                                            <div class="statistics-details d-flex align-items-center justify-content-between">
+                                                <div>
+                                                    <p class="statistics-title">Total Pemasukan</p>
+                                                    <h3 class="rate-percentage">213</h3>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 grid-margin">
+                            <div class="card">
+                                <div class="card-body">
+                                        <div class="col-sm-12">
+                                            <div class="statistics-details d-flex align-items-center justify-content-between">
+                                                <div>
+                                                    <p class="statistics-title">Total Pemasukan</p>
+                                                    <h3 class="rate-percentage">213</h3>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 grid-margin">
+                            <div class="card">
+                                <div class="card-body">
+                                        <div class="col-sm-12">
+                                            <div class="statistics-details d-flex align-items-center justify-content-between">
+                                                <div>
+                                                    <p class="statistics-title">Jumlah Siswa</p>
+                                                    <h3 class="rate-percentage ">{{$usercount}}</h3>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 grid-margin">
+                            <div class="card">
+                                <div class="card-body">
+                                        <div class="col-sm-12">
+                                            <div class="statistics-details d-flex align-items-center justify-content-between">
+                                                <div>
+                                                    <p class="statistics-title">Profil Sekolah</p>
+                                                    <h3 class="rate-percentage">{{$user->nama}}</h3>
+                                                </div>
+                                            </div>
                                     </div>
                                 </div>
                             </div>

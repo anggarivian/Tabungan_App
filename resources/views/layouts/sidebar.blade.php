@@ -15,8 +15,8 @@
       </a>
       <div class="collapse" id="transaksi">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item "> <a class="nav-link" href="{{asset('template/pages/ui-features/buttons.html')}}">Stor Tabungan</a></li>
-          <li class="nav-item"> <a class="nav-link" href="{{asset('template/pages/ui-features/dropdowns.html')}}">Tarik Tabungan</a></li>
+          <li class="nav-item"> <a class="nav-link" href="{{route('tabungan.stor')}}">Stor Tabungan</a></li>
+          <li class="nav-item"> <a class="nav-link" href="{{route('tabungan.tarik')}}">Tarik Tabungan</a></li>
         </ul>
       </div>
     </li>

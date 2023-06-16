@@ -185,6 +185,10 @@
                          @method ('PATCH')
                          @csrf
                          <div class="row">
+                              {{-- <div class="form-group col-md-6">
+                                   <label for="id">Id</label> --}}
+                                   <input type="text" class="form-control rounded" id="edit-id" name="id" placeholder="Id" readonly hidden>
+                              {{-- </div> --}}
                               <div class="form-group col-md-6">
                                    <label for="nama">Nama</label>
                                    <input type="text" class="form-control rounded" id="edit-nama" name="nama" placeholder="Nama">

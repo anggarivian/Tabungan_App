@@ -62,7 +62,9 @@
                                                   </tr>
                                              </thead>
                                              <tbody>
-                                                  @foreach($user as $users)
+                                                  @php $no=1; @endphp
+                                                       @foreach($user as $users)
+                                                       @if ($users->relationToRole->id == '2')
                                                        <tr>
                                                             <td>{{$loop->iteration}}</td>
                                                             <td>{{$users->id}}</td>
@@ -73,6 +75,7 @@
                                                             <td>{{$users->kontak}}</td>
                                                             <td>{{$users->created_at}}</td>
                                                        </tr>
+                                                       @endif
                                                   @endforeach
                                              </tbody>
                                         </table>

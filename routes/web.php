@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PetugasController;
+use App\Http\Controllers\TabunganController;
+use App\Http\Controllers\TestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,15 +25,17 @@ Route::get('/home', function () {
     return redirect()->route('admin');
 });
 
+Route::get('/test', [TestController::class, 'beranda'])->name('test');
+
 Auth::routes();
 
-// Beranda Dashboard Route -----------------------------------------------------
+// Beranda Dashboard Route -----------------------------------------------------------------------------------------
 Route::get('/admin', [HomeController::class, 'index'])->name('admin');
 
-// Ambil Data Route ------------------------------------------------------------
+// Ambil Data Route ------------------------------------------------------------------------------------------------
 Route::get('admin/ajaxadmin/dataUser/{id}', [AdminController::class, 'getDataUser']);
 
-// Admin routes ----------------------------------------------------------------
+// Admin routes ----------------------------------------------------------------------------------------------------
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/admin/petugas', [AdminController::class, 'index'])->name('petugas');
     Route::post('/admin/petugas/add', [AdminController::class, 'store'])->name('petugas.store');
@@ -41,11 +45,17 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/admin/laporan/petugas', [AdminController::class, 'laporan'])->name('laporan.petugas');
 });
 
-// Petugas Routes ----------------------------------------------------------------
+// Petugas Routes --------------------------------------------------------------------------------------------------
 Route::group(['middleware' => 'auth'], function () {
+
+    // Kelola Siswa ------------------------------------------------------------------------------------------------
     Route::get('/admin/siswa', [PetugasController::class, 'index'])->name('siswa');
     Route::post('/admin/siswa/add', [PetugasController::class, 'store'])->name('siswa.store');
     Route::patch('admin/siswa/update', [PetugasController::class, 'edit'])->name('siswa.ubah');
     Route::get('admin/siswa/delete/{id}', [PetugasController::class,'destroy'])->name('siswa.hapus');
     Route::get('/admin/laporan/siswa', [PetugasController::class, 'laporan'])->name('laporan.siswa');
+
+    // Kelola Tabungan ---------------------------------------------------------------------------------------------
+    Route::get('/admin/tabungan/stor-tabungan', [TabunganController::class, 'index_stor'])->name('tabungan.stor');
+    Route::get('/admin/tabungan/tarik-tabungan', [TabunganController::class, 'index_tarik'])->name('tabungan.tarik');
 });

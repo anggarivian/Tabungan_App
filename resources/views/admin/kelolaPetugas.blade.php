@@ -154,7 +154,7 @@
                          @csrf
                          <div class="form-group">
                               <label for="id">ID</label>
-                              <input type="text" class="form-control rounded" id="edit-id" name="id" placeholder="Id" readonly>
+                              <input type="text" class="form-control rounded" id="edit-id" name="id" placeholder="Id" readonly hiddenn>
                          </div>
                          <div class="form-group">
                               <label for="username">Username</label>
