@@ -16,6 +16,7 @@ class UserSeeder extends Seeder
     {
         $user = [
             [
+                'id'                => 1,
                 'nama'              => 'Admin',
                 'username'          => 'Admin',
                 'email'             => 'admin@mail.com',
@@ -23,9 +24,11 @@ class UserSeeder extends Seeder
                 'kelas'             => '-',
                 'kontak'            => '086734676654',
                 'password'          => bcrypt('12345'),
-                'roles_id'          => 1
+                'roles_id'          => 1,
+                'id_tabungan'       => 'KT000',
             ],
             [
+                'id'                => 2,
                 'nama'              => 'Petugas',
                 'username'          => 'Petugas',
                 'email'             => 'petugas@mail.com',
@@ -33,20 +36,9 @@ class UserSeeder extends Seeder
                 'kelas'             => '-',
                 'kontak'            => '081248439240',
                 'password'          => bcrypt('12345'),
-                'roles_id'          => 2
+                'roles_id'          => 2,
+                'id_tabungan'       => 'KT000',
             ],
-            [
-                'nama'              => 'Siswa',
-                'username'          => 'Siswa',
-                'email'             => 'siswa@mail.com',
-                'jenis_kelamin'     => 'Laki',
-                'kelas'             => '2C',
-                'kontak'            => '085798888834',
-                'orang_tua'         => 'Jhon Cena',
-                'alamat'            => 'Kp. Parabon Desa Sukarame',
-                'password'          => bcrypt('12345'),
-                'roles_id'          => 3
-            ]
         ];
 
         foreach ($user as $key => $value){

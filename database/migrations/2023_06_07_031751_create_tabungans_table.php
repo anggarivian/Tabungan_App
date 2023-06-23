@@ -16,11 +16,12 @@ class CreateTabungansTable extends Migration
         Schema::create('tabungans', function (Blueprint $table) {
             $table->id();
             $table->foreignId('users_id')->constrained();
-            $table->int('jumlah_tabungan');
-            $table->string('tipe_transaksi');
-            $table->int('jumlah_dibuku');
-            $table->int('premi');
-            $table->int('sisa');
+            $table->integer('jumlah_tabungan');
+            $table->string('tipe_transaksi')->nullable();
+            $table->integer('jumlah_dibuku');
+            $table->integer('jumlah');
+            $table->integer('premi');
+            $table->integer('sisa');
             $table->timestamps();
         });
     }

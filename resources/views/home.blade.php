@@ -121,7 +121,7 @@
                                             <div class="statistics-details d-flex align-items-center justify-content-between">
                                                 <div>
                                                     <p class="statistics-title">Profil Sekolah</p>
-                                                    <h3 class="rate-percentage">{{$user->nama}}</h3>
+                                                    <h3 class="rate-percentage">1</h3>
                                                 </div>
                                             </div>
                                     </div>

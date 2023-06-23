@@ -2,11 +2,11 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Tarik Tabungan - SITASU</title>
+     <meta charset="utf-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+     <title>Tarik Tabungan - SITASU</title>
 
-    @include('layouts.head')
+     @include('layouts.head')
 
 </head>
 
@@ -27,29 +27,30 @@
                <div class="content-wrapper">
                     <h4 class="card-title">Tarik Tabungan</h4>
                     <hr>
+                    {{-- Row 1 --}}
                     <div class="row">
-                         <div class="col-lg-5 grid-margin">
+                         <div class="col-lg-3 grid-margin">
                               <div class="card">
                                    <div class="card-body">
                                         <div class="col-sm-12">
                                              <div class="statistics-details d-flex align-items-center justify-content-between">
                                                   <div>
                                                        <p class="statistics-title">Jumlah Saldo Keseluruhan</p>
-                                                       <h3 class="rate-percentage">Rp. 1.500.000</h3>
+                                                       <h3 class="rate-percentage">Rp. 11.525.000</h3>
                                                   </div>
                                              </div>
                                         </div>
                                    </div>
                               </div>
                          </div>
-                         <div class="col-lg-5 grid-margin">
+                         <div class="col-lg-3 grid-margin">
                               <div class="card">
                                    <div class="card-body">
                                         <div class="col-sm-12">
                                              <div class="statistics-details d-flex align-items-center justify-content-between">
                                                   <div>
-                                                       <p class="statistics-title">Jumlah Pengeluaran 1 Bulan Terakhir</p>
-                                                       <h3 class="rate-percentage">Rp. 1.500.000</h3>
+                                                       <p class="statistics-title">Jumlah Tarik Keseluruhan</p>
+                                                       <h3 class="rate-percentage">Rp. 15.923.000</h3>
                                                   </div>
                                              </div>
                                         </div>
@@ -57,10 +58,80 @@
                               </div>
                          </div>
                          <div class="col-lg-2 grid-margin">
-                              <div class="card align-items-center justify-content-center">
-                                   <div class="card-body ">
-                                        <button type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#tambahModal">
-                                             Tarik Tabungan
+                              <div class="card">
+                                   <div class="card-body">
+                                        <div class="col-sm-12">
+                                             <div class="statistics-details d-flex align-items-center justify-content-between">
+                                                  <div>
+                                                       <p class="statistics-title">Jumlah Tarik Bulan Ini</p>
+                                                       <h3 class="rate-percentage">Rp. 1.478.000</h3>
+                                                  </div>
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+                         </div>
+                         <div class="col-lg-2 grid-margin">
+                              <div class="card">
+                                   <div class="card-body">
+                                        <div class="col-sm-12">
+                                             <div class="statistics-details d-flex align-items-center justify-content-between">
+                                                  <div>
+                                                       <p class="statistics-title">Jumlah Tarik Minggu Ini</p>
+                                                       <h3 class="rate-percentage">Rp. 705.000</h3>
+                                                  </div>
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+                         </div>
+                         <div class="col-lg-2 grid-margin">
+                              <div class="card">
+                                   <div class="card-body">
+                                        <div class="col-sm-12">
+                                             <div class="statistics-details d-flex align-items-center justify-content-between">
+                                                  <div>
+                                                       <p class="statistics-title">Jumlah Tarik Hari Ini</p>
+                                                       <h3 class="rate-percentage">Rp. 211.000</h3>
+                                                  </div>
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+
+                    <div class="card mb-4">
+                         <div class="card-body">
+                              <div class="row" style="margin-bottom: -20px;">
+                                   <div class="form-group col-md-3">
+                                        <label for="id">ID Siswa</label>
+                                        <div class="d-flex justify-content-between">
+                                             <input type="text" class="form-control rounded" id="id" name="id" placeholder="ID Siswa">
+                                             <button type="button" class="btn btn-sm btn-primary btn-rounded" style="margin-left: 10px;">
+                                                  Cari
+                                             </button>
+                                        </div>
+                                   </div>
+                                   <div class="form-group col-md-2">
+                                        <label for="nama">Nama Siswa</label>
+                                        <input type="text" class="form-control rounded" id="nama" name="nama" placeholder="Nama" readonly>
+                                   </div>
+                                   <div class="form-group col-md-2">
+                                        <label for="jumlah_tabungan">Jumlah Tabungan</label>
+                                        <input type="text" class="form-control rounded" id="jumlah_tabungan" name="jumlah_tabungan" placeholder="Tabungan" readonly>
+                                   </div>
+                                   <div class="form-group col-md-2">
+                                        <label for="jumlah_dibuku">Jumlah Tabungan Dibuku</label>
+                                        <input type="text" class="form-control rounded" id="jumlah_dibuku" name="jumlah_dibuku" placeholder="Tabungan Dibuku" readonly>
+                                   </div>
+                                   <div class="form-group col-md-2">
+                                        <label for="jumlah_tarik">Masukan Jumlah Tarik</label>
+                                        <input type="text" class="form-control rounded" id="jumlah_tarik" name="jumlah_tarik" placeholder="Jumlah Tarik">
+                                   </div>
+                                   <div class="form-group col-md-1">
+                                        <button type="button" class="btn btn-sm btn-primary m-1 btn-rounded p-3 mt-3">
+                                             Tambah
                                         </button>
                                    </div>
                               </div>
@@ -69,14 +140,77 @@
 
                     <div class="card">
                          <div class="card-body">
-                              <h4 class="card-title">Data Tarik Tabungan</h4>
-                                   <div class="col-lg-3 d-flex">
-                                        <input type="text" class="form-control rounded h-auto m-1" id="nama" name="nama" placeholder="Cari Nama Siswa">
-                                        <button type="button" class="btn btn-primary btn-rounded m-1">
+                              <div class="col-lg-12 d-flex  justify-content-between">
+                                   <h4 class="card-title mt-2">Data Tarik Tabungan</h4>
+                                   <div class="d-flex justify-content-between">
+                                        <input type="text" class="form-control btn-sm rounded h-auto m-1" id="nama" name="nama" placeholder="Cari Nama Siswa">
+                                        <button type="button" class="btn btn-sm btn-primary m-1 btn-rounded">
                                              Search
                                         </button>
                                    </div>
-                              <hr>
+                              </div>
+                              {{-- Row 2 --}}
+                              <div class="row m-2 mt-4">
+                                   <div class="col-lg-12 grid-margin">
+                                        <div class="col-sm-12 statistics-details d-flex align-items-center justify-content-between">
+                                             <div class="statistics-details d-flex align-items-center justify-content-between">
+                                                  <div>
+                                                       <p class="statistics-title">Kelas 1 - A</p>
+                                                       <h4 class="rate-percentage">Rp. 523.000</h4>
+                                                  </div>
+                                             </div>
+                                             <div class="statistics-details d-flex align-items-center justify-content-between">
+                                                  <div>
+                                                       <p class="statistics-title">Kelas 1 - B</p>
+                                                       <h4 class="rate-percentage">Rp. 234.000</h4>
+                                                  </div>
+                                             </div>
+                                             <div class="statistics-details d-flex align-items-center justify-content-between">
+                                                  <div>
+                                                       <p class="statistics-title">Kelas 2 - A</p>
+                                                       <h4 class="rate-percentage">Rp. 145.000</h4>
+                                                  </div>
+                                             </div>
+                                             <div class="statistics-details d-flex align-items-center justify-content-between">
+                                                  <div>
+                                                       <p class="statistics-title">Kelas 2 - B</p>
+                                                       <h4 class="rate-percentage">Rp. 632.000</h4>
+                                                  </div>
+                                             </div>
+                                             <div class="statistics-details d-flex align-items-center justify-content-between">
+                                                  <div>
+                                                       <p class="statistics-title">Kelas 3 - A</p>
+                                                       <h4 class="rate-percentage">Rp. 345.000</h4>
+                                                  </div>
+                                             </div>
+                                             <div class="statistics-details d-flex align-items-center justify-content-between">
+                                                  <div>
+                                                       <p class="statistics-title">Kelas 3 - B</p>
+                                                       <h4 class="rate-percentage">Rp. 734.000</h4>
+                                                  </div>
+                                             </div>
+                                             <div class="statistics-details d-flex align-items-center justify-content-between">
+                                                  <div>
+                                                       <p class="statistics-title">Kelas 4</p>
+                                                       <h4 class="rate-percentage">Rp. 124.000</h4>
+                                                  </div>
+                                             </div>
+                                             <div class="statistics-details d-flex align-items-center justify-content-between">
+                                                  <div>
+                                                       <p class="statistics-title">Kelas 5</p>
+                                                       <h4 class="rate-percentage">Rp. 912.000</h4>
+                                                  </div>
+                                             </div>
+                                             <div class="statistics-details d-flex align-items-center justify-content-between">
+                                                  <div>
+                                                       <p class="statistics-title">Kelas 6</p>
+                                                       <h4 class="rate-percentage">Rp. 233.000</h4>
+                                                  </div>
+                                             </div>
+
+                                        </div>
+                                   </div>
+                              </div>
                               <div class="table-responsive">
                                    <table id="table-data " class="table table-striped text-center">
                                         <thead>
@@ -93,7 +227,7 @@
                                                   <th>Orang Tua</th>
                                                   <th>Alamat</th>
                                                   <th>Tanggal Dibuat</th>
-                                             </tr>     
+                                             </tr>
                                         </thead>
                                         <tbody>
 
@@ -105,79 +239,6 @@
                </div>
           </div>
      </div>
-
-<!-- End Content Main -->
-
-<div class="modal fade" id="tambahModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-     <div class="modal-dialog">
-          <div class="modal-content">
-               <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Data Siswa</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-               </div>
-               <div class="modal-body">
-                    <form method="post" action="{{ route('siswa.store')}}" enctype="multipart/form-data">
-                         @csrf
-                         <div class="row">
-                              <div class="form-group col-md-6">
-                                   <label for="nama">Nama</label>
-                                   <input type="text" class="form-control rounded" id="nama" name="nama" placeholder="Nama">
-                              </div>
-                              <div class="form-group col-md-6">
-                                   <label for="username">Username</label>
-                                   <input type="text" class="form-control rounded" id="username" name="username" placeholder="Username">
-                              </div>
-                              <div class="form-group col-md-6">
-                                   <label for="email">Email Address</label>
-                                   <input type="email" class="form-control rounded" id="email" name="email" placeholder="Email">
-                              </div>
-                              <div class="form-group col-md-6">
-                                   <label for="kontak">Nomor Telepon</label>
-                                   <input type="text" class="form-control rounded" id="kontak" name="kontak" placeholder="Kontak">
-                              </div>
-                              <div class="form-group col-md-6">
-                                   <label for="password">Password</label>
-                                   <input type="password" class="form-control rounded" id="password" name="password" placeholder="Password">
-                              </div>
-                              <div class="form-group col-md-6">
-                                   <label for="jenis_kelamin">Jenis Kelamin</label>
-                                   <select name="jenis_kelamin" class="form-select form-select-sm" id="jenis_kelamin">
-                                   <option value="Laki - Laki">Laki - Laki</option>
-                                   <option value="Perempuan">Perempuan</option>
-                              </select>
-                              </div>
-                              <div class="form-group col-md-6">
-                                   <label for="kelas">Kelas</label>
-                                   <select name="kelas" class="form-select form-select-sm" id="kelas">
-                                        <option value="1A">1 - A</option>
-                                        <option value="1B">1 - B</option>
-                                        <option value="2A">2 - A</option>
-                                        <option value="2B">2 - B</option>
-                                        <option value="3A">3 - A</option>
-                                        <option value="3B">3 - B</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                   </select>
-                              </div>
-                              <div class="form-group col-md-6">
-                                   <label for="orang_tua">Nama Orang Tua</label>
-                                   <input type="text" class="form-control rounded" id="orang_tua" name="orang_tua" placeholder="Orang_tua">
-                              </div>
-                              <div class="form-group">
-                                   <label for="alamat">Alamat</label>
-                                   <input type="text" class="form-control rounded" id="alamat" name="alamat" placeholder="Alamat">
-                              </div>
-                         </div>
-                         <div class="modal-footer justify-content-between">
-                              <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">Batal</button>
-                              <button type="submit" class="btn btn-primary btn-rounded">Tambah Data Siswa</button>
-                         </div>
-                    </form>
-               </div>
-          </div>
-     </div>
-</div>
 </div>
 
      <!-- Script -->

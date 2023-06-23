@@ -5,7 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PetugasController;
 use App\Http\Controllers\TabunganController;
-use App\Http\Controllers\TestController;
+use App\Http\Controllers\PengajuanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,9 +23,7 @@ Route::get('/', function () {
 });
 Route::get('/home', function () {
     return redirect()->route('admin');
-});
-
-Route::get('/test', [TestController::class, 'beranda'])->name('test');
+})->middleware('admin');
 
 Auth::routes();
 
@@ -56,6 +54,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/admin/laporan/siswa', [PetugasController::class, 'laporan'])->name('laporan.siswa');
 
     // Kelola Tabungan ---------------------------------------------------------------------------------------------
-    Route::get('/admin/tabungan/stor-tabungan', [TabunganController::class, 'index_stor'])->name('tabungan.stor');
-    Route::get('/admin/tabungan/tarik-tabungan', [TabunganController::class, 'index_tarik'])->name('tabungan.tarik');
+        // Stor Tabungan -------------------------------------------------------------------------------------------
+        Route::get('/admin/tabungan/stor-tabungan', [TabunganController::class, 'index_stor'])->name('tabungan.stor');
+        Route::post('/admin/tabungan/stor-tabungan', [TabunganController::class, 'stor_tabungan'])->name('tabungan.stor.tambah');
+
+        // Tarik Tabungan ------------------------------------------------------------------------------------------
+        Route::get('/admin/tabungan/tarik-tabungan', [TabunganController::class, 'index_tarik'])->name('tabungan.tarik');
+
+    // Kelola Pengajuan ---------------------------------------------------------------------------------------------
+    Route::get('/admin/pengajuan', [PengajuanController::class, 'index'])->name('pengajuan');
+
 });

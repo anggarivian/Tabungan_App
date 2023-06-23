@@ -45,7 +45,6 @@
                                              <table id="table-data " class="table table-striped text-center">
                                                   <thead>
                                                        <tr class="text-center">
-                                                            <th>Opsi</th>
                                                             <th>No</th>
                                                             <th>ID</th>
                                                             <th>Username</th>
@@ -57,6 +56,7 @@
                                                             <th>Orang Tua</th>
                                                             <th>Alamat</th>
                                                             <th>Tanggal Dibuat</th>
+                                                            <th>Opsi</th>
                                                        </tr>
                                                   </thead>
                                                   <tbody>
@@ -64,16 +64,8 @@
                                                        @foreach($user as $users)
                                                        @if ($users->relationToRole->id == '3')
                                                             <tr>
-                                                                 <td class="text-center">
-                                                                      <button type="button" class="btn btn-warning btn-sm btn-rounded" data-id="{{ $users->id }}" id="btn-edit-user" data-bs-toggle="modal" data-bs-target="#editModal">
-                                                                           Edit
-                                                                      </button>
-                                                                      <a type="button" href="/admin/siswa/delete/{{$users->id}}" class="btn btn-danger btn-rounded btn-sm">
-                                                                           Hapus
-                                                                      </a>
-                                                                 </td>
                                                                  <td class="text-center">{{$no++}}</td>
-                                                                 <td class="text-center">{{$users->id}}</td>
+                                                                 <td class="text-center">{{$users->id_tabungan}}</td>
                                                                  <td>{{$users->username}}</td>
                                                                  <td>{{$users->nama}}</td>
                                                                  <td>{{$users->jenis_kelamin}}</td>
@@ -83,6 +75,14 @@
                                                                  <td>{{$users->orang_tua}}</td>
                                                                  <td>{{$users->alamat}}</td>
                                                                  <td>{{$users->created_at}}</td>
+                                                                 <td class="text-center">
+                                                                      <button type="button" class="btn btn-warning btn-sm btn-rounded" data-id="{{ $users->id }}" id="btn-edit-user" data-bs-toggle="modal" data-bs-target="#editModal">
+                                                                           Edit
+                                                                      </button>
+                                                                      <a type="button" href="/admin/siswa/delete/{{$users->id}}" class="btn btn-danger btn-rounded btn-sm">
+                                                                           Hapus
+                                                                      </a>
+                                                                 </td>
                                                             </tr>
                                                        @endif
                                                        @endforeach
@@ -114,6 +114,7 @@
                          <div class="row">
                               <div class="form-group col-md-6">
                                    <label for="nama">Nama</label>
+                                   <input type="text" class="form-control rounded" id="id_tabungan" name="id_tabungan" value="{{ $nomer }}" hidden>
                                    <input type="text" class="form-control rounded" id="nama" name="nama" placeholder="Nama">
                               </div>
                               <div class="form-group col-md-6">

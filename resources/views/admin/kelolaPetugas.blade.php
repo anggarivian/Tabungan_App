@@ -41,11 +41,10 @@
                               </div>
                               <div class="card">
                                    <div class="card-body">
-                                        <table id="table-data" class="table table-striped">
+                                        <table id="table-data" class="table table-striped text-center">
                                              <thead>
-                                                  <tr class="text-center">
+                                                  <tr>
                                                        <th>No</th>
-                                                       <th>ID</th>
                                                        <th>Username</th>
                                                        <th>Nama</th>
                                                        <th>Jenis Kelamin</th>
@@ -60,11 +59,10 @@
                                                   @foreach($user as $users)
                                                   @if ($users->relationToRole->id == '2')
                                                        <tr>
-                                                            <td class="text-center">{{$no++}}</td>
-                                                            <td class="text-center">{{$users->id}}</td>
+                                                            <td>{{$no++}}</td>
                                                             <td>{{$users->username}}</td>
                                                             <td>{{$users->nama}}</td>
-                                                            <td >{{$users->jenis_kelamin}}</td>
+                                                            <td>{{$users->jenis_kelamin}}</td>
                                                             <td>{{$users->email}}</td>
                                                             <td>{{$users->kontak}}</td>
                                                             <td>{{$users->created_at}}</td>
@@ -152,10 +150,10 @@
                     <form method="post" action="{{ route('petugas.ubah')}}" enctype="multipart/form-data">
                          @method ('PATCH')
                          @csrf
-                         <div class="form-group">
-                              <label for="id">ID</label>
-                              <input type="text" class="form-control rounded" id="edit-id" name="id" placeholder="Id" readonly hiddenn>
-                         </div>
+                         {{-- <div class="form-group">
+                              <label for="id">ID</label> --}}
+                              <input type="text" class="form-control rounded" id="edit-id" name="id" placeholder="Id" readonly hidden>
+                         {{-- </div> --}}
                          <div class="form-group">
                               <label for="username">Username</label>
                               <input type="text" class="form-control rounded" id="edit-username" name="username" placeholder="Username" readonly>
@@ -179,7 +177,6 @@
                          <div class="form-group">
                               <label for="jenis_kelamin">Jenis Kelamin</label>
                               <select name="jenis_kelamin" class="form-select form-select rounded" id="edit-jenis_kelamin">
-                                   <option id="edit-jenis_kelamin" value="Laki - Laki"></option>
                                    <option value="Laki - Laki">Laki - Laki</option>
                                    <option value="Perempuan">Perempuan</option>
                               </select>

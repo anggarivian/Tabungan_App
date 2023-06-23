@@ -21,17 +21,10 @@
       </div>
     </li>
     <li class="nav-item">
-      <a class="nav-link" data-bs-toggle="collapse" href="#pengajuan" aria-expanded="false" aria-controls="pengajuan">
+      <a class="nav-link" href="{{route('pengajuan')}}">
         <i class="menu-icon mdi mdi-cash-refund"></i>
-        <span class="menu-title">Pengajuan  </span>
-        <i class="menu-arrow"></i>
+        <span class="menu-title">Pengajuan</span>
       </a>
-      <div class="collapse" id="pengajuan">
-        <ul class="nav flex-column sub-menu">
-          <li class="nav-item "> <a class="nav-link" href="{{asset('template/pages/ui-features/buttons.html')}}">Tertunda</a></li>
-          <li class="nav-item"> <a class="nav-link" href="{{asset('template/pages/ui-features/dropdowns.html')}}">Riwayat</a></li>
-        </ul>
-      </div>
     </li>
     <li class="nav-item">
       <a class="nav-link" data-bs-toggle="collapse" href="#laporan" aria-expanded="false" aria-controls="laporan">
