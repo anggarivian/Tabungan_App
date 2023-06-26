@@ -70,11 +70,6 @@ class PetugasController extends Controller
 
             $tabungan = new Tabungan;
 
-            $validate = $req->validate([
-                'nama' => 'required|max:255',
-                'kelas' => 'required',
-            ]);
-
             $tabungan->id_tabungan = $req->get('id_tabungan');
             $tabungan->nama = $req->get('nama');
             $tabungan->kelas = $req->get('kelas');
@@ -104,6 +99,7 @@ class PetugasController extends Controller
                 'jenis_kelamin' => 'required',
             ]);
 
+            $user->id_tabungan = $req->get('id_tabungan');
             $user->nama = $req->get('nama');
             $user->username = $req->get('username');
             $user->email = $req->get('email');
@@ -117,6 +113,12 @@ class PetugasController extends Controller
             $user->roles_id = 3 ;
             $user->save();
 
+            $idTabungan = $req->get('id_tabungan'); // Kriteria id_tabungan yang sama
+            $namaBaru = $req->get('nama'); // Nama baru yang ingin diubah
+            $kelasBaru = $req->get('kelas'); // Nama baru yang ingin diubah
+            Tabungan::where('id_tabungan', $idTabungan)->update(['nama' => $namaBaru]);
+            Tabungan::where('id_tabungan', $idTabungan)->update(['kelas' => $kelasBaru]);
+
             $notification = array(
                 'message' => 'Data User berhasil diubah',
                 'alert-type' => 'success'
@@ -126,6 +128,7 @@ class PetugasController extends Controller
         public function destroy(Request $req, $id){
             $user = User::find($id);
             $user->delete();
+            Tabungan::where('id_tabungan', $user->id_tabungan)->delete();
             $notification = array(
                 'message' => 'Data Siswa berhasil dihapus',
                 'alert-type' => 'success'

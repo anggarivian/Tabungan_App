@@ -189,6 +189,7 @@
                               {{-- <div class="form-group col-md-6">
                                    <label for="id">Id</label> --}}
                                    <input type="text" class="form-control rounded" id="edit-id" name="id" placeholder="Id" readonly hidden>
+                                   <input type="text" class="form-control rounded" id="edit-id_tabungan" name="id_tabungan" placeholder="Id_tabungan" readonly hidden>
                               {{-- </div> --}}
                               <div class="form-group col-md-6">
                                    <label for="nama">Nama</label>
@@ -266,6 +267,7 @@
                     dataType: 'json',
                     success: function(res){
                          $('#edit-id').val(res.id);
+                         $('#edit-id_tabungan').val(res.id_tabungan);
                          $('#edit-nama').val(res.nama);
                          $('#edit-username').val(res.username);
                          $('#edit-email').val(res.email);

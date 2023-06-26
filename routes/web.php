@@ -60,6 +60,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         // Tarik Tabungan ------------------------------------------------------------------------------------------
         Route::get('/admin/tabungan/tarik-tabungan', [TabunganController::class, 'index_tarik'])->name('tabungan.tarik');
+        Route::patch('/admin/tabungan/tarik-tabungan', [TabunganController::class, 'tarik_tabungan'])->name('tabungan.tarik.tambah');
 
     // Kelola Pengajuan ---------------------------------------------------------------------------------------------
     Route::get('/admin/pengajuan', [PengajuanController::class, 'index'])->name('pengajuan');
