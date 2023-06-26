@@ -16,8 +16,9 @@ class TabunganSeeder extends Seeder
     {
         $tabungans = [
             [
-                'id'                => 1,
                 'users_id'          => 1,
+                'nama'              => 'Siswa',
+                'kelas'             => '4',
                 'jumlah_tabungan'   => 0,
                 'tipe_transaksi'    => 'Stor',
                 'jumlah_dibuku'     => 0,

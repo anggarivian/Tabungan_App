@@ -56,7 +56,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Kelola Tabungan ---------------------------------------------------------------------------------------------
         // Stor Tabungan -------------------------------------------------------------------------------------------
         Route::get('/admin/tabungan/stor-tabungan', [TabunganController::class, 'index_stor'])->name('tabungan.stor');
-        Route::post('/admin/tabungan/stor-tabungan', [TabunganController::class, 'stor_tabungan'])->name('tabungan.stor.tambah');
+        Route::patch('/admin/tabungan/stor-tabungan', [TabunganController::class, 'stor_tabungan'])->name('tabungan.stor.tambah');
 
         // Tarik Tabungan ------------------------------------------------------------------------------------------
         Route::get('/admin/tabungan/tarik-tabungan', [TabunganController::class, 'index_tarik'])->name('tabungan.tarik');

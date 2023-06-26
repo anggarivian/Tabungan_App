@@ -21,14 +21,14 @@ class PetugasController extends Controller
             $tabungan = Tabungan::All();
 
             // Kode Tabungan Otomatis
-            $cek = User::count();
-            if ($cek == 0) {
-                $urut = 001;
-                $nomer = 'KT' . $urut;
-            } else {
-                $ambil = User::all()->last();
-                $urut = (int)substr($ambil->id_tabungan, -3) + 1;
-                $nomer = 'KT' . $urut;
+            $prefix = 'KT'; // Awalan kode tabungan, bisa disesuaikan
+            $randomNumber = mt_rand(100, 999); // Generate angka acak antara 1000 dan 9999
+            $nomer = $prefix . $randomNumber;
+
+            // Pastikan kode tabungan yang dihasilkan tidak ada di dalam database
+            while (User::where('id_tabungan', $nomer)->exists()) {
+                $randomNumber = mt_rand(100, 999);
+                $nomer = $prefix . $randomNumber;
             }
 
             return view('petugas.kelolaSiswa', compact('user','role','nomer'));
@@ -68,16 +68,17 @@ class PetugasController extends Controller
 
             $user->save();
 
-            $ambildata = User::orderBy('id', 'desc')->pluck('id')->first();
-
             $tabungan = new Tabungan;
 
-            $tabungan->users_id = $ambildata;
-            $tabungan->jumlah_tabungan = 0 ;
-            $tabungan->jumlah_dibuku = 0 ;
-            $tabungan->jumlah = 0 ;
-            $tabungan->premi = 0.5 ;
-            $tabungan->sisa = 0 ;
+            $validate = $req->validate([
+                'nama' => 'required|max:255',
+                'kelas' => 'required',
+            ]);
+
+            $tabungan->id_tabungan = $req->get('id_tabungan');
+            $tabungan->nama = $req->get('nama');
+            $tabungan->kelas = $req->get('kelas');
+            $tabungan->roles_id = 3 ;
 
             $tabungan->save();
 
@@ -111,7 +112,7 @@ class PetugasController extends Controller
             $user->orang_tua = $req->get('orang_tua');
             $user->alamat = $req->get('alamat');
             $user->jenis_kelamin =  $req->get('jenis_kelamin');
-            $user->kelas = $req->get('kelas'); ;
+            $user->kelas = $req->get('kelas');
             $user->password = Hash::make($req->get('password'));
             $user->roles_id = 3 ;
             $user->save();
@@ -122,7 +123,7 @@ class PetugasController extends Controller
             );
             return redirect()->route('siswa')->with($notification);
         }
-        public function destroy($id){
+        public function destroy(Request $req, $id){
             $user = User::find($id);
             $user->delete();
             $notification = array(

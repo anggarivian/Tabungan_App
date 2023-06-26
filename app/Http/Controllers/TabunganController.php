@@ -16,6 +16,11 @@ class TabunganController extends Controller
         $user = User::All();
         $role = Role::All();
 
+        // Tabel Stor Tabungan --------------------------------
+        $startDate = now()->startOfMonth(); // Mulai bulan ini
+        $endDate = now()->endOfMonth(); // Akhir bulan ini
+        $storTabel = Tabungan::whereBetween('created_at', [$startDate, $endDate])->paginate(30);
+
         // Total Tabungan -------------------------------------
         $hitungTotalSaldo = Tabungan::sum('jumlah_tabungan');
 
@@ -36,26 +41,62 @@ class TabunganController extends Controller
         $hariStor = Tabungan::whereDate('created_at', $today)->where('tipe_transaksi', 'Stor')->sum('jumlah');
 
         // Total Stor Kelas 1 A Hari Ini ----------------------
+        $storKelas1A = Tabungan::where('kelas', '1A')->whereDate('created_at', $today)->sum('jumlah');
 
-        return view('petugas.kelolaStor', compact('stor','user','role','hitungTotalSaldo','hitungTotalStor','bulanStor','mingguStor','hariStor'));
+        // Total Stor Kelas 1 B Hari Ini ----------------------
+        $storKelas1B = Tabungan::where('kelas', '1B')->whereDate('created_at', $today)->sum('jumlah');
+
+        // Total Stor Kelas 2 A Hari Ini ----------------------
+        $storKelas2A = Tabungan::where('kelas', '2A')->whereDate('created_at', $today)->sum('jumlah');
+
+        // Total Stor Kelas 2 B Hari Ini ----------------------
+        $storKelas2B = Tabungan::where('kelas', '2B')->whereDate('created_at', $today)->sum('jumlah');
+
+        // Total Stor Kelas 3 A Hari Ini ----------------------
+        $storKelas3A = Tabungan::where('kelas', '3A')->whereDate('created_at', $today)->sum('jumlah');
+
+        // Total Stor Kelas 3 B Hari Ini ----------------------
+        $storKelas3B = Tabungan::where('kelas', '3B')->whereDate('created_at', $today)->sum('jumlah');
+
+        // Total Stor Kelas 4 Hari Ini ----------------------
+        $storKelas4 = Tabungan::where('kelas', '4')->whereDate('created_at', $today)->sum('jumlah');
+
+        // Total Stor Kelas 5 Hari Ini ----------------------
+        $storKelas5 = Tabungan::where('kelas', '5')->whereDate('created_at', $today)->sum('jumlah');
+
+        // Total Stor Kelas 6 Hari Ini ----------------------
+        $storKelas6 = Tabungan::where('kelas', '6')->whereDate('created_at', $today)->sum('jumlah');
+
+        // Generate Dropdown Id Tabungan --------------------
+        $storTerbaru = [];
+        for ($i = 0 ; $i < 1000 ; $i++){
+            $coba = Tabungan::where('id_tabungan', 'KT'.$i )->latest('id')->first();
+            if ($coba != null ) {
+                $storTerbaru[$i] = $coba ;
+            }
+        }
+
+        return view('petugas.kelolaStor',
+        compact('storKelas1A','storKelas1B','storKelas2A','storKelas2B',
+                'storKelas3A','storKelas3B','storKelas4','storKelas5',
+                'storKelas6','storTabel',
+                'storTerbaru','stor','user','role','hitungTotalSaldo',
+                'hitungTotalStor','bulanStor','mingguStor','hariStor'));
     }
     public function stor_tabungan(Request $req){
-        $tabungan = new Tabungan;
 
-        $validate = $req->validate([
-            'nama' => 'required|max:255',
-            'kelas' => 'required',
-            'jumlah_tabungan' => 'required',
-            'jumlah_dibuku' => 'required',
-        ]);
+        $tabungan = new Tabungan ;
 
-        $tabungan->users_id = $req->get('users_id');
+        $tabungan->id_tabungan = $req->get('selectuser');
+        $tabungan->nama = $req->get('nama');
+        $tabungan->kelas = $req->get('kelas');
+        $tabungan->roles_id = 3 ;
         $tabungan->tipe_transaksi = 'Stor';
-        $tabungan->jumlah_tabungan = $req->get('jumlah_tabungan') + $req->get('jumlah_stor');
+        $tabungan->jumlah = $req->get('jumlah_stor');
+        $tabungan->jumlah_tabungan = $req->get('jumlah_tabungan') + $tabungan->jumlah ;
         $tabungan->jumlah_dibuku = $req->get('jumlah_dibuku');
-        $tabungan->jumlah = $req->get('jumlah_stor') ;
         $tabungan->premi = $tabungan->jumlah_tabungan * 0.05 ;
-        $tabungan->sisa = $tabungan->jumlah_tabungan - $tabungan->premi ;
+        $tabungan->sisa = $tabungan->jumlah - $tabungan->premi ;
 
         $tabungan->save();
 

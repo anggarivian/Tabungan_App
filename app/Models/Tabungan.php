@@ -13,4 +13,12 @@ class Tabungan extends Model
     {
         return $this->belongsTo(User::class, 'users_id');
     }
+    public function relationToRole()
+    {
+        return $this->belongsTo(Role::class, 'roles_id');
+    }
+    public function relationUser()
+    {
+        return $this->belongsTo(User::class)->withDefault();
+    }
 }

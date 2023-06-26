@@ -25,7 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('orang_tua')->nullable();
             $table->string('alamat')->nullable();
-            $table->char('id_tabungan', 5)->nullable();
+            $table->string('id_tabungan', 5);
             $table->foreignId('roles_id')->constrained();
             $table->rememberToken();
             $table->timestamps();

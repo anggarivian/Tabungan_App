@@ -114,7 +114,7 @@
                          <div class="row">
                               <div class="form-group col-md-6">
                                    <label for="nama">Nama</label>
-                                   <input type="text" class="form-control rounded" id="id_tabungan" name="id_tabungan" value="{{ $nomer }}" hidden>
+                                   <input type="text" class="form-control rounded" id="id_tabungan" name="id_tabungan" value="{{ $nomer }}" >
                                    <input type="text" class="form-control rounded" id="nama" name="nama" placeholder="Nama">
                               </div>
                               <div class="form-group col-md-6">
