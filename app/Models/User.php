@@ -20,6 +20,10 @@ class User extends Authenticatable
     {
         return $this->hasOne(Tabungan::class)->withDefault();
     }
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'roles_id');
+    }
 
     /**
      * The attributes that are mass assignable.

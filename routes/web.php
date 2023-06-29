@@ -21,48 +21,43 @@ use App\Http\Controllers\PengajuanController;
 Route::get('/', function () {
     return view('auth.login');
 });
-Route::get('/home', function () {
-    return redirect()->route('admin');
-})->middleware('admin');
 
 Auth::routes();
 
-// Beranda Dashboard Route -----------------------------------------------------------------------------------------
-Route::get('/admin', [HomeController::class, 'index'])->name('admin');
+Route::get('/home', function () {
+    return redirect()->route('admin');
+})->middleware('auth');
 
-// Ambil Data Route ------------------------------------------------------------------------------------------------
-Route::get('admin/ajaxadmin/dataUser/{id}', [AdminController::class, 'getDataUser']);
+Route::get('/admin', [HomeController::class, 'index'])->name('admin')->middleware('auth');
 
-// Admin routes ----------------------------------------------------------------------------------------------------
-Route::group(['middleware' => 'auth'], function () {
+Route::get('admin/ajaxadmin/dataUser/{id}', [AdminController::class, 'getDataUser'])->middleware('auth');
+
+// Admin Route -----------------------------------------------------------------------------------------------------
+Route::middleware('admin')->group(function () {
     Route::get('/admin/petugas', [AdminController::class, 'index'])->name('petugas');
     Route::post('/admin/petugas/add', [AdminController::class, 'store'])->name('petugas.store');
-    Route::get('admin/ajaxadmin/dataUser/{id}', [AdminController::class, 'getDataUser']);
     Route::patch('admin/petugas/update', [AdminController::class, 'edit'])->name('petugas.ubah');
     Route::get('admin/petugas/delete/{id}', [AdminController::class,'destroy'])->name('petugas.hapus');
     Route::get('/admin/laporan/petugas', [AdminController::class, 'laporan'])->name('laporan.petugas');
 });
 
-// Petugas Routes --------------------------------------------------------------------------------------------------
-Route::group(['middleware' => 'auth'], function () {
-
-    // Kelola Siswa ------------------------------------------------------------------------------------------------
-    Route::get('/admin/siswa', [PetugasController::class, 'index'])->name('siswa');
-    Route::post('/admin/siswa/add', [PetugasController::class, 'store'])->name('siswa.store');
-    Route::patch('admin/siswa/update', [PetugasController::class, 'edit'])->name('siswa.ubah');
-    Route::get('admin/siswa/delete/{id}', [PetugasController::class,'destroy'])->name('siswa.hapus');
-    Route::get('/admin/laporan/siswa', [PetugasController::class, 'laporan'])->name('laporan.siswa');
+// Petugas Route ---------------------------------------------------------------------------------------------------
+Route::middleware('petugas')->group(function () {
+    Route::get('/petugas/siswa', [PetugasController::class, 'index'])->name('siswa');
+    Route::post('/petugas/siswa/add', [PetugasController::class, 'store'])->name('siswa.store');
+    Route::patch('petugas/siswa/update', [PetugasController::class, 'edit'])->name('siswa.ubah');
+    Route::get('petugas/siswa/delete/{id}', [PetugasController::class,'destroy'])->name('siswa.hapus');
+    Route::get('/petugas/laporan/siswa', [PetugasController::class, 'laporan'])->name('laporan.siswa');
 
     // Kelola Tabungan ---------------------------------------------------------------------------------------------
         // Stor Tabungan -------------------------------------------------------------------------------------------
-        Route::get('/admin/tabungan/stor-tabungan', [TabunganController::class, 'index_stor'])->name('tabungan.stor');
-        Route::patch('/admin/tabungan/stor-tabungan', [TabunganController::class, 'stor_tabungan'])->name('tabungan.stor.tambah');
+        Route::get('/petugas/tabungan/stor-tabungan', [TabunganController::class, 'index_stor'])->name('tabungan.stor');
+        Route::patch('/petugas/tabungan/stor-tabungan', [TabunganController::class, 'stor_tabungan'])->name('tabungan.stor.tambah');
 
         // Tarik Tabungan ------------------------------------------------------------------------------------------
-        Route::get('/admin/tabungan/tarik-tabungan', [TabunganController::class, 'index_tarik'])->name('tabungan.tarik');
-        Route::patch('/admin/tabungan/tarik-tabungan', [TabunganController::class, 'tarik_tabungan'])->name('tabungan.tarik.tambah');
+        Route::get('/petugas/tabungan/tarik-tabungan', [TabunganController::class, 'index_tarik'])->name('tabungan.tarik');
+        Route::patch('/petugas/tabungan/tarik-tabungan', [TabunganController::class, 'tarik_tabungan'])->name('tabungan.tarik.tambah');
 
-    // Kelola Pengajuan ---------------------------------------------------------------------------------------------
-    Route::get('/admin/pengajuan', [PengajuanController::class, 'index'])->name('pengajuan');
-
+        // Kelola Pengajuan ---------------------------------------------------------------------------------------------
+        Route::get('/petugas/pengajuan', [PengajuanController::class, 'index'])->name('pengajuan');
 });

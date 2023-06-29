@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class petugas
+class isPetugas
 {
     /**
      * Handle an incoming request.
@@ -16,6 +16,10 @@ class petugas
      */
     public function handle(Request $request, Closure $next)
     {
-        return $next($request);
+        if (auth()->user()->roles_id == 2){
+            return $next($request);
+        }
+
+        return redirect('admin');
     }
 }

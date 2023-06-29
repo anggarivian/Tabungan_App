@@ -79,7 +79,7 @@
                                                                       <button type="button" class="btn btn-warning btn-sm btn-rounded" data-id="{{ $users->id }}" id="btn-edit-user" data-bs-toggle="modal" data-bs-target="#editModal">
                                                                            Edit
                                                                       </button>
-                                                                      <a type="button" href="/admin/siswa/delete/{{$users->id}}" class="btn btn-danger btn-rounded btn-sm">
+                                                                      <a type="button" href="/petugas/siswa/delete/{{$users->id}}" class="btn btn-danger btn-rounded btn-sm">
                                                                            Hapus
                                                                       </a>
                                                                  </td>

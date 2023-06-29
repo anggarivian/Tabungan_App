@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $usercount = User::where('id', 3)->count();
+        $usercount = 1 ;
         return view('home', compact('usercount'));
     }
 }
