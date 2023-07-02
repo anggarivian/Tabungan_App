@@ -47,14 +47,13 @@
                                                        <tr class="text-center">
                                                             <th>No</th>
                                                             <th>ID</th>
-                                                            <th>Username</th>
                                                             <th>Nama</th>
                                                             <th>Jenis Kelamin</th>
-                                                            <th>Email</th>
                                                             <th>Kelas</th>
                                                             <th>Kontak</th>
                                                             <th>Orang Tua</th>
                                                             <th>Alamat</th>
+                                                            <th>Email</th>
                                                             <th>Tanggal Dibuat</th>
                                                             <th>Opsi</th>
                                                        </tr>
@@ -66,14 +65,13 @@
                                                             <tr>
                                                                  <td class="text-center">{{$no++}}</td>
                                                                  <td class="text-center">{{$users->id_tabungan}}</td>
-                                                                 <td>{{$users->username}}</td>
                                                                  <td>{{$users->nama}}</td>
                                                                  <td>{{$users->jenis_kelamin}}</td>
-                                                                 <td>{{$users->email}}</td>
                                                                  <td>{{$users->kelas}}</td>
                                                                  <td>{{$users->kontak}}</td>
                                                                  <td>{{$users->orang_tua}}</td>
                                                                  <td>{{$users->alamat}}</td>
+                                                                 <td>{{$users->email}}</td>
                                                                  <td>{{$users->created_at}}</td>
                                                                  <td class="text-center">
                                                                       <button type="button" class="btn btn-warning btn-sm btn-rounded" data-id="{{ $users->id }}" id="btn-edit-user" data-bs-toggle="modal" data-bs-target="#editModal">
@@ -114,12 +112,8 @@
                          <div class="row">
                               <div class="form-group col-md-6">
                                    <label for="nama">Nama</label>
-                                   <input type="text" class="form-control rounded" id="id_tabungan" name="id_tabungan" value="{{ $nomer }}" >
+                                   <input type="text" class="form-control rounded" id="id_tabungan" name="id_tabungan" value="{{ $nomer }}" hidden>
                                    <input type="text" class="form-control rounded" id="nama" name="nama" placeholder="Nama">
-                              </div>
-                              <div class="form-group col-md-6">
-                                   <label for="username">Username</label>
-                                   <input type="text" class="form-control rounded" id="username" name="username" placeholder="Username">
                               </div>
                               <div class="form-group col-md-6">
                                    <label for="email">Email Address</label>
@@ -156,9 +150,9 @@
                               </div>
                               <div class="form-group col-md-6">
                                    <label for="orang_tua">Nama Orang Tua</label>
-                                   <input type="text" class="form-control rounded" id="orang_tua" name="orang_tua" placeholder="Orang_tua">
+                                   <input type="text" class="form-control rounded" id="orang_tua" name="orang_tua" placeholder="Orang Tua">
                               </div>
-                              <div class="form-group">
+                              <div class="form-group col-md-6">
                                    <label for="alamat">Alamat</label>
                                    <input type="text" class="form-control rounded" id="alamat" name="alamat" placeholder="Alamat">
                               </div>
@@ -196,20 +190,12 @@
                                    <input type="text" class="form-control rounded" id="edit-nama" name="nama" placeholder="Nama">
                               </div>
                               <div class="form-group col-md-6">
-                                   <label for="username">Username</label>
-                                   <input type="text" class="form-control rounded" id="edit-username" name="username" placeholder="Username" readonly>
-                              </div>
-                              <div class="form-group col-md-6">
                                    <label for="email">Email Address</label>
                                    <input type="email" class="form-control rounded" id="edit-email" name="email" placeholder="Email">
                               </div>
                               <div class="form-group col-md-6">
                                    <label for="kontak">Nomor Telepon</label>
                                    <input type="text" class="form-control rounded" id="edit-kontak" name="kontak" placeholder="Kontak">
-                              </div>
-                              <div class="form-group col-md-6">
-                                   <label for="password">Password</label>
-                                   <input type="password" class="form-control rounded" id="edit-password" name="password" placeholder="Password">
                               </div>
                               <div class="form-group col-md-6">
                                    <label for="jenis_kelamin">Jenis Kelamin</label>
@@ -269,9 +255,7 @@
                          $('#edit-id').val(res.id);
                          $('#edit-id_tabungan').val(res.id_tabungan);
                          $('#edit-nama').val(res.nama);
-                         $('#edit-username').val(res.username);
                          $('#edit-email').val(res.email);
-                         $('#edit-password').val(res.password);
                          $('#edit-jenis_kelamin').val(res.jenis_kelamin);
                          $('#edit-kontak').val(res.kontak);
                          $('#edit-kelas').val(res.kelas);

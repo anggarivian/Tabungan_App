@@ -241,6 +241,7 @@
                                                   <th>Kelas</th>
                                                   <th>Jumlah Tabungan</th>
                                                   <th>Jumlah Dibuku</th>
+                                                  <th>Jumlah Stor</th>
                                                   <th>Premi</th>
                                                   <th>Sisa</th>
                                                   <th>Tanggal Dibuat</th>
@@ -256,6 +257,7 @@
                                                             <td>{{$stors->kelas}}</td>
                                                             <td>{{$stors->jumlah_tabungan}}</td>
                                                             <td>{{$stors->jumlah_dibuku}}</td>
+                                                            <td>{{$stors->jumlah}}</td>
                                                             <td>{{$stors->premi}}</td>
                                                             <td>{{$stors->sisa}}</td>
                                                             <td>{{$stors->created_at}}</td>

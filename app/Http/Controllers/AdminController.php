@@ -34,13 +34,13 @@ class AdminController extends Controller
             'jenis_kelamin' => 'required',
         ]);
         $user->nama = $req->get('nama');
-        $user->username = $req->get('username');
+        $user->id_tabungan = '-';
         $user->email = $req->get('email');
         $user->kontak = $req->get('kontak');
         $user->jenis_kelamin = $req->get('jenis_kelamin');
         $user->password = Hash::make($req->get('password'));
         $user->roles_id = 2 ;
-        $user->kelas = 'NULL' ;
+        $user->kelas = '-' ;
         $user->save();
         $notification = array(
             'message' =>'Data User berhasil ditambahkan', 'alert-type' =>'success'
@@ -58,14 +58,11 @@ class AdminController extends Controller
         $validate = $req->validate([
             'nama' => 'required|max:255',
             'email' => 'required',
-            'password' => 'required',
             'jenis_kelamin' => 'required',
         ]);
         $user->nama = $req->get('nama');
         $user->email = $req->get('email');
         $user->jenis_kelamin = $req->get('jenis_kelamin');
-        $user->password = $req->get('password');
-        $user->roles_id = 2 ;
         $user->save();
         $notification = array(
             'message' => 'Data User berhasil diubah',

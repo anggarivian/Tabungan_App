@@ -18,7 +18,6 @@ class UserSeeder extends Seeder
             [
                 'id'                => 1,
                 'nama'              => 'Admin',
-                'username'          => 'Admin',
                 'email'             => 'admin@mail.com',
                 'jenis_kelamin'     => 'Laki',
                 'kelas'             => '-',
@@ -30,7 +29,6 @@ class UserSeeder extends Seeder
             [
                 'id'                => 2,
                 'nama'              => 'Petugas',
-                'username'          => 'Petugas',
                 'email'             => 'petugas@mail.com',
                 'jenis_kelamin'     => 'Laki',
                 'kelas'             => '-',

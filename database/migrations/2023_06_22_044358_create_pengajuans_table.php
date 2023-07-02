@@ -15,6 +15,13 @@ class CreatePengajuansTable extends Migration
     {
         Schema::create('pengajuans', function (Blueprint $table) {
             $table->id();
+            $table->string('nama');
+            $table->string('kelas');
+            $table->string('id_tabungan', 5);
+            $table->integer('jumlah_tabungan');
+            $table->integer('jumlah_penarikan');
+            $table->string('alasan');
+            $table->string('status')->default('Tersedia');
             $table->timestamps();
         });
     }

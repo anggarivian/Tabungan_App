@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PetugasController;
 use App\Http\Controllers\TabunganController;
 use App\Http\Controllers\PengajuanController;
+use App\Http\Controllers\SiswaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,4 +61,10 @@ Route::middleware('petugas')->group(function () {
 
         // Kelola Pengajuan ---------------------------------------------------------------------------------------------
         Route::get('/petugas/pengajuan', [PengajuanController::class, 'index'])->name('pengajuan');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('/siswa/pengajuan', [PengajuanController::class, 'siswa_index'])->name('siswa.pengajuan');
+    Route::post('/siswa/pengajuan/add', [PengajuanController::class, 'store'])->name('siswa.ajukan');
+    Route::get('/siswa/riwayat', [PengajuanController::class, 'index'])->name('siswa.riwayat');
 });

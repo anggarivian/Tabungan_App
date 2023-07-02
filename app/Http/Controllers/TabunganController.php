@@ -98,7 +98,7 @@ class TabunganController extends Controller
         $tabungan->jumlah_tabungan = $req->get('jumlah_tabungan') + $tabungan->jumlah ;
         $tabungan->jumlah_dibuku = $req->get('jumlah_dibuku');
         $tabungan->premi = $tabungan->jumlah_tabungan * 0.05 ;
-        $tabungan->sisa = $tabungan->jumlah - $tabungan->premi ;
+        $tabungan->sisa = $tabungan->jumlah_tabungan - $tabungan->premi ;
 
         $tabungan->save();
 
@@ -197,7 +197,7 @@ class TabunganController extends Controller
         $tabungan->jumlah_tabungan = $req->get('jumlah_tabungan') - $tabungan->jumlah ;
         $tabungan->jumlah_dibuku = $req->get('jumlah_dibuku');
         $tabungan->premi = $tabungan->jumlah_tabungan * 0.05 ;
-        $tabungan->sisa = $tabungan->jumlah - $tabungan->premi ;
+        $tabungan->sisa = $tabungan->jumlah_tabungan - $tabungan->premi ;
 
         $tabungan->save();
 

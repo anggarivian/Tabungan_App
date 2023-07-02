@@ -4,7 +4,7 @@
 <head>
      <meta charset="utf-8">
      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-     <title>Kelola Petugas - SITASU</title>
+     <title>Pengajuan Penarikan - SITASU</title>
 
      @include('layouts.head')
 
@@ -30,13 +30,11 @@
                               <div class="card">
                                    <div class="card-body">
                                         <h4 class="card-title" >Data Pengajuan Penarikan Tabungan</h4>
-                                        <hr>
                                         <table id="table-data" class="table table-striped">
                                              <thead>
                                                   <tr class="text-center">
                                                        <th>No</th>
                                                        <th>ID</th>
-                                                       <th>Username</th>
                                                        <th>Nama</th>
                                                        <th>Jenis Kelamin</th>
                                                        <th>Email</th>

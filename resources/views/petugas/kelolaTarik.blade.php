@@ -241,6 +241,7 @@
                                                   <th>Kelas</th>
                                                   <th>Jumlah Tabungan</th>
                                                   <th>Jumlah Dibuku</th>
+                                                  <th>Jumlah Tarik</th>
                                                   <th>Premi</th>
                                                   <th>Sisa</th>
                                                   <th>Tanggal Dibuat</th>
@@ -256,6 +257,7 @@
                                                             <td>{{$tariks->kelas}}</td>
                                                             <td>{{$tariks->jumlah_tabungan}}</td>
                                                             <td>{{$tariks->jumlah_dibuku}}</td>
+                                                            <td>{{$tariks->jumlah}}</td>
                                                             <td>{{$tariks->premi}}</td>
                                                             <td>{{$tariks->sisa}}</td>
                                                             <td>{{$tariks->created_at}}</td>

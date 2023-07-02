@@ -6,7 +6,12 @@
         <span class="menu-title">Beranda</span>
       </a>
     </li>
-    <li class="nav-item nav-category">Pengelolaan Tabungan</li>
+    @if (Auth::user()->roles_id === 1 || Auth::user()->roles_id === 2)
+        <li class="nav-item nav-category">Pengelolaan Tabungan</li>
+    @endif
+    @if (Auth::user()->roles_id === 3)
+        <li class="nav-item nav-category">Tabungan</li>
+    @endif
     @if (Auth::user()->roles_id === 2)
     <li class="nav-item">
       <a class="nav-link" data-bs-toggle="collapse" href="#transaksi" aria-expanded="false" aria-controls="transaksi">
@@ -28,22 +33,42 @@
       </a>
     </li>
     @endif
+    @if (Auth::user()->roles_id === 3)
     <li class="nav-item">
-      <a class="nav-link" data-bs-toggle="collapse" href="#laporan" aria-expanded="false" aria-controls="laporan">
-        <i class="menu-icon mdi mdi-file-document"></i>
-        <span class="menu-title">Laporan</span>
-        <i class="menu-arrow"></i>
+      <a class="nav-link" href="{{route('siswa.riwayat')}}">
+        <i class="menu-icon mdi mdi-cash-refund"></i>
+        <span class="menu-title">Tabungan</span>
       </a>
-      <div class="collapse" id="laporan">
-        <ul class="nav flex-column sub-menu">
-          <li class="nav-item "> <a class="nav-link" href="{{asset('template/pages/ui-features/buttons.html')}}">Transaksi</a></li>
-          <li class="nav-item"> <a class="nav-link" href="{{asset('template/pages/ui-features/dropdowns.html')}}">Pengajuan</a></li>
-          <li class="nav-item"> <a class="nav-link" href="{{route('laporan.siswa')}}">Siswa</a></li>
-          <li class="nav-item"> <a class="nav-link" href="{{route('laporan.petugas')}}">Petugas</a></li>
-        </ul>`
-      </div>
     </li>
-    <li class="nav-item nav-category">Pengelolaan Pengguna</li>
+    @endif
+    @if (Auth::user()->roles_id === 3)
+    <li class="nav-item">
+      <a class="nav-link" href="{{route('siswa.pengajuan')}}">
+        <i class="menu-icon mdi mdi-cash-refund"></i>
+        <span class="menu-title">Tarik Uang</span>
+      </a>
+    </li>
+    @endif
+    @if (Auth::user()->roles_id === 1 || Auth::user()->roles_id === 2)
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="collapse" href="#laporan" aria-expanded="false" aria-controls="laporan">
+            <i class="menu-icon mdi mdi-file-document"></i>
+            <span class="menu-title">Laporan</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse" id="laporan">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item "> <a class="nav-link" href="{{asset('template/pages/ui-features/buttons.html')}}">Transaksi</a></li>
+              <li class="nav-item"> <a class="nav-link" href="{{asset('template/pages/ui-features/dropdowns.html')}}">Pengajuan</a></li>
+              <li class="nav-item"> <a class="nav-link" href="{{route('laporan.siswa')}}">Siswa</a></li>
+              <li class="nav-item"> <a class="nav-link" href="{{route('laporan.petugas')}}">Petugas</a></li>
+            </ul>`
+          </div>
+        </li>
+    @endif
+    @if (Auth::user()->roles_id === 1 || Auth::user()->roles_id === 2)
+        <li class="nav-item nav-category">Pengelolaan Pengguna</li>
+    @endif
     @if (Auth::user()->roles_id === 2)
     <li class="nav-item">
       <a class="nav-link" href="{{route('siswa')}}">

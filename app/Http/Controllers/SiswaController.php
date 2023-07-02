@@ -6,5 +6,8 @@ use Illuminate\Http\Request;
 
 class SiswaController extends Controller
 {
-    //
+    public function index(){
+        $user = User::All();
+        return view('siswa.riwayat', compact('user'));
+    }
 }

@@ -41,44 +41,44 @@
                               </div>
                               <div class="card">
                                    <div class="card-body">
-                                        <table id="table-data" class="table table-striped text-center">
-                                             <thead>
-                                                  <tr>
-                                                       <th>No</th>
-                                                       <th>Username</th>
-                                                       <th>Nama</th>
-                                                       <th>Jenis Kelamin</th>
-                                                       <th>Email</th>
-                                                       <th>Kontak</th>
-                                                       <th>Tanggal Dibuat</th>
-                                                       <th>Opsi</th>
-                                                  </tr>
-                                             </thead>
-                                             <tbody>
-                                                  @php $no=1; @endphp
-                                                  @foreach($user as $users)
-                                                  @if ($users->relationToRole->id == '2')
+                                        <div class="table-responsive">
+                                             <table id="table-data" class="table table-striped text-center">
+                                                  <thead>
                                                        <tr>
-                                                            <td>{{$no++}}</td>
-                                                            <td>{{$users->username}}</td>
-                                                            <td>{{$users->nama}}</td>
-                                                            <td>{{$users->jenis_kelamin}}</td>
-                                                            <td>{{$users->email}}</td>
-                                                            <td>{{$users->kontak}}</td>
-                                                            <td>{{$users->created_at}}</td>
-                                                            <td class="text-center">
-                                                                 <button type="button" class="btn btn-warning btn-sm btn-rounded" data-id="{{ $users->id }}" id="btn-edit-user" data-bs-toggle="modal" data-bs-target="#editModal">
-                                                                      Edit
-                                                                 </button>
-                                                                 <a type="button" href="/admin/petugas/delete/{{$users->id}}" class="btn btn-danger btn-rounded btn-sm">
-                                                                      Hapus
-                                                                 </a>
-                                                            </td>
+                                                            <th>No</th>
+                                                            <th>Nama</th>
+                                                            <th>Jenis Kelamin</th>
+                                                            <th>Email</th>
+                                                            <th>Kontak</th>
+                                                            <th>Tanggal Dibuat</th>
+                                                            <th>Opsi</th>
                                                        </tr>
-                                                       @endif
-                                                  @endforeach
-                                             </tbody>
-                                        </table>
+                                                  </thead>
+                                                  <tbody>
+                                                       @php $no=1; @endphp
+                                                       @foreach($user as $users)
+                                                       @if ($users->relationToRole->id == '2')
+                                                            <tr>
+                                                                 <td>{{$no++}}</td>
+                                                                 <td>{{$users->nama}}</td>
+                                                                 <td>{{$users->jenis_kelamin}}</td>
+                                                                 <td>{{$users->email}}</td>
+                                                                 <td>{{$users->kontak}}</td>
+                                                                 <td>{{$users->created_at}}</td>
+                                                                 <td class="text-center">
+                                                                      <button type="button" class="btn btn-warning btn-sm btn-rounded" data-id="{{ $users->id }}" id="btn-edit-user" data-bs-toggle="modal" data-bs-target="#editModal">
+                                                                           Edit
+                                                                      </button>
+                                                                      <a type="button" href="/admin/petugas/delete/{{$users->id}}" class="btn btn-danger btn-rounded btn-sm">
+                                                                           Hapus
+                                                                      </a>
+                                                                 </td>
+                                                            </tr>
+                                                            @endif
+                                                       @endforeach
+                                                  </tbody>
+                                             </table>
+                                        </div>
                                    </div>
                               </div>
                               </div>
@@ -101,32 +101,30 @@
                <div class="modal-body">
                     <form method="post" action="{{ route('petugas.store')}}" enctype="multipart/form-data">
                          @csrf
-                         <div class="form-group">
-                              <label for="nama">Nama</label>
-                              <input type="text" class="form-control rounded" id="nama" name="nama" placeholder="Nama">
-                         </div>
-                         <div class="form-group">
-                              <label for="username">Username</label>
-                              <input type="text" class="form-control rounded" id="username" name="username" placeholder="Username">
-                         </div>
-                         <div class="form-group">
-                              <label for="email">Email Address</label>
-                              <input type="email" class="form-control rounded" id="email" name="email" placeholder="Email">
-                         </div>
-                         <div class="form-group">
-                              <label for="kontak">Nomor Telepon</label>
-                              <input type="text" class="form-control rounded" id="kontak" name="kontak" placeholder="Kontak">
-                         </div>
-                         <div class="form-group">
+                         <div class="row">
+                              <div class="form-group">
+                                   <label for="nama">Nama</label>
+                                   <input type="text" class="form-control rounded" id="nama" name="nama" placeholder="Nama">
+                              </div>
+                              <div class="form-group col-md-6">
+                                   <label for="email">Email Address</label>
+                                   <input type="email" class="form-control rounded" id="email" name="email" placeholder="Email">
+                              </div>
+                              <div class="form-group col-md-6">
+                                   <label for="kontak">Nomor Telepon</label>
+                                   <input type="text" class="form-control rounded" id="kontak" name="kontak" placeholder="Kontak">
+                              </div>
+                              <div class="form-group col-md-6">
                               <label for="password">Password</label>
                               <input type="password" class="form-control rounded" id="password" name="password" placeholder="Password">
-                         </div>
-                         <div class="form-group">
-                              <label for="jenis_kelamin">Jenis Kelamin</label>
-                              <select name="jenis_kelamin" class="form-select form-select-sm" id="jenis_kelamin">
-                                   <option value="Laki - Laki">Laki - Laki</option>
-                                   <option value="Perempuan">Perempuan</option>
-                              </select>
+                              </div>
+                              <div class="form-group col-md-6">
+                                   <label for="jenis_kelamin">Jenis Kelamin</label>
+                                   <select name="jenis_kelamin" class="form-select form-select-sm" id="jenis_kelamin">
+                                        <option value="Laki - Laki">Laki - Laki</option>
+                                        <option value="Perempuan">Perempuan</option>
+                                   </select>
+                              </div>
                          </div>
                          <div class="modal-footer justify-content-center">
                               <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">Batal</button>
@@ -150,40 +148,31 @@
                     <form method="post" action="{{ route('petugas.ubah')}}" enctype="multipart/form-data">
                          @method ('PATCH')
                          @csrf
-                         {{-- <div class="form-group">
-                              <label for="id">ID</label> --}}
-                              <input type="text" class="form-control rounded" id="edit-id" name="id" placeholder="Id" readonly hidden>
-                         {{-- </div> --}}
-                         <div class="form-group">
-                              <label for="username">Username</label>
-                              <input type="text" class="form-control rounded" id="edit-username" name="username" placeholder="Username" readonly>
-                         </div>
-                         <div class="form-group">
-                              <label for="nama">Nama</label>
-                              <input type="text" class="form-control rounded" id="edit-nama" name="nama" placeholder="Nama">
-                         </div>
-                         <div class="form-group">
-                              <label for="email">Email Address</label>
-                              <input type="email" class="form-control rounded" id="edit-email" name="email" placeholder="Email">
-                         </div>
-                         <div class="form-group">
-                              <label for="kontak">Nomor Telepon</label>
-                              <input type="text" class="form-control rounded" id="edit-kontak" name="kontak" placeholder="Kontak">
-                         </div>
-                         <div class="form-group">
-                              <label for="password">Password</label>
-                              <input type="text" class="form-control rounded" id="edit-password" name="password" placeholder="Password">
-                         </div>
-                         <div class="form-group">
-                              <label for="jenis_kelamin">Jenis Kelamin</label>
-                              <select name="jenis_kelamin" class="form-select form-select rounded" id="edit-jenis_kelamin">
-                                   <option value="Laki - Laki">Laki - Laki</option>
-                                   <option value="Perempuan">Perempuan</option>
-                              </select>
-                         </div>
-                         <div class="modal-footer justify-content-center">
-                              <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">Batal</button>
-                              <button type="submit" class="btn btn-primary btn-rounded">Simpan</button>
+                         <div class="row">
+                              <div class="form-group col-md-6">
+                                   <label for="nama">Nama</label>
+                                   <input type="text" class="form-control rounded" id="edit-id" name="id" placeholder="Id" readonly hidden>
+                                   <input type="text" class="form-control rounded" id="edit-nama" name="nama" placeholder="Nama">
+                              </div>
+                              <div class="form-group col-md-6">
+                                   <label for="email">Email Address</label>
+                                   <input type="email" class="form-control rounded" id="edit-email" name="email" placeholder="Email">
+                              </div>
+                              <div class="form-group col-md-6">
+                                   <label for="kontak">Nomor Telepon</label>
+                                   <input type="text" class="form-control rounded" id="edit-kontak" name="kontak" placeholder="Kontak">
+                              </div>
+                              <div class="form-group col-md-6">
+                                   <label for="jenis_kelamin">Jenis Kelamin</label>
+                                   <select name="jenis_kelamin" class="form-select form-select rounded" id="edit-jenis_kelamin">
+                                        <option value="Laki - Laki">Laki - Laki</option>
+                                        <option value="Perempuan">Perempuan</option>
+                                   </select>
+                              </div>
+                              <div class="modal-footer justify-content-center">
+                                   <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">Batal</button>
+                                   <button type="submit" class="btn btn-primary btn-rounded">Simpan</button>
+                              </div>
                          </div>
                     </form>
                </div>
@@ -207,11 +196,9 @@
                     dataType: 'json',
                     success: function(res){
                          $('#edit-id').val(res.id);
-                         $('#edit-username').val(res.username);
                          $('#edit-nama').val(res.nama);
                          $('#edit-email').val(res.email);
                          $('#edit-kontak').val(res.kontak);
-                         $('#edit-password').val(res.password);
                          $('#edit-jenis_kelamin').val(res.jenis_kelamin);
                     },
                });
