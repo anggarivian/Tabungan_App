@@ -30,7 +30,7 @@
                               <div class="card">
                                    <div class="card-body">
                                         <h4 class="card-title" >Ajukan Penarikan Tabungan</h4>
-                                        @if ( $validasi->status == NULL || $validasi->status == 'Tersedia')
+                                        @if ( $validasi->status == NULL || $validasi->status == 'Disetujui')
                                              @if ( $selisihHari >= 30 )
                                              <form method="post" action="{{ route('siswa.ajukan') }}" enctype="multipart/form-data">
                                                   @csrf
@@ -68,7 +68,7 @@
                                                   </div>
                                              @endif
                                         @endif
-                                        @if ( $validasi->status == 'Pending' )
+                                        @if ( $validasi->status == 'Diproses' )
                                              <div class="text-center p-5">
                                                   <p>Pengajuan Penarikan Tabungan Dalam Proses</p>
                                                   <h5 style="color: green">PENDING</h5>

@@ -32,6 +32,7 @@ Route::get('/home', function () {
 Route::get('/admin', [HomeController::class, 'index'])->name('admin')->middleware('auth');
 
 Route::get('admin/ajaxadmin/dataUser/{id}', [AdminController::class, 'getDataUser'])->middleware('auth');
+Route::get('petugas/ajaxpetugas/dataPengajuan/{id}', [PengajuanController::class, 'getDataPengajuan'])->middleware('auth');
 
 // Admin Route -----------------------------------------------------------------------------------------------------
 Route::middleware('admin')->group(function () {
@@ -59,10 +60,13 @@ Route::middleware('petugas')->group(function () {
         Route::get('/petugas/tabungan/tarik-tabungan', [TabunganController::class, 'index_tarik'])->name('tabungan.tarik');
         Route::patch('/petugas/tabungan/tarik-tabungan', [TabunganController::class, 'tarik_tabungan'])->name('tabungan.tarik.tambah');
 
-        // Kelola Pengajuan ---------------------------------------------------------------------------------------------
+        // Kelola Pengajuan ----------------------------------------------------------------------------------------
         Route::get('/petugas/pengajuan', [PengajuanController::class, 'index'])->name('pengajuan');
+        Route::post('/petugas/pengajuan/setuju', [PengajuanController::class, 'setuju'])->name('pengajuan.setuju');
+        Route::post('/petugas/pengajuan/tolak', [PengajuanController::class, 'tolak'])->name('pengajuan.tolak');
 });
 
+// Siswa Route -----------------------------------------------------------------------------------------------------
 Route::middleware('auth')->group(function () {
     Route::get('/siswa/pengajuan', [PengajuanController::class, 'siswa_index'])->name('siswa.pengajuan');
     Route::post('/siswa/pengajuan/add', [PengajuanController::class, 'store'])->name('siswa.ajukan');

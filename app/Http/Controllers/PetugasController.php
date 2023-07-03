@@ -33,11 +33,6 @@ class PetugasController extends Controller
 
             return view('petugas.kelolaSiswa', compact('user','role','nomer'));
         }
-        public function laporan(){
-            $user = User::All();
-            $role = Role::All();
-            return view('laporan.laporanSiswa', compact('user','role'));
-        }
         public function store(Request $req){
 
             $user = new User;

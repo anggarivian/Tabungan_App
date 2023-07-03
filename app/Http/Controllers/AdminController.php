@@ -18,12 +18,6 @@ class AdminController extends Controller
         $role = Role::All();
         return view('admin.kelolaPetugas', compact('user','role'));
     }
-    // Laporan Data Petugas -----------------------------------------------------------------------------------------
-    public function laporan(){
-        $user = User::All();
-        $role = Role::All();
-        return view('laporan.laporanPetugas', compact('user','role'));
-    }
     // Create Data Petugas ------------------------------------------------------------------------------------------
     public function store(Request $req){
         $user = new User;

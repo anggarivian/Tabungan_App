@@ -264,8 +264,8 @@
                                                        </tr>
                                                   @endforeach
                                         </tbody>
-                                   </div>
-                              </table>
+                                   </table>
+                              </div>
                          </div>
                     </div>
                </div>
