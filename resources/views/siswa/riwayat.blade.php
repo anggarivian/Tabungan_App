@@ -29,23 +29,69 @@
                          <div class="col-lg-12 grid-margin">
                               <div class="card">
                                    <div class="card-body">
-                                        <h4 class="card-title" >Riwayat Tabungan</h4>
+                                        <h4 class="card-title" >Identitas Siswa</h4>
+                                             <div class="table-responsive">
+                                                  <table id="table-data" class="table table-striped">
+                                                  <tr>
+                                                       <td>ID</td>
+                                                       <td>{{Auth::user()->id_tabungan}}</td>
+                                                  </tr>
+                                                  <tr>
+                                                       <td>Nama</td>
+                                                       <td>{{Auth::user()->nama}}</td>
+                                                  </tr>
+                                                  <tr>
+                                                       <td>Kelas</td>
+                                                       <td>{{Auth::user()->kelas}}</td>
+                                                  </tr>
+                                                  <tr>
+                                                       <td>Nomer Kontak</td>
+                                                       <td>{{Auth::user()->kontak}}</td>
+                                                  </tr>
+                                                  <tr>
+                                                       <td>Nama Orang Tua</td>
+                                                       <td>{{Auth::user()->orang_tua}}</td>
+                                                  </tr>
+                                                  <tr>
+                                                       <td>Alamat</td>
+                                                       <td>{{Auth::user()->alamat}}</td>
+                                                  </tr>
+                                             </table>
+                                        </div>
+                                        <br><br>
+                                        <h4 class="card-title" >Riwayat Transaksi</h4>
                                         <div class="table-responsive">
-                                             <table id="table-data" class="table table-striped">
+                                             <table id="table-data" class="table table-striped text-center">
                                                   <thead>
                                                        <tr class="text-center">
                                                             <th>No</th>
-                                                            <th>ID</th>
-                                                            <th>Nama</th>
-                                                            <th>Jenis Kelamin</th>
-                                                            <th>Email</th>
-                                                            <th>Kontak</th>
+                                                            <th>Tabungan</th>
+                                                            <th>Stor</th>
+                                                            <th>Tarik</th>
+                                                            <th>Sisa</th>
                                                             <th>Tanggal Dibuat</th>
-                                                            <th>Opsi</th>
                                                        </tr>
                                                   </thead>
                                                   <tbody>
-
+                                                       @php $no=1; @endphp
+                                                            @foreach($tabel as $tabel)
+                                                                 @if ($tabel->tipe_transaksi)
+                                                                 <tr>
+                                                                      <td class="text-center">{{$no++}}</td>
+                                                                      <td>{{$tabel->jumlah_tabungan}}</td>
+                                                                      @if ($tabel->tipe_transaksi == 'Stor')
+                                                                           <td>{{$tabel->jumlah}}</td>
+                                                                           <td>-</td>
+                                                                      @endif
+                                                                      @if ($tabel->tipe_transaksi == 'Tarik')
+                                                                           <td>-</td>
+                                                                           <td>{{$tabel->jumlah}}</td>
+                                                                      @endif
+                                                                      <td>{{$tabel->sisa}}</td>
+                                                                      <td>{{$tabel->created_at}}</td>
+                                                                 </tr>
+                                                                 @endif
+                                                            @endforeach
                                                   </tbody>
                                              </table>
                                         </div>

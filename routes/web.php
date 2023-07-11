@@ -49,7 +49,7 @@ Route::middleware('petugas')->group(function () {
     Route::post('/petugas/siswa/add', [PetugasController::class, 'store'])->name('siswa.store');
     Route::patch('petugas/siswa/update', [PetugasController::class, 'edit'])->name('siswa.ubah');
     Route::get('petugas/siswa/delete/{id}', [PetugasController::class,'destroy'])->name('siswa.hapus');
-    Route::get('/petugas/laporan/siswa', [PetugasController::class, 'laporan'])->name('laporan.siswa');
+    // Route::get('/petugas/laporan/siswa', [PetugasController::class, 'laporan'])->name('laporan.siswa');
 
     // Kelola Tabungan ---------------------------------------------------------------------------------------------
         // Stor Tabungan -------------------------------------------------------------------------------------------
@@ -70,5 +70,5 @@ Route::middleware('petugas')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/siswa/pengajuan', [PengajuanController::class, 'siswa_index'])->name('siswa.pengajuan');
     Route::post('/siswa/pengajuan/add', [PengajuanController::class, 'store'])->name('siswa.ajukan');
-    Route::get('/siswa/riwayat', [PengajuanController::class, 'index'])->name('siswa.riwayat');
+    Route::get('/siswa/riwayat', [PengajuanController::class, 'riwayat'])->name('siswa.riwayat');
 });

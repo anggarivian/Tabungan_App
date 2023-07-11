@@ -30,7 +30,7 @@
                               <div class="card">
                                    <div class="card-body">
                                         <h4 class="card-title" >Ajukan Penarikan Tabungan</h4>
-                                        @if ( $validasi->status == NULL || $validasi->status == 'Disetujui')
+                                        @if ( $validasi->status == NULL || $validasi == 'Disetujui')
                                              @if ( $selisihHari >= 30 )
                                              <form method="post" action="{{ route('siswa.ajukan') }}" enctype="multipart/form-data">
                                                   @csrf

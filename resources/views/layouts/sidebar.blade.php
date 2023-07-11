@@ -36,7 +36,7 @@
     @if (Auth::user()->roles_id === 3)
     <li class="nav-item">
       <a class="nav-link" href="{{route('siswa.riwayat')}}">
-        <i class="menu-icon mdi mdi-cash-refund"></i>
+        <i class="menu-icon mdi mdi-cash"></i>
         <span class="menu-title">Tabungan</span>
       </a>
     </li>

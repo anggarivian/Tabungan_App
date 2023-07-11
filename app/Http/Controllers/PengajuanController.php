@@ -21,7 +21,7 @@ class PengajuanController extends Controller
         $pengajuan = Pengajuan::All();
         $user = Auth::user();
         $test = $user->id_tabungan ;
-
+        $selisihHari = 0 ;
         // Ambil Data Dari Tabungan ----------------------------------------------------------------
         $data = Tabungan::where('id_tabungan', $test)->latest('created_at')->first();
 
@@ -32,9 +32,23 @@ class PengajuanController extends Controller
             $tanggalTerakhir = Carbon::parse($validasi->created_at);
             $tanggalSekarang = Carbon::now();
             $selisihHari = $tanggalTerakhir->diffInDays($tanggalSekarang);
+        } else {
+            $validasi = 'Disetujui';
         }
 
         return view('pengajuan.siswaPengajuan', compact('pengajuan','data','validasi','selisihHari'));
+    }
+
+    public function riwayat(Request $req){
+        $tabungan = Tabungan::All();
+        $user = Auth::user();
+        $test = $user->id_tabungan ;
+
+        $startDate = now()->startOfMonth(); // Mulai bulan ini
+        $endDate = now()->endOfMonth(); // Akhir bulan ini
+        $tabel = Tabungan::whereBetween('created_at', [$startDate, $endDate])->where('id_tabungan', $test )->paginate(30);
+
+        return view('siswa.riwayat', compact('tabungan', 'tabel'));
     }
 
     public function store(Request $req){
