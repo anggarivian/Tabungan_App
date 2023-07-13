@@ -19,19 +19,10 @@ class PetugasController extends Controller
             $user = User::All();
             $role = Role::All();
             $tabungan = Tabungan::All();
+ 
+            $userSiswa = User::where('roles_id', '3')->get();
 
-            // Kode Tabungan Otomatis
-            $prefix = 'KT'; // Awalan kode tabungan, bisa disesuaikan
-            $randomNumber = mt_rand(100, 999); // Generate angka acak antara 1000 dan 9999
-            $nomer = $prefix . $randomNumber;
-
-            // Pastikan kode tabungan yang dihasilkan tidak ada di dalam database
-            while (User::where('id_tabungan', $nomer)->exists()) {
-                $randomNumber = mt_rand(100, 999);
-                $nomer = $prefix . $randomNumber;
-            }
-
-            return view('petugas.kelolaSiswa', compact('user','role','nomer'));
+            return view('petugas.kelolaSiswa', compact('user','role','userSiswa'));
         }
         public function store(Request $req){
 
@@ -84,7 +75,6 @@ class PetugasController extends Controller
                 'nama' => 'required|max:255',
                 'email' => 'required',
                 'kontak' => 'required',
-                'password' => 'required',
                 'kelas' => 'required',
                 'orang_tua' => 'required',
                 'alamat' => 'required',
@@ -100,7 +90,6 @@ class PetugasController extends Controller
             $user->alamat = $req->get('alamat');
             $user->jenis_kelamin =  $req->get('jenis_kelamin');
             $user->kelas = $req->get('kelas');
-            $user->password = Hash::make($req->get('password'));
             $user->roles_id = 3 ;
             $user->save();
 
@@ -111,7 +100,7 @@ class PetugasController extends Controller
             Tabungan::where('id_tabungan', $idTabungan)->update(['kelas' => $kelasBaru]);
 
             $notification = array(
-                'message' => 'Data User berhasil diubah',
+                'message' => 'Data Siswa berhasil diubah',
                 'alert-type' => 'success'
             );
             return redirect()->route('siswa')->with($notification);

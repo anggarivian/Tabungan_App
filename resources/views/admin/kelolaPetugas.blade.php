@@ -47,6 +47,7 @@
                                                        <tr>
                                                             <th>No</th>
                                                             <th>Nama</th>
+                                                            <th>Username</th>
                                                             <th>Jenis Kelamin</th>
                                                             <th>Email</th>
                                                             <th>Kontak</th>
@@ -55,12 +56,11 @@
                                                        </tr>
                                                   </thead>
                                                   <tbody>
-                                                       @php $no=1; @endphp
-                                                       @foreach($user as $users)
-                                                       @if ($users->relationToRole->id == '2')
+                                                       @foreach($userPetugas as $users)
                                                             <tr>
-                                                                 <td>{{$no++}}</td>
+                                                                 <td class="text-center">{{$loop->iteration}}</td>
                                                                  <td>{{$users->nama}}</td>
+                                                                 <td>{{$users->id_tabungan}}</td>
                                                                  <td>{{$users->jenis_kelamin}}</td>
                                                                  <td>{{$users->email}}</td>
                                                                  <td>{{$users->kontak}}</td>
@@ -74,7 +74,6 @@
                                                                       </a>
                                                                  </td>
                                                             </tr>
-                                                            @endif
                                                        @endforeach
                                                   </tbody>
                                              </table>
@@ -102,9 +101,13 @@
                     <form method="post" action="{{ route('petugas.store')}}" enctype="multipart/form-data">
                          @csrf
                          <div class="row">
-                              <div class="form-group">
+                              <div class="form-group col-md-6">
                                    <label for="nama">Nama</label>
                                    <input type="text" class="form-control rounded" id="nama" name="nama" placeholder="Nama">
+                              </div>
+                              <div class="form-group col-md-6">
+                                   <label for="id_tabungan">Username</label>
+                                   <input type="text" class="form-control rounded" id="id_tabungan" name="id_tabungan" placeholder="Username">
                               </div>
                               <div class="form-group col-md-6">
                                    <label for="email">Email Address</label>
@@ -149,10 +152,14 @@
                          @method ('PATCH')
                          @csrf
                          <div class="row">
-                              <div class="form-group col-md-6">
+                              <div class="form-group">
                                    <label for="nama">Nama</label>
                                    <input type="text" class="form-control rounded" id="edit-id" name="id" placeholder="Id" readonly hidden>
                                    <input type="text" class="form-control rounded" id="edit-nama" name="nama" placeholder="Nama">
+                              </div>
+                              <div class="form-group col-md-6">
+                                   <label for="id_tabungan">Username</label>
+                                   <input type="text" class="form-control rounded" id="edit-id_tabungan" name="id_tabungan" placeholder="Username">
                               </div>
                               <div class="form-group col-md-6">
                                    <label for="email">Email Address</label>
@@ -164,7 +171,7 @@
                               </div>
                               <div class="form-group col-md-6">
                                    <label for="jenis_kelamin">Jenis Kelamin</label>
-                                   <select name="jenis_kelamin" class="form-select form-select rounded" id="edit-jenis_kelamin">
+                                   <select name="jenis_kelamin" class="form-select form-select-sm rounded" id="edit-jenis_kelamin">
                                         <option value="Laki - Laki">Laki - Laki</option>
                                         <option value="Perempuan">Perempuan</option>
                                    </select>
@@ -196,6 +203,7 @@
                     dataType: 'json',
                     success: function(res){
                          $('#edit-id').val(res.id);
+                         $('#edit-id_tabungan').val(res.id_tabungan);
                          $('#edit-nama').val(res.nama);
                          $('#edit-email').val(res.email);
                          $('#edit-kontak').val(res.kontak);

@@ -46,7 +46,7 @@
                                                   <thead>
                                                        <tr class="text-center">
                                                             <th>No</th>
-                                                            <th>ID</th>
+                                                            <th>NISN</th>
                                                             <th>Nama</th>
                                                             <th>Jenis Kelamin</th>
                                                             <th>Kelas</th>
@@ -59,11 +59,9 @@
                                                        </tr>
                                                   </thead>
                                                   <tbody>
-                                                       @php $no=1; @endphp
-                                                       @foreach($user as $users)
-                                                       @if ($users->relationToRole->id == '3')
+                                                       @foreach($userSiswa as $users)
                                                             <tr>
-                                                                 <td class="text-center">{{$no++}}</td>
+                                                                 <td class="text-center">{{$loop->iteration}}</td>
                                                                  <td class="text-center">{{$users->id_tabungan}}</td>
                                                                  <td>{{$users->nama}}</td>
                                                                  <td>{{$users->jenis_kelamin}}</td>
@@ -82,7 +80,6 @@
                                                                       </a>
                                                                  </td>
                                                             </tr>
-                                                       @endif
                                                        @endforeach
                                                   </tbody>
                                              </div>
@@ -110,22 +107,25 @@
                     <form method="post" action="{{ route('siswa.store')}}" enctype="multipart/form-data">
                          @csrf
                          <div class="row">
-                              <div class="form-group col-md-6">
+                              <div class="form-group col-md-12">
                                    <label for="nama">Nama</label>
-                                   <input type="text" class="form-control rounded" id="id_tabungan" name="id_tabungan" value="{{ $nomer }}" hidden>
-                                   <input type="text" class="form-control rounded" id="nama" name="nama" placeholder="Nama">
+                                   <input type="text" class="form-control rounded" id="nama" name="nama" placeholder="Masukan Nama">
+                              </div>
+                              <div class="form-group col-md-6">
+                                   <label for="id_tabungan">NISN</label>
+                                   <input type="text" class="form-control rounded" id="id_tabungan" name="id_tabungan" placeholder="Masukan NISN">
                               </div>
                               <div class="form-group col-md-6">
                                    <label for="email">Email Address</label>
-                                   <input type="email" class="form-control rounded" id="email" name="email" placeholder="Email">
+                                   <input type="email" class="form-control rounded" id="email" name="email" placeholder="Masukan Email">
                               </div>
                               <div class="form-group col-md-6">
                                    <label for="kontak">Nomor Telepon</label>
-                                   <input type="text" class="form-control rounded" id="kontak" name="kontak" placeholder="Kontak">
+                                   <input type="text" class="form-control rounded" id="kontak" name="kontak" placeholder="Masukan Kontak">
                               </div>
                               <div class="form-group col-md-6">
                                    <label for="password">Password</label>
-                                   <input type="password" class="form-control rounded" id="password" name="password" placeholder="Password">
+                                   <input type="password" class="form-control rounded" id="password" name="password" placeholder="Masukan Password">
                               </div>
                               <div class="form-group col-md-6">
                                    <label for="jenis_kelamin">Jenis Kelamin</label>
@@ -150,11 +150,11 @@
                               </div>
                               <div class="form-group col-md-6">
                                    <label for="orang_tua">Nama Orang Tua</label>
-                                   <input type="text" class="form-control rounded" id="orang_tua" name="orang_tua" placeholder="Orang Tua">
+                                   <input type="text" class="form-control rounded" id="orang_tua" name="orang_tua" placeholder="Masukan Orang Tua">
                               </div>
                               <div class="form-group col-md-6">
                                    <label for="alamat">Alamat</label>
-                                   <input type="text" class="form-control rounded" id="alamat" name="alamat" placeholder="Alamat">
+                                   <input type="text" class="form-control rounded" id="alamat" name="alamat" placeholder="Masukan Alamat">
                               </div>
                          </div>
                          <div class="modal-footer justify-content-between">
@@ -172,7 +172,7 @@
      <div class="modal-dialog">
           <div class="modal-content">
                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Data Petugas</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Data Siswa</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                </div>
                <div class="modal-body">
@@ -183,19 +183,22 @@
                               {{-- <div class="form-group col-md-6">
                                    <label for="id">Id</label> --}}
                                    <input type="text" class="form-control rounded" id="edit-id" name="id" placeholder="Id" readonly hidden>
-                                   <input type="text" class="form-control rounded" id="edit-id_tabungan" name="id_tabungan" placeholder="Id_tabungan" readonly hidden>
                               {{-- </div> --}}
                               <div class="form-group col-md-6">
                                    <label for="nama">Nama</label>
-                                   <input type="text" class="form-control rounded" id="edit-nama" name="nama" placeholder="Nama">
+                                   <input type="text" class="form-control rounded" id="edit-nama" name="nama" placeholder="Masukan Nama">
+                              </div>
+                              <div class="form-group col-md-6">
+                                   <label for="id">NISN</label>
+                                   <input type="text" class="form-control rounded" id="edit-id_tabungan" name="id_tabungan" placeholder="Masukan NISN"  >
                               </div>
                               <div class="form-group col-md-6">
                                    <label for="email">Email Address</label>
-                                   <input type="email" class="form-control rounded" id="edit-email" name="email" placeholder="Email">
+                                   <input type="email" class="form-control rounded" id="edit-email" name="email" placeholder="Masukan Email">
                               </div>
                               <div class="form-group col-md-6">
                                    <label for="kontak">Nomor Telepon</label>
-                                   <input type="text" class="form-control rounded" id="edit-kontak" name="kontak" placeholder="Kontak">
+                                   <input type="text" class="form-control rounded" id="edit-kontak" name="kontak" placeholder="Masukan Kontak">
                               </div>
                               <div class="form-group col-md-6">
                                    <label for="jenis_kelamin">Jenis Kelamin</label>
@@ -220,11 +223,11 @@
                               </div>
                               <div class="form-group col-md-6">
                                    <label for="orang_tua">Nama Orang Tua</label>
-                                   <input type="text" class="form-control rounded" id="edit-orang_tua" name="orang_tua" placeholder="Orang_tua">
+                                   <input type="text" class="form-control rounded" id="edit-orang_tua" name="orang_tua" placeholder="Masukan Orang Tua">
                               </div>
-                              <div class="form-group">
+                              <div class="form-group col-md-6">
                                    <label for="alamat">Alamat</label>
-                                   <input type="text" class="form-control rounded" id="edit-alamat" name="alamat" placeholder="Alamat">
+                                   <input type="text" class="form-control rounded" id="edit-alamat" name="alamat" placeholder="Masukan Alamat">
                               </div>
                          </div>
                          <div class="modal-footer justify-content-center">

@@ -36,7 +36,7 @@
                                              <div class="statistics-details d-flex align-items-center justify-content-between">
                                                   <div>
                                                        <p class="statistics-title">Jumlah Saldo Keseluruhan</p>
-                                                       <h4 class="rate-percentage">Rp. {{$hitungTotalSaldo}}</h4>
+                                                       <h4 class="rate-percentage">Rp. {{$totalJumlahTabungan}}</h4>
                                                   </div>
                                              </div>
                                         </div>
@@ -173,61 +173,14 @@
                               <div class="row m-2 mt-4">
                                    <div class="col-lg-12 grid-margin">
                                         <div class="col-sm-12 statistics-details d-flex align-items-center justify-content-between">
+                                             @foreach ($totalTarikHariIni as $totalTarikHari)
                                              <div class="statistics-details d-flex align-items-center justify-content-between">
                                                   <div>
-                                                       <p class="statistics-title">Kelas 1 - A</p>
-                                                       <h5 class="rate-percentage">Rp. {{$tarikKelas1A}}</h5>
+                                                       <p class="statistics-title">Kelas {{$kelasList[$loop->iteration-1]}}</p>
+                                                       <h5 class="rate-percentage">Rp. {{$totalTarikHari}}</h5>
                                                   </div>
                                              </div>
-                                             <div class="statistics-details d-flex align-items-center justify-content-between">
-                                                  <div>
-                                                       <p class="statistics-title">Kelas 1 - B</p>
-                                                       <h5 class="rate-percentage">Rp. {{$tarikKelas1B}}</h5>
-                                                  </div>
-                                             </div>
-                                             <div class="statistics-details d-flex align-items-center justify-content-between">
-                                                  <div>
-                                                       <p class="statistics-title">Kelas 2 - A</p>
-                                                       <h5 class="rate-percentage">Rp. {{$tarikKelas2A}}</h5>
-                                                  </div>
-                                             </div>
-                                             <div class="statistics-details d-flex align-items-center justify-content-between">
-                                                  <div>
-                                                       <p class="statistics-title">Kelas 2 - B</p>
-                                                       <h5 class="rate-percentage">Rp. {{$tarikKelas2B}}</h5>
-                                                  </div>
-                                             </div>
-                                             <div class="statistics-details d-flex align-items-center justify-content-between">
-                                                  <div>
-                                                       <p class="statistics-title">Kelas 3 - A</p>
-                                                       <h5 class="rate-percentage">Rp. {{$tarikKelas3A}}</h5>
-                                                  </div>
-                                             </div>
-                                             <div class="statistics-details d-flex align-items-center justify-content-between">
-                                                  <div>
-                                                       <p class="statistics-title">Kelas 3 - B</p>
-                                                       <h5 class="rate-percentage">Rp. {{$tarikKelas3B}}</h5>
-                                                  </div>
-                                             </div>
-                                             <div class="statistics-details d-flex align-items-center justify-content-between">
-                                                  <div>
-                                                       <p class="statistics-title">Kelas 4</p>
-                                                       <h5 class="rate-percentage">Rp. {{$tarikKelas4}}</h5>
-                                                  </div>
-                                             </div>
-                                             <div class="statistics-details d-flex align-items-center justify-content-between">
-                                                  <div>
-                                                       <p class="statistics-title">Kelas 5</p>
-                                                       <h5 class="rate-percentage">Rp. {{$tarikKelas5}}</h5>
-                                                  </div>
-                                             </div>
-                                             <div class="statistics-details d-flex align-items-center justify-content-between">
-                                                  <div>
-                                                       <p class="statistics-title">Kelas 6</p>
-                                                       <h5 class="rate-percentage">Rp. {{$tarikKelas6}}</h5>
-                                                  </div>
-                                             </div>
-
+                                             @endforeach
                                         </div>
                                    </div>
                               </div>
@@ -248,21 +201,20 @@
                                              </tr>
                                         </thead>
                                         <tbody>
-                                             @php $no=1; @endphp
-                                                  @foreach($tarikTabel as $tariks)
-                                                       <tr>
-                                                            <td class="text-center">{{$no++}}</td>
-                                                            <td class="text-center">{{$tariks->id_tabungan}}</td>
-                                                            <td>{{$tariks->nama}}</td>
-                                                            <td>{{$tariks->kelas}}</td>
-                                                            <td>{{$tariks->jumlah_tabungan}}</td>
-                                                            <td>{{$tariks->jumlah_dibuku}}</td>
-                                                            <td>{{$tariks->jumlah}}</td>
-                                                            <td>{{$tariks->premi}}</td>
-                                                            <td>{{$tariks->sisa}}</td>
-                                                            <td>{{$tariks->created_at}}</td>
-                                                       </tr>
-                                                  @endforeach
+                                             @foreach($tarikTabel as $tariks)
+                                                  <tr>
+                                                       <td class="text-center">{{$loop->iteration}}</td>
+                                                       <td class="text-center">{{$tariks->id_tabungan}}</td>
+                                                       <td>{{$tariks->nama}}</td>
+                                                       <td>{{$tariks->kelas}}</td>
+                                                       <td>{{$tariks->jumlah_tabungan}}</td>
+                                                       <td>{{$tariks->jumlah_dibuku}}</td>
+                                                       <td>{{$tariks->jumlah}}</td>
+                                                       <td>{{$tariks->premi}}</td>
+                                                       <td>{{$tariks->sisa}}</td>
+                                                       <td>{{$tariks->created_at}}</td>
+                                                  </tr>
+                                             @endforeach
                                         </tbody>
                                    </div>
                               </table>

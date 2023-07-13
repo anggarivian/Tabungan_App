@@ -35,8 +35,8 @@
                                         <div class="col-sm-12">
                                              <div class="statistics-details d-flex align-items-center justify-content-between">
                                                   <div>
-                                                       <p class="statistics-title">Jumlah Saldo Keseluruhan</p>
-                                                       <h4 class="rate-percentage">Rp. {{$hitungTotalSaldo}}</h4>
+                                                       <p class="statistics-title">Jumlah Tabungan Keseluruhan</p>
+                                                       <h4 class="rate-percentage">Rp. {{$totalJumlahTabungan}}</h4>
                                                   </div>
                                              </div>
                                         </div>
@@ -49,7 +49,7 @@
                                         <div class="col-sm-12">
                                              <div class="statistics-details d-flex align-items-center justify-content-between">
                                                   <div>
-                                                       <p class="statistics-title">Stor Keseluruhan</p>
+                                                       <p class="statistics-title">Total Keseluruhan Uang Masuk</p>
                                                        <h4 class="rate-percentage">Rp. {{$hitungTotalStor}}</h4>
                                                   </div>
                                              </div>
@@ -108,10 +108,10 @@
                                         @method ('PATCH')
                                         @csrf
                                         <div class="row justify-content-between" >
-                                             <div class="form-group col-md-2" style="margin-right: -10px">
-                                                  <label for="id">ID Siswa</label>
+                                             <div class="form-group col-md-2" >
+                                                  <label for="id">Masukan NISN</label>
                                                   <select name="selectuser" class="form-control" id="selectuser">
-                                                       <option selected >Pilih Siswa</option>
+                                                       <option selected >Pilih NISN</option>
                                                        @foreach($storTerbaru as $key => $value)
                                                             @if ($value->relationToRole->id == '3')
                                                             <option value="{{$value->id_tabungan}}" id="getname"
@@ -126,24 +126,20 @@
                                                        @endforeach
                                                   </select>
                                              </div>
-                                             <div class="form-group col-md-2 "style="margin-right: -10px;">
+                                             <div class="form-group col-md-3 "style="margin-right: -10px;">
                                                   <label for="nama">Nama Siswa</label>
                                                   <input type="text" class="form-control rounded" id="id" name="id" placeholder="id" hidden>
                                                   <input type="text" class="form-control rounded" id="nama" name="nama" placeholder="Nama" readonly>
                                              </div>
-                                             <div class="form-group col-md-1 "style="margin-right: -10px;width:120px;">
+                                             <div class="form-group col-md-2 "style="margin-right: -10px;">
                                                   <label for="kelas">Kelas</label>
                                                   <input type="text" class="form-control rounded" id="kelas" name="kelas" placeholder="Kelas" readonly>
                                              </div>
-                                             <div class="form-group col-md-2 "style="margin-right: -10px">
-                                                  <label for="jumlah_tabungan">Jumlah Tabungan</label>
+                                             <div class="form-group col-md-2 ">
+                                                  <label for="jumlah_tabungan">Saldo Awal</label>
                                                   <input type="text" class="form-control rounded" id="jumlah_tabungan" name="jumlah_tabungan" placeholder="Tabungan" readonly>
                                              </div>
-                                             <div class="form-group col-md-2 "style="margin-right: -10px">
-                                                  <label for="jumlah_dibuku">Jumlah Tabungan Dibuku</label>
-                                                  <input type="text" class="form-control rounded" id="jumlah_dibuku" name="jumlah_dibuku" placeholder="Tabungan Dibuku">
-                                             </div>
-                                             <div class="form-group col-md-2 "style="margin-right: -10px">
+                                             <div class="form-group col-md-2 ">
                                                   <label for="jumlah_stor">Masukan Jumlah Stor</label>
                                                   <input type="text" class="form-control rounded" id="jumlah_stor" name="jumlah_stor" placeholder="Jumlah Stor">
                                              </div>
@@ -173,61 +169,14 @@
                               <div class="row m-2 mt-4">
                                    <div class="col-lg-12 grid-margin">
                                         <div class="col-sm-12 statistics-details d-flex align-items-center justify-content-between">
+                                             @foreach ($totalStorHariIni as $totalStorHari)
                                              <div class="statistics-details d-flex align-items-center justify-content-between">
                                                   <div>
-                                                       <p class="statistics-title">Kelas 1 - A</p>
-                                                       <h5 class="rate-percentage">Rp. {{$storKelas1A}}</h5>
+                                                       <p class="statistics-title">Kelas {{$kelasList[$loop->iteration-1]}}</p>
+                                                       <h5 class="rate-percentage">Rp. {{$totalStorHari}}</h5>
                                                   </div>
                                              </div>
-                                             <div class="statistics-details d-flex align-items-center justify-content-between">
-                                                  <div>
-                                                       <p class="statistics-title">Kelas 1 - B</p>
-                                                       <h5 class="rate-percentage">Rp. {{$storKelas1B}}</h5>
-                                                  </div>
-                                             </div>
-                                             <div class="statistics-details d-flex align-items-center justify-content-between">
-                                                  <div>
-                                                       <p class="statistics-title">Kelas 2 - A</p>
-                                                       <h5 class="rate-percentage">Rp. {{$storKelas2A}}</h5>
-                                                  </div>
-                                             </div>
-                                             <div class="statistics-details d-flex align-items-center justify-content-between">
-                                                  <div>
-                                                       <p class="statistics-title">Kelas 2 - B</p>
-                                                       <h5 class="rate-percentage">Rp. {{$storKelas2B}}</h5>
-                                                  </div>
-                                             </div>
-                                             <div class="statistics-details d-flex align-items-center justify-content-between">
-                                                  <div>
-                                                       <p class="statistics-title">Kelas 3 - A</p>
-                                                       <h5 class="rate-percentage">Rp. {{$storKelas3A}}</h5>
-                                                  </div>
-                                             </div>
-                                             <div class="statistics-details d-flex align-items-center justify-content-between">
-                                                  <div>
-                                                       <p class="statistics-title">Kelas 3 - B</p>
-                                                       <h5 class="rate-percentage">Rp. {{$storKelas3B}}</h5>
-                                                  </div>
-                                             </div>
-                                             <div class="statistics-details d-flex align-items-center justify-content-between">
-                                                  <div>
-                                                       <p class="statistics-title">Kelas 4</p>
-                                                       <h5 class="rate-percentage">Rp. {{$storKelas4}}</h5>
-                                                  </div>
-                                             </div>
-                                             <div class="statistics-details d-flex align-items-center justify-content-between">
-                                                  <div>
-                                                       <p class="statistics-title">Kelas 5</p>
-                                                       <h5 class="rate-percentage">Rp. {{$storKelas5}}</h5>
-                                                  </div>
-                                             </div>
-                                             <div class="statistics-details d-flex align-items-center justify-content-between">
-                                                  <div>
-                                                       <p class="statistics-title">Kelas 6</p>
-                                                       <h5 class="rate-percentage">Rp. {{$storKelas6}}</h5>
-                                                  </div>
-                                             </div>
-
+                                             @endforeach
                                         </div>
                                    </div>
                               </div>
@@ -236,33 +185,32 @@
                                         <thead>
                                              <tr class="text-center">
                                                   <th>No</th>
-                                                  <th>Kode</th>
+                                                  <th>NISN</th>
                                                   <th>Nama</th>
                                                   <th>Kelas</th>
-                                                  <th>Jumlah Tabungan</th>
-                                                  <th>Jumlah Dibuku</th>
+                                                  <th>Saldo Awal</th>
                                                   <th>Jumlah Stor</th>
-                                                  <th>Premi</th>
+                                                  <th>Saldo Awal</th>
+                                                  <th>ADM</th>
                                                   <th>Sisa</th>
                                                   <th>Tanggal Dibuat</th>
                                              </tr>
                                         </thead>
                                         <tbody>
-                                             @php $no=1; @endphp
-                                                  @foreach($storTabel as $stors)
-                                                       <tr>
-                                                            <td class="text-center">{{$no++}}</td>
-                                                            <td class="text-center">{{$stors->id_tabungan}}</td>
-                                                            <td>{{$stors->nama}}</td>
-                                                            <td>{{$stors->kelas}}</td>
-                                                            <td>{{$stors->jumlah_tabungan}}</td>
-                                                            <td>{{$stors->jumlah_dibuku}}</td>
-                                                            <td>{{$stors->jumlah}}</td>
-                                                            <td>{{$stors->premi}}</td>
-                                                            <td>{{$stors->sisa}}</td>
-                                                            <td>{{$stors->created_at}}</td>
-                                                       </tr>
-                                                  @endforeach
+                                             @foreach($storTabel as $stors)
+                                                  <tr>
+                                                       <td class="text-center">{{$loop->iteration}}</td>
+                                                       <td class="text-center">{{$stors->id_tabungan}}</td>
+                                                       <td>{{$stors->nama}}</td>
+                                                       <td>{{$stors->kelas}}</td>
+                                                       <td>{{$stors->saldo_awal}}</td>
+                                                       <td>{{$stors->jumlah}}</td>
+                                                       <td>{{$stors->saldo_akhir}}</td>
+                                                       <td>{{$stors->premi}}</td>
+                                                       <td>{{$stors->sisa}}</td>
+                                                       <td>{{$stors->created_at}}</td>
+                                                  </tr>
+                                             @endforeach
                                         </tbody>
                                    </table>
                               </div>

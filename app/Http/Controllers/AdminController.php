@@ -16,19 +16,24 @@ class AdminController extends Controller
     public function index(){
         $user = User::All();
         $role = Role::All();
-        return view('admin.kelolaPetugas', compact('user','role'));
+
+        $userPetugas = User::where('roles_id', '2')->get();
+
+        return view('admin.kelolaPetugas', compact('user','role','userPetugas'));
     }
     // Create Data Petugas ------------------------------------------------------------------------------------------
     public function store(Request $req){
         $user = new User;
         $validate = $req->validate([
             'nama' => 'required|max:255',
+            'id_tabungan' => 'required|max:10',
             'email' => 'required',
+            'kontak' => 'required',
             'password' => 'required',
             'jenis_kelamin' => 'required',
         ]);
         $user->nama = $req->get('nama');
-        $user->id_tabungan = '-';
+        $user->id_tabungan = $req->get('id_tabungan');
         $user->email = $req->get('email');
         $user->kontak = $req->get('kontak');
         $user->jenis_kelamin = $req->get('jenis_kelamin');
@@ -37,7 +42,7 @@ class AdminController extends Controller
         $user->kelas = '-' ;
         $user->save();
         $notification = array(
-            'message' =>'Data User berhasil ditambahkan', 'alert-type' =>'success'
+            'message' =>'Data Petugas berhasil ditambahkan', 'alert-type' =>'success'
         );
         return redirect()->route('petugas')->with($notification);
     }
@@ -59,7 +64,7 @@ class AdminController extends Controller
         $user->jenis_kelamin = $req->get('jenis_kelamin');
         $user->save();
         $notification = array(
-            'message' => 'Data User berhasil diubah',
+            'message' => 'Data Petugas berhasil diubah',
             'alert-type' => 'success'
         );
         return redirect()->route('petugas')->with($notification);
@@ -69,7 +74,7 @@ class AdminController extends Controller
         $user = User::find($id);
         $user->delete();
         $notification = array(
-            'message' => 'Data User berhasil dihapus',
+            'message' => 'Data Petugas berhasil dihapus',
             'alert-type' => 'success'
         );
         return redirect()->route('petugas')->with($notification);

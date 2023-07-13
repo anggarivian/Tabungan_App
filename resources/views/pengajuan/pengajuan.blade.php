@@ -46,11 +46,10 @@
                                                             </tr>
                                                        </thead>
                                                        <tbody>
-                                                            @php $no=1; @endphp
                                                             @foreach($pengajuan as $pengajuans)
                                                             @if ($pengajuans->status == 'Diproses')
                                                                  <tr>
-                                                                      <td class="text-center">{{$no++}}</td>
+                                                                      <td class="text-center">{{$loop->iteration}}</td>
                                                                       <td class="text-center">{{$pengajuans->id_tabungan}}</td>
                                                                       <td>{{$pengajuans->nama}}</td>
                                                                       <td>{{$pengajuans->kelas}}</td>

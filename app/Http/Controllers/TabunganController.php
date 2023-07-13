@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\Tabungan;
 use App\Models\User;
@@ -23,6 +24,18 @@ class TabunganController extends Controller
 
         // Total Tabungan -------------------------------------
         $hitungTotalSaldo = Tabungan::sum('jumlah_tabungan');
+        $dataTerbaru = DB::table('tabungans')
+        ->select('id', 'id_tabungan', 'jumlah_tabungan')
+        ->whereIn('id', function ($query) {
+            $query->select(DB::raw('MAX(id)'))
+                ->from('tabungans')
+                ->groupBy('id_tabungan');
+        })->get();
+
+        $totalJumlahTabungan = 0;
+        foreach ($dataTerbaru as $data) {
+            $totalJumlahTabungan += $data->jumlah_tabungan;
+        }
 
         // Total Stor Tabungan --------------------------------
         $hitungTotalStor = Tabungan::where('tipe_transaksi', 'Stor')->sum('jumlah');
@@ -40,32 +53,17 @@ class TabunganController extends Controller
         $today = Carbon::today();
         $hariStor = Tabungan::whereDate('created_at', $today)->where('tipe_transaksi', 'Stor')->sum('jumlah');
 
-        // Total Stor Kelas 1 A Hari Ini ----------------------
-        $storKelas1A = Tabungan::where('kelas', '1A')->where('tipe_transaksi', 'Stor')->whereDate('created_at', $today)->sum('jumlah');
+        // Total Per Kelas Stor Tabungan Hari Ini -----------------------
+        $today = Carbon::today();
+        $kelasList = ['1A', '1B', '2A', '2B', '3A', '3B', '4', '5', '6'];
+        $totalStorHariIni = [];
 
-        // Total Stor Kelas 1 B Hari Ini ----------------------
-        $storKelas1B = Tabungan::where('kelas', '1B')->where('tipe_transaksi', 'Stor')->whereDate('created_at', $today)->sum('jumlah');
-
-        // Total Stor Kelas 2 A Hari Ini ----------------------
-        $storKelas2A = Tabungan::where('kelas', '2A')->where('tipe_transaksi', 'Stor')->whereDate('created_at', $today)->sum('jumlah');
-
-        // Total Stor Kelas 2 B Hari Ini ----------------------
-        $storKelas2B = Tabungan::where('kelas', '2B')->where('tipe_transaksi', 'Stor')->whereDate('created_at', $today)->sum('jumlah');
-
-        // Total Stor Kelas 3 A Hari Ini ----------------------
-        $storKelas3A = Tabungan::where('kelas', '3A')->where('tipe_transaksi', 'Stor')->whereDate('created_at', $today)->sum('jumlah');
-
-        // Total Stor Kelas 3 B Hari Ini ----------------------
-        $storKelas3B = Tabungan::where('kelas', '3B')->where('tipe_transaksi', 'Stor')->whereDate('created_at', $today)->sum('jumlah');
-
-        // Total Stor Kelas 4 Hari Ini ----------------------
-        $storKelas4 = Tabungan::where('kelas', '4')->where('tipe_transaksi', 'Stor')->whereDate('created_at', $today)->sum('jumlah');
-
-        // Total Stor Kelas 5 Hari Ini ----------------------
-        $storKelas5 = Tabungan::where('kelas', '5')->where('tipe_transaksi', 'Stor')->whereDate('created_at', $today)->sum('jumlah');
-
-        // Total Stor Kelas 6 Hari Ini ----------------------
-        $storKelas6 = Tabungan::where('kelas', '6')->where('tipe_transaksi', 'Stor')->whereDate('created_at', $today)->sum('jumlah');
+        foreach ($kelasList as $kelas) {
+            $totalStorHariIni[$kelas] = Tabungan::where('kelas', $kelas)
+                ->where('tipe_transaksi', 'Stor')
+                ->whereDate('created_at', $today)
+                ->sum('jumlah');
+        }
 
         // Generate Dropdown Id Tabungan --------------------
         $storTerbaru = [];
@@ -76,12 +74,8 @@ class TabunganController extends Controller
             }
         }
 
-        return view('petugas.kelolaStor',
-        compact('storKelas1A','storKelas1B','storKelas2A','storKelas2B',
-                'storKelas3A','storKelas3B','storKelas4','storKelas5',
-                'storKelas6','storTabel',
-                'storTerbaru','stor','user','role','hitungTotalSaldo',
-                'hitungTotalStor','bulanStor','mingguStor','hariStor'));
+        return view('petugas.kelolaStor', compact('storTabel','totalJumlahTabungan','totalStorHariIni','kelasList','storTerbaru','stor','user','role',
+                                                    'hitungTotalSaldo','hitungTotalStor','bulanStor','mingguStor','hariStor'));
     }
 
 
@@ -122,6 +116,18 @@ class TabunganController extends Controller
 
         // Total Tabungan -------------------------------------
         $hitungTotalSaldo = Tabungan::sum('jumlah_tabungan');
+        $dataTerbaru = DB::table('tabungans')
+        ->select('id', 'id_tabungan', 'jumlah_tabungan')
+        ->whereIn('id', function ($query) {
+            $query->select(DB::raw('MAX(id)'))
+                ->from('tabungans')
+                ->groupBy('id_tabungan');
+        })->get();
+
+        $totalJumlahTabungan = 0;
+        foreach ($dataTerbaru as $data) {
+            $totalJumlahTabungan += $data->jumlah_tabungan;
+        }
 
         // Total Tarik Tabungan --------------------------------
         $hitungTotalTarik = Tabungan::where('tipe_transaksi', 'Tarik')->sum('jumlah');
@@ -139,32 +145,17 @@ class TabunganController extends Controller
         $today = Carbon::today();
         $hariTarik = Tabungan::whereDate('created_at', $today)->where('tipe_transaksi', 'Tarik')->sum('jumlah');
 
-        // Total Tarik Kelas 1 A Hari Ini ----------------------
-        $tarikKelas1A = Tabungan::where('kelas', '1A')->where('tipe_transaksi', 'Tarik')->whereDate('created_at', $today)->sum('jumlah');
+        // Total Per Kelas Tarik Tabungan Hari Ini -----------------------
+        $today = Carbon::today();
+        $kelasList = ['1A', '1B', '2A', '2B', '3A', '3B', '4', '5', '6'];
+        $totalTarikHariIni = [];
 
-        // Total Tarik Kelas 1 B Hari Ini ----------------------
-        $tarikKelas1B = Tabungan::where('kelas', '1B')->where('tipe_transaksi', 'Tarik')->whereDate('created_at', $today)->sum('jumlah');
-
-        // Total Tarik Kelas 2 A Hari Ini ----------------------
-        $tarikKelas2A = Tabungan::where('kelas', '2A')->where('tipe_transaksi', 'Tarik')->whereDate('created_at', $today)->sum('jumlah');
-
-        // Total Tarik Kelas 2 B Hari Ini ----------------------
-        $tarikKelas2B = Tabungan::where('kelas', '2B')->where('tipe_transaksi', 'Tarik')->whereDate('created_at', $today)->sum('jumlah');
-
-        // Total Tarik Kelas 3 A Hari Ini ----------------------
-        $tarikKelas3A = Tabungan::where('kelas', '3A')->where('tipe_transaksi', 'Tarik')->whereDate('created_at', $today)->sum('jumlah');
-
-        // Total Tarik Kelas 3 B Hari Ini ----------------------
-        $tarikKelas3B = Tabungan::where('kelas', '3B')->where('tipe_transaksi', 'Tarik')->whereDate('created_at', $today)->sum('jumlah');
-
-        // Total Tarik Kelas 4 Hari Ini ----------------------
-        $tarikKelas4 = Tabungan::where('kelas', '4')->where('tipe_transaksi', 'Tarik')->whereDate('created_at', $today)->sum('jumlah');
-
-        // Total Tarik Kelas 5 Hari Ini ----------------------
-        $tarikKelas5 = Tabungan::where('kelas', '5')->where('tipe_transaksi', 'Tarik')->whereDate('created_at', $today)->sum('jumlah');
-
-        // Total Tarik Kelas 6 Hari Ini ----------------------
-        $tarikKelas6 = Tabungan::where('kelas', '6')->where('tipe_transaksi', 'Tarik')->whereDate('created_at', $today)->sum('jumlah');
+        foreach ($kelasList as $kelas) {
+            $totalTarikHariIni[$kelas] = Tabungan::where('kelas', $kelas)
+                ->where('tipe_transaksi', 'Tarik')
+                ->whereDate('created_at', $today)
+                ->sum('jumlah');
+        }
 
         // Generate Dropdown Id Tabungan --------------------
         $tarikTerbaru = [];
@@ -175,12 +166,8 @@ class TabunganController extends Controller
             }
         }
 
-        return view('petugas.kelolaTarik',
-        compact('tarikKelas1A','tarikKelas1B','tarikKelas2A','tarikKelas2B',
-                'tarikKelas3A','tarikKelas3B','tarikKelas4','tarikKelas5',
-                'tarikKelas6','tarikTabel',
-                'tarikTerbaru','tarik','user','role','hitungTotalSaldo',
-                'hitungTotalTarik','bulanTarik','mingguTarik','hariTarik'));
+        return view('petugas.kelolaTarik', compact('tarikTabel','totalJumlahTabungan','totalTarikHariIni','kelasList','tarikTerbaru','tarik','user','role',
+                                                    'hitungTotalSaldo','hitungTotalTarik','bulanTarik','mingguTarik','hariTarik'));
     }
 
 
