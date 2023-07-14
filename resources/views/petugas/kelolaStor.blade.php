@@ -35,7 +35,7 @@
                                         <div class="col-sm-12">
                                              <div class="statistics-details d-flex align-items-center justify-content-between">
                                                   <div>
-                                                       <p class="statistics-title">Jumlah Tabungan Keseluruhan</p>
+                                                       <p class="statistics-title">Total Saldo Tabungan Saat Ini</p>
                                                        <h4 class="rate-percentage">Rp. {{$totalJumlahTabungan}}</h4>
                                                   </div>
                                              </div>
@@ -113,16 +113,14 @@
                                                   <select name="selectuser" class="form-control" id="selectuser">
                                                        <option selected >Pilih NISN</option>
                                                        @foreach($storTerbaru as $key => $value)
-                                                            @if ($value->relationToRole->id == '3')
                                                             <option value="{{$value->id_tabungan}}" id="getname"
                                                                  data-id="{{ $value->id }}"
                                                                  data-nama="{{ $value->nama }}"
                                                                  data-kelas="{{ $value->kelas }}"
-                                                                 data-tabungan="{{ $value->jumlah_tabungan }}"
+                                                                 data-tabungan="{{ $value->saldo_akhir }}"
                                                                  data-dibuku="{{ $value->jumlah_dibuku }}">
                                                                  {{$value->id_tabungan}}
                                                             </option>
-                                                            @endif
                                                        @endforeach
                                                   </select>
                                              </div>
@@ -190,7 +188,7 @@
                                                   <th>Kelas</th>
                                                   <th>Saldo Awal</th>
                                                   <th>Jumlah Stor</th>
-                                                  <th>Saldo Awal</th>
+                                                  <th>Saldo Akhir</th>
                                                   <th>ADM</th>
                                                   <th>Sisa</th>
                                                   <th>Tanggal Dibuat</th>
@@ -208,7 +206,7 @@
                                                        <td>{{$stors->saldo_akhir}}</td>
                                                        <td>{{$stors->premi}}</td>
                                                        <td>{{$stors->sisa}}</td>
-                                                       <td>{{$stors->created_at}}</td>
+                                                       <td>{{ \Carbon\Carbon::parse($stors->created_at)->format('H:i, F d') }}</td>
                                                   </tr>
                                              @endforeach
                                         </tbody>

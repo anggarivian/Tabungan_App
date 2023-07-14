@@ -23,18 +23,14 @@ class TabunganController extends Controller
         $storTabel = Tabungan::whereBetween('created_at', [$startDate, $endDate])->where('tipe_transaksi', 'Stor')->paginate(30);
 
         // Total Tabungan -------------------------------------
-        $hitungTotalSaldo = Tabungan::sum('jumlah_tabungan');
-        $dataTerbaru = DB::table('tabungans')
-        ->select('id', 'id_tabungan', 'jumlah_tabungan')
-        ->whereIn('id', function ($query) {
-            $query->select(DB::raw('MAX(id)'))
-                ->from('tabungans')
-                ->groupBy('id_tabungan');
+        $hitungTotalSaldo = Tabungan::sum('saldo_akhir');
+        $dataTerbaru = DB::table('tabungans')->select('id', 'id_tabungan', 'saldo_akhir')->whereIn('id', function ($query) {
+            $query->select(DB::raw('MAX(id)'))->from('tabungans')->groupBy('id_tabungan');
         })->get();
 
         $totalJumlahTabungan = 0;
         foreach ($dataTerbaru as $data) {
-            $totalJumlahTabungan += $data->jumlah_tabungan;
+            $totalJumlahTabungan += $data->saldo_akhir;
         }
 
         // Total Stor Tabungan --------------------------------
@@ -65,13 +61,20 @@ class TabunganController extends Controller
                 ->sum('jumlah');
         }
 
-        // Generate Dropdown Id Tabungan --------------------
+        // Generate Dropdown NISN --------------------
         $storTerbaru = [];
-        for ($i = 0 ; $i < 1000 ; $i++){
-            $coba = Tabungan::where('id_tabungan', 'KT'.$i )->latest('id')->first();
-            if ($coba != null ) {
-                $storTerbaru[$i] = $coba ;
-            }
+        $result = [];
+        $result2 = [];
+        $ambilDataTerakhir = Tabungan::pluck('id_tabungan');
+
+        foreach ($ambilDataTerakhir as $index => $value) {
+            $result[$value] = $index;
+        }
+        foreach ($result as $index => $value) {
+            $result2[$value] = $index;
+        }
+        foreach ($result2 as $index => $value) {
+            $storTerbaru[$value] = Tabungan::where('id_tabungan', $value )->latest('id')->first();
         }
 
         return view('petugas.kelolaStor', compact('storTabel','totalJumlahTabungan','totalStorHariIni','kelasList','storTerbaru','stor','user','role',
@@ -89,15 +92,15 @@ class TabunganController extends Controller
         $tabungan->roles_id = 3 ;
         $tabungan->tipe_transaksi = 'Stor';
         $tabungan->jumlah = $req->get('jumlah_stor');
-        $tabungan->jumlah_tabungan = $req->get('jumlah_tabungan') + $tabungan->jumlah ;
-        $tabungan->jumlah_dibuku = $req->get('jumlah_dibuku');
-        $tabungan->premi = $tabungan->jumlah_tabungan * 0.05 ;
-        $tabungan->sisa = $tabungan->jumlah_tabungan - $tabungan->premi ;
+        $tabungan->saldo_awal = $req->get('jumlah_tabungan');
+        $tabungan->saldo_akhir = $tabungan->saldo_awal + $tabungan->jumlah ;
+        $tabungan->premi = $tabungan->saldo_akhir * 0.05 ;
+        $tabungan->sisa = $tabungan->saldo_akhir - $tabungan->premi ;
 
         $tabungan->save();
 
         $notification = array(
-            'message' => 'Data User berhasil diubah',
+            'message' => 'Transaksi Stor Tabungan Berhasil',
             'alert-type' => 'success'
         );
         return redirect()->route('tabungan.stor')->with($notification);
@@ -115,18 +118,14 @@ class TabunganController extends Controller
         $tarikTabel = Tabungan::whereBetween('created_at', [$startDate, $endDate])->where('tipe_transaksi', 'Tarik')->paginate(30);
 
         // Total Tabungan -------------------------------------
-        $hitungTotalSaldo = Tabungan::sum('jumlah_tabungan');
-        $dataTerbaru = DB::table('tabungans')
-        ->select('id', 'id_tabungan', 'jumlah_tabungan')
-        ->whereIn('id', function ($query) {
-            $query->select(DB::raw('MAX(id)'))
-                ->from('tabungans')
-                ->groupBy('id_tabungan');
+        $hitungTotalSaldo = Tabungan::sum('saldo_akhir');
+        $dataTerbaru = DB::table('tabungans')->select('id', 'id_tabungan', 'saldo_akhir')->whereIn('id', function ($query) {
+            $query->select(DB::raw('MAX(id)'))->from('tabungans')->groupBy('id_tabungan');
         })->get();
 
         $totalJumlahTabungan = 0;
         foreach ($dataTerbaru as $data) {
-            $totalJumlahTabungan += $data->jumlah_tabungan;
+            $totalJumlahTabungan += $data->saldo_akhir;
         }
 
         // Total Tarik Tabungan --------------------------------
@@ -157,13 +156,20 @@ class TabunganController extends Controller
                 ->sum('jumlah');
         }
 
-        // Generate Dropdown Id Tabungan --------------------
+        // Generate Dropdown NISN --------------------
         $tarikTerbaru = [];
-        for ($i = 0 ; $i < 1000 ; $i++){
-            $coba = Tabungan::where('id_tabungan', 'KT'.$i )->latest('id')->first();
-            if ($coba != null ) {
-                $tarikTerbaru[$i] = $coba ;
-            }
+        $result = [];
+        $result2 = [];
+        $ambilDataTerakhir = Tabungan::pluck('id_tabungan');
+
+        foreach ($ambilDataTerakhir as $index => $value) {
+            $result[$value] = $index;
+        }
+        foreach ($result as $index => $value) {
+            $result2[$value] = $index;
+        }
+        foreach ($result2 as $index => $value) {
+            $tarikTerbaru[$value] = Tabungan::where('id_tabungan', $value )->latest('id')->first();
         }
 
         return view('petugas.kelolaTarik', compact('tarikTabel','totalJumlahTabungan','totalTarikHariIni','kelasList','tarikTerbaru','tarik','user','role',
@@ -181,15 +187,15 @@ class TabunganController extends Controller
         $tabungan->roles_id = 3 ;
         $tabungan->tipe_transaksi = 'Tarik';
         $tabungan->jumlah = $req->get('jumlah_tarik');
-        $tabungan->jumlah_tabungan = $req->get('jumlah_tabungan') - $tabungan->jumlah ;
-        $tabungan->jumlah_dibuku = $req->get('jumlah_dibuku');
-        $tabungan->premi = $tabungan->jumlah_tabungan * 0.05 ;
-        $tabungan->sisa = $tabungan->jumlah_tabungan - $tabungan->premi ;
+        $tabungan->saldo_awal = $req->get('jumlah_tabungan');
+        $tabungan->saldo_akhir = $tabungan->saldo_awal - $tabungan->jumlah ;
+        $tabungan->premi = $tabungan->saldo_akhir * 0.05 ;
+        $tabungan->sisa = $tabungan->saldo_akhir - $tabungan->premi ;
 
         $tabungan->save();
 
         $notification = array(
-            'message' => 'Data User berhasil diubah',
+            'message' => 'Transaksi Tarik Tabungan Berhasil',
             'alert-type' => 'success'
         );
         return redirect()->route('tabungan.tarik')->with($notification);

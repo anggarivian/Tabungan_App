@@ -35,7 +35,7 @@
                                         <div class="col-sm-12">
                                              <div class="statistics-details d-flex align-items-center justify-content-between">
                                                   <div>
-                                                       <p class="statistics-title">Jumlah Saldo Keseluruhan</p>
+                                                       <p class="statistics-title">Total Saldo Tabungan Saat Ini</p>
                                                        <h4 class="rate-percentage">Rp. {{$totalJumlahTabungan}}</h4>
                                                   </div>
                                              </div>
@@ -49,7 +49,7 @@
                                         <div class="col-sm-12">
                                              <div class="statistics-details d-flex align-items-center justify-content-between">
                                                   <div>
-                                                       <p class="statistics-title">Tarik Keseluruhan</p>
+                                                       <p class="statistics-title">Total Keseluruhan Uang Masuk</p>
                                                        <h4 class="rate-percentage">Rp. {{$hitungTotalTarik}}</h4>
                                                   </div>
                                              </div>
@@ -103,51 +103,45 @@
 
                     <div class="card mb-4">
                          <div class="card-body" style="margin-bottom: -25px ;">
-                              <div class="row" >
+                              <div class="row " >
                                    <form method="post" action="{{ route('tabungan.tarik.tambah')}}" enctype="multipart/form-data">
                                         @method ('PATCH')
                                         @csrf
-                                        <div class="row justify-content-between">
-                                             <div class="form-group col-md-2 " style="margin-right: -10px;">
-                                                  <label for="id">ID Siswa</label>
+                                        <div class="row justify-content-between" >
+                                             <div class="form-group col-md-2" >
+                                                  <label for="id">Masukan NISN</label>
                                                   <select name="selectuser" class="form-control" id="selectuser">
-                                                       <option selected >Pilih Siswa</option>
+                                                       <option selected >Pilih NISN</option>
                                                        @foreach($tarikTerbaru as $key => $value)
-                                                            @if ($value->relationToRole->id == '3')
                                                             <option value="{{$value->id_tabungan}}" id="getname"
                                                                  data-id="{{ $value->id }}"
                                                                  data-nama="{{ $value->nama }}"
                                                                  data-kelas="{{ $value->kelas }}"
-                                                                 data-tabungan="{{ $value->jumlah_tabungan }}"
+                                                                 data-tabungan="{{ $value->saldo_akhir }}"
                                                                  data-dibuku="{{ $value->jumlah_dibuku }}">
                                                                  {{$value->id_tabungan}}
                                                             </option>
-                                                            @endif
                                                        @endforeach
                                                   </select>
                                              </div>
-                                             <div class="form-group col-md-2 "style="margin-right: -10px;">
+                                             <div class="form-group col-md-3 "style="margin-right: -10px;">
                                                   <label for="nama">Nama Siswa</label>
                                                   <input type="text" class="form-control rounded" id="id" name="id" placeholder="id" hidden>
                                                   <input type="text" class="form-control rounded" id="nama" name="nama" placeholder="Nama" readonly>
                                              </div>
-                                             <div class="form-group col-md-1 "style="margin-right: -10px;width:120px;">
+                                             <div class="form-group col-md-2 "style="margin-right: -10px;">
                                                   <label for="kelas">Kelas</label>
                                                   <input type="text" class="form-control rounded" id="kelas" name="kelas" placeholder="Kelas" readonly>
                                              </div>
-                                             <div class="form-group col-md-2 "style="margin-right: -10px;">
-                                                  <label for="jumlah_tabungan">Jumlah Tabungan</label>
+                                             <div class="form-group col-md-2 ">
+                                                  <label for="jumlah_tabungan">Saldo Awal</label>
                                                   <input type="text" class="form-control rounded" id="jumlah_tabungan" name="jumlah_tabungan" placeholder="Tabungan" readonly>
                                              </div>
-                                             <div class="form-group col-md-2 "style="margin-right: -10px;">
-                                                  <label for="jumlah_dibuku">Jumlah Tabungan Dibuku</label>
-                                                  <input type="text" class="form-control rounded" id="jumlah_dibuku" name="jumlah_dibuku" placeholder="Tabungan Dibuku">
-                                             </div>
-                                             <div class="form-group col-md-2 "style="margin-right: -10px;">
+                                             <div class="form-group col-md-2 ">
                                                   <label for="jumlah_tarik">Masukan Jumlah Tarik</label>
                                                   <input type="text" class="form-control rounded" id="jumlah_tarik" name="jumlah_tarik" placeholder="Jumlah Tarik">
                                              </div>
-                                             <div class="form-group col-md-1 "style="margin-right: 12px;">
+                                             <div class="form-group col-md-1 " style="margin-right: 12px">
                                                   <button type="submit" class="btn btn-sm btn-primary m-1 btn-rounded p-3 mt-3">
                                                        Tambah
                                                   </button>
@@ -189,13 +183,13 @@
                                         <thead>
                                              <tr class="text-center">
                                                   <th>No</th>
-                                                  <th>Kode</th>
+                                                  <th>NISN</th>
                                                   <th>Nama</th>
                                                   <th>Kelas</th>
-                                                  <th>Jumlah Tabungan</th>
-                                                  <th>Jumlah Dibuku</th>
+                                                  <th>Saldo Awal</th>
                                                   <th>Jumlah Tarik</th>
-                                                  <th>Premi</th>
+                                                  <th>Saldo Akhir</th>
+                                                  <th>ADM</th>
                                                   <th>Sisa</th>
                                                   <th>Tanggal Dibuat</th>
                                              </tr>
@@ -207,17 +201,17 @@
                                                        <td class="text-center">{{$tariks->id_tabungan}}</td>
                                                        <td>{{$tariks->nama}}</td>
                                                        <td>{{$tariks->kelas}}</td>
-                                                       <td>{{$tariks->jumlah_tabungan}}</td>
-                                                       <td>{{$tariks->jumlah_dibuku}}</td>
+                                                       <td>{{$tariks->saldo_awal}}</td>
                                                        <td>{{$tariks->jumlah}}</td>
+                                                       <td>{{$tariks->saldo_akhir}}</td>
                                                        <td>{{$tariks->premi}}</td>
                                                        <td>{{$tariks->sisa}}</td>
-                                                       <td>{{$tariks->created_at}}</td>
+                                                       <td>{{ \Carbon\Carbon::parse($tariks->created_at)->format('H:i, F d') }}</td>
                                                   </tr>
                                              @endforeach
                                         </tbody>
-                                   </div>
-                              </table>
+                                   </table>
+                              </div>
                          </div>
                     </div>
                </div>

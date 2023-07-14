@@ -35,13 +35,13 @@
                                                        <thead>
                                                             <tr class="text-center">
                                                                  <th>No</th>
-                                                                 <th>ID</th>
+                                                                 <th>NISN</th>
                                                                  <th>Nama</th>
                                                                  <th>Kelas</th>
-                                                                 <th>Jumlah Tabungan</th>
+                                                                 <th>Jumlah Saldo</th>
                                                                  <th>Jumlah Penarikan</th>
                                                                  <th>Alasan</th>
-                                                                 <th>Tanggal Dibuat</th>
+                                                                 <th>Diajukan</th>
                                                                  <th>Opsi</th>
                                                             </tr>
                                                        </thead>
@@ -56,11 +56,12 @@
                                                                       <td>{{$pengajuans->jumlah_tabungan}}</td>
                                                                       <td>{{$pengajuans->jumlah_penarikan}}</td>
                                                                       <td>{{$pengajuans->alasan}}</td>
-                                                                      <td>{{$pengajuans->created_at}}</td>
+                                                                      <td>{{ \Carbon\Carbon::parse($pengajuans->created_at)->format('H:i, F d') }}</td>
                                                                       <td class="text-center">
                                                                            <button type="button" class="btn btn-primary btn-sm btn-rounded" data-id="{{ $pengajuans->id }}" id="btn-edit-user" data-bs-toggle="modal" data-bs-target="#editModal">
                                                                                 Lihat
                                                                            </button>
+                                                                           <a href="/petugas/pengajuan/tolak/{{ $pengajuans->id }}" class="btn btn-warning btn-sm btn-rounded" type="button" class="btn btn-secondary btn-rounded">Tolak</a>
                                                                       </td>
                                                                  </tr>
                                                             @endif
@@ -92,29 +93,28 @@
                          <div class="row">
                                    <input type="text" class="form-control rounded" id="edit-id" name="id" placeholder="Id" readonly hidden>
                                    <input type="text" class="form-control rounded" id="edit-id_tabungan" name="id_tabungan" placeholder="Id_tabungan" readonly hidden>
-                              <div class="form-group col-md-6">
+                              <div class="form-group col-md-8">
                                    <label for="nama">Nama</label>
-                                   <input type="text" class="form-control rounded" id="edit-nama" name="nama" placeholder="Nama">
+                                   <input type="text" class="form-control rounded" id="edit-nama" name="nama" placeholder="Nama" readonly>
                               </div>
-                              <div class="form-group col-md-6">
+                              <div class="form-group col-md-4">
                                    <label for="kelas">Kelas</label>
-                                   <input type="text" class="form-control rounded" id="edit-kelas" name="kelas" placeholder="Kelas">
+                                   <input type="text" class="form-control rounded" id="edit-kelas" name="kelas" placeholder="Kelas" readonly>
                               </div>
                               <div class="form-group col-md-6">
-                                   <label for="jumlah_tabungan">Jumlah Tabungan</label>
-                                   <input type="text" class="form-control rounded" id="edit-jumlah_tabungan" name="jumlah_tabungan" placeholder="Jumlah Tabungan">
+                                   <label for="jumlah_tabungan">Jumlah Saldo</label>
+                                   <input type="text" class="form-control rounded" id="edit-jumlah_tabungan" name="jumlah_tabungan" placeholder="Jumlah Tabungan" readonly>
                               </div>
                               <div class="form-group col-md-6">
                                    <label for="jumlah_penarikan">Jumlah Penarikan</label>
-                                   <input type="text" class="form-control rounded" id="edit-jumlah_penarikan" name="jumlah_penarikan" placeholder="Jumlah Tarik">
+                                   <input type="text" class="form-control rounded" id="edit-jumlah_penarikan" name="jumlah_penarikan" placeholder="Jumlah Tarik" readonly>
                               </div>
                               <div class="form-group">
                                    <label for="alasan">Alasan</label>
-                                   <input type="text" class="form-control rounded" id="edit-alasan" name="alasan" placeholder="Alasan">
+                                   <input type="text" class="form-control rounded" id="edit-alasan" name="alasan" placeholder="Alasan" readonly>
                               </div>
                          </div>
                          <div class="modal-footer justify-content-center">
-                              <a href="{{ route('pengajuan.tolak') }}" type="button" class="btn btn-secondary btn-rounded">Tolak</a>
                               <button type="submit" class="btn btn-primary btn-rounded">Setujui</button>
                          </div>
                     </form>

@@ -33,7 +33,7 @@
                                              <div class="table-responsive">
                                                   <table id="table-data" class="table table-striped">
                                                   <tr>
-                                                       <td>ID</td>
+                                                       <td>NISN</td>
                                                        <td>{{Auth::user()->id_tabungan}}</td>
                                                   </tr>
                                                   <tr>
@@ -56,6 +56,10 @@
                                                        <td>Alamat</td>
                                                        <td>{{Auth::user()->alamat}}</td>
                                                   </tr>
+                                                  <tr>
+                                                       <td>Saldo</td>
+                                                       <td>Rp. {{$data->sisa}}</td>
+                                                  </tr>
                                              </table>
                                         </div>
                                         <br><br>
@@ -65,11 +69,10 @@
                                                   <thead>
                                                        <tr class="text-center">
                                                             <th>No</th>
-                                                            <th>Tabungan</th>
                                                             <th>Stor</th>
                                                             <th>Tarik</th>
                                                             <th>Sisa</th>
-                                                            <th>Tanggal Dibuat</th>
+                                                            <th>Dibuat</th>
                                                        </tr>
                                                   </thead>
                                                   <tbody>
@@ -78,7 +81,6 @@
                                                                  @if ($tabel->tipe_transaksi)
                                                                  <tr>
                                                                       <td class="text-center">{{$no++}}</td>
-                                                                      <td>{{$tabel->jumlah_tabungan}}</td>
                                                                       @if ($tabel->tipe_transaksi == 'Stor')
                                                                            <td>{{$tabel->jumlah}}</td>
                                                                            <td>-</td>
@@ -88,7 +90,7 @@
                                                                            <td>{{$tabel->jumlah}}</td>
                                                                       @endif
                                                                       <td>{{$tabel->sisa}}</td>
-                                                                      <td>{{$tabel->created_at}}</td>
+                                                                      <td>{{ \Carbon\Carbon::parse($tabel->created_at)->format('d F y') }}</td>
                                                                  </tr>
                                                                  @endif
                                                             @endforeach

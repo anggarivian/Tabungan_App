@@ -21,34 +21,26 @@ class PengajuanController extends Controller
         $pengajuan = Pengajuan::All();
         $user = Auth::user();
         $test = $user->id_tabungan ;
-        $selisihHari = 0 ;
+
         // Ambil Data Dari Tabungan ----------------------------------------------------------------
         $data = Tabungan::where('id_tabungan', $test)->latest('created_at')->first();
+        $cekData = Pengajuan::count();
 
-        // Data Untuk Validasi ---------------------------------------------------------------------
-        $validasi = Pengajuan::where('id_tabungan', $test)->latest('created_at')->first();
-
-        if ($validasi) {
-            $tanggalTerakhir = Carbon::parse($validasi->created_at);
-            $tanggalSekarang = Carbon::now();
-            $selisihHari = $tanggalTerakhir->diffInDays($tanggalSekarang);
-        } else {
-            $validasi = 'Disetujui';
-        }
-
-        return view('pengajuan.siswaPengajuan', compact('pengajuan','data','validasi','selisihHari'));
+        return view('pengajuan.siswaPengajuan', compact('pengajuan','data','cekData'));
     }
 
     public function riwayat(Request $req){
         $tabungan = Tabungan::All();
         $user = Auth::user();
         $test = $user->id_tabungan ;
+        // Ambil Data Dari Tabungan ----------------------------------------------------------------
+        $data = Tabungan::where('id_tabungan', $test)->latest('created_at')->first();
 
         $startDate = now()->startOfMonth(); // Mulai bulan ini
         $endDate = now()->endOfMonth(); // Akhir bulan ini
         $tabel = Tabungan::whereBetween('created_at', [$startDate, $endDate])->where('id_tabungan', $test )->paginate(30);
 
-        return view('siswa.riwayat', compact('tabungan', 'tabel'));
+        return view('siswa.riwayat', compact('tabungan', 'tabel','data'));
     }
 
     public function store(Request $req){
@@ -66,7 +58,7 @@ class PengajuanController extends Controller
         $pengajuan->save();
 
         $notification = array(
-            'message' =>'Data Siswa berhasil ditambahkan', 'alert-type' =>'success'
+            'message' =>'Penarikan Berhasil Diajukan', 'alert-type' =>'success'
         );
 
         return redirect()->route('siswa.pengajuan')->with($notification);
@@ -97,10 +89,9 @@ class PengajuanController extends Controller
         $tabungan->roles_id = 3 ;
         $tabungan->tipe_transaksi = 'Tarik';
         $tabungan->jumlah = $req->get('jumlah_penarikan');
-        $tabungan->jumlah_tabungan = $req->get('jumlah_tabungan') - $tabungan->jumlah ;
-        $tabungan->jumlah_dibuku = $tabungan->jumlah_tabungan;
-        $tabungan->premi = $tabungan->jumlah_tabungan * 0.05 ;
-        $tabungan->sisa = $tabungan->jumlah_tabungan - $tabungan->premi ;
+        $tabungan->saldo_akhir = $req->get('jumlah_tabungan') - $tabungan->jumlah ;
+        $tabungan->premi = $tabungan->saldo_akhir * 0.05 ;
+        $tabungan->sisa = $tabungan->saldo_akhir - $tabungan->premi ;
 
         $tabungan->save();
 
@@ -110,24 +101,15 @@ class PengajuanController extends Controller
 
         return redirect()->route('pengajuan')->with($notification);
     }
-    public function tolak(Request $req){
+    public function tolak($id){
 
-        $pengajuan = new Pengajuan;
-
-        $pengajuan->id_tabungan = $req->get('id_tabungan');
-        $pengajuan->nama = $req->get('nama');
-        $pengajuan->kelas = $req->get('kelas');
-        $pengajuan->jumlah_tabungan = $req->get('jumlah_tabungan');
-        $pengajuan->jumlah_penarikan = $req->get('jumlah_tarik');
-        $pengajuan->alasan = $req->get('alasan');
-        $pengajuan->status = 'Ditolak';
-
-        $pengajuan->save();
+        $pengajuan = Pengajuan::find($id);
+        $pengajuan->delete();
 
         $notification = array(
-            'message' =>'Data Siswa berhasil ditambahkan', 'alert-type' =>'success'
+            'message' =>'Pengajuan Telah di Tolak', 'alert-type' =>'success'
         );
 
-        return redirect()->route('siswa.pengajuan')->with($notification);
+        return redirect()->route('pengajuan')->with($notification);
     }
 }

@@ -63,7 +63,7 @@ Route::middleware('petugas')->group(function () {
         // Kelola Pengajuan ----------------------------------------------------------------------------------------
         Route::get('/petugas/pengajuan', [PengajuanController::class, 'index'])->name('pengajuan');
         Route::post('/petugas/pengajuan/setuju', [PengajuanController::class, 'setuju'])->name('pengajuan.setuju');
-        Route::post('/petugas/pengajuan/tolak', [PengajuanController::class, 'tolak'])->name('pengajuan.tolak');
+        Route::get('/petugas/pengajuan/tolak/{id}', [PengajuanController::class, 'tolak'])->name('pengajuan.tolak');
 });
 
 // Siswa Route -----------------------------------------------------------------------------------------------------
