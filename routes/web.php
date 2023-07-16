@@ -73,7 +73,6 @@ Route::middleware('auth')->group(function () {
 
 // Laporan Route -----------------------------------------------------------------------------------------------------
 Route::middleware('auth')->group(function () {
-
     // Laporan Data Petugas ------------------------------------------------------------------------------------------
     Route::get('/laporan/ptgs', [AdminController::class, 'laporan'])->name('laporan.petugas');
     Route::get('/exportpetugaspdf', [AdminController::class, 'exportpdf'])->name('export.petugas.pdf');
@@ -91,4 +90,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/exportpengajuanpdf', [PengajuanController::class, 'exportpdf'])->name('export.pengajuan.pdf');
     Route::get('/exportpengajuanexcel', [PengajuanController::class, 'exportexcel'])->name('export.pengajuan.excel');
     Route::post('/importpengajuanexcel', [PengajuanController::class, 'importexcel'])->name('import.pengajuan.excel');
+
+    // Laporan Data Tabungan -----------------------------------------------------------------------------------------
+    Route::get('/laporan/transaksi', [TabunganController::class, 'laporan'])->name('laporan.transaksi');
+    Route::get('/exporttransaksipdf', [TabunganController::class, 'exportpdf'])->name('export.transaksi.pdf');
+    Route::get('/exporttransaksiexcel', [TabunganController::class, 'exportexcel'])->name('export.transaksi.excel');
+    Route::post('/importtransaksiexcel', [TabunganController::class, 'importexcel'])->name('import.transaksi.excel');
 });

@@ -21,4 +21,6 @@ class Tabungan extends Model
     {
         return $this->belongsTo(User::class)->withDefault();
     }
+
+    protected $guarded = [];
 }
