@@ -32,9 +32,17 @@
                                         <div class="col-sm-12">
                                              <div class="statistics-details d-flex align-items-center justify-content-between">
                                                   <h4 class="card-title" >Laporan Siswa</h4>
-                                                  <button type="button" class="btn btn-primary btn-rounded" data-bs-toggle="modal" data-bs-target="#tambahModal">
-                                                       Export
-                                                  </button>
+                                                  <div>
+                                                       <button type="button" class="btn btn-sm btn-primary btn-rounded m-1" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                            Import Excel
+                                                       </button>
+                                                       <a href="/exportsiswaexcel" class="btn btn-sm btn-success btn-rounded m-1">
+                                                            Export Excel
+                                                       </a>
+                                                       <a href="/exportsiswapdf" class="btn btn-sm btn-danger btn-rounded m-1">
+                                                            Export PDF
+                                                       </a>
+                                                  </div>
                                              </div>
                                         </div>
                                    </div>
@@ -46,11 +54,9 @@
                                                   <thead>
                                                        <tr class="text-center">
                                                             <th>No</th>
-                                                            <th>ID</th>
-                                                            <th>Username</th>
+                                                            <th>Kode</th>
                                                             <th>Nama</th>
                                                             <th>Jenis Kelamin</th>
-                                                            <th>Email</th>
                                                             <th>Kelas</th>
                                                             <th>Kontak</th>
                                                             <th>Orang Tua</th>
@@ -59,23 +65,18 @@
                                                        </tr>
                                                   </thead>
                                                   <tbody>
-                                                       @php $no=1; @endphp
-                                                       @foreach($user as $users)
-                                                       @if ($users->relationToRole->id == '3')
+                                                       @foreach($userSiswa as $users)
                                                             <tr>
-                                                                 <td class="text-center">{{$no++}}</td>
-                                                                 <td class="text-center">{{$users->id}}</td>
-                                                                 <td>{{$users->username}}</td>
+                                                                 <td class="text-center">{{$loop->iteration}}</td>
+                                                                 <td class="text-center">{{$users->id_tabungan}}</td>
                                                                  <td>{{$users->nama}}</td>
                                                                  <td>{{$users->jenis_kelamin}}</td>
-                                                                 <td>{{$users->email}}</td>
                                                                  <td>{{$users->kelas}}</td>
                                                                  <td>{{$users->kontak}}</td>
                                                                  <td>{{$users->orang_tua}}</td>
                                                                  <td>{{$users->alamat}}</td>
-                                                                 <td>{{$users->created_at}}</td>
+                                                                 <td>{{ \Carbon\Carbon::parse($users->created_at)->format('H:i, F d y') }}</td>
                                                             </tr>
-                                                       @endif
                                                        @endforeach
                                                   </tbody>
                                              </div>
@@ -90,6 +91,31 @@
           </div>
      </div>
 <!-- End Content Main -->
+
+<!-- Import Excel -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+     <div class="modal-dialog">
+          <div class="modal-content">
+               <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Import Data Siswa</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               </div>
+               <form action="/importsiswaexcel" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body" style="margin-bottom: -30px">
+                         <label for="file" class="m-1">Pilih File Excel</label>
+                         <div class="form-group">
+                              <input type="file" class="form-control rounded" style="padding-bottom: 28px" name="file" required>
+                         </div>
+                    </div>
+                    <div class="modal-footer">
+                         <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">Batal</button>
+                         <button type="submit" class="btn btn-primary btn-rounded">Import</button>
+                    </div>
+               </form>
+          </div>
+     </div>
+</div>
 
 <!-- Script -->
 @include('layouts.script')

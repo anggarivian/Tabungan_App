@@ -24,7 +24,7 @@ class UserSeeder extends Seeder
                 'kontak'            => '086734676654',
                 'password'          => bcrypt('12345'),
                 'roles_id'          => 1,
-                'id_tabungan'       => 'KT000',
+                'id_tabungan'       => 'admin',
             ],
             [
                 'id'                => 2,
@@ -35,7 +35,7 @@ class UserSeeder extends Seeder
                 'kontak'            => '081248439240',
                 'password'          => bcrypt('12345'),
                 'roles_id'          => 2,
-                'id_tabungan'       => 'KT000',
+                'id_tabungan'       => 'ptgas',
             ],
         ];
 

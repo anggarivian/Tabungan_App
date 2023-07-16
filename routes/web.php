@@ -40,7 +40,6 @@ Route::middleware('admin')->group(function () {
     Route::post('/admin/petugas/add', [AdminController::class, 'store'])->name('petugas.store');
     Route::patch('admin/petugas/update', [AdminController::class, 'edit'])->name('petugas.ubah');
     Route::get('admin/petugas/delete/{id}', [AdminController::class,'destroy'])->name('petugas.hapus');
-    Route::get('/admin/laporan/petugas', [AdminController::class, 'laporan'])->name('laporan.petugas');
 });
 
 // Petugas Route ---------------------------------------------------------------------------------------------------
@@ -49,7 +48,6 @@ Route::middleware('petugas')->group(function () {
     Route::post('/petugas/siswa/add', [PetugasController::class, 'store'])->name('siswa.store');
     Route::patch('petugas/siswa/update', [PetugasController::class, 'edit'])->name('siswa.ubah');
     Route::get('petugas/siswa/delete/{id}', [PetugasController::class,'destroy'])->name('siswa.hapus');
-    Route::get('/petugas/laporan/siswa', [PetugasController::class, 'laporan'])->name('laporan.siswa');
 
     // Kelola Tabungan ---------------------------------------------------------------------------------------------
         // Stor Tabungan -------------------------------------------------------------------------------------------
@@ -63,12 +61,39 @@ Route::middleware('petugas')->group(function () {
         // Kelola Pengajuan ----------------------------------------------------------------------------------------
         Route::get('/petugas/pengajuan', [PengajuanController::class, 'index'])->name('pengajuan');
         Route::post('/petugas/pengajuan/setuju', [PengajuanController::class, 'setuju'])->name('pengajuan.setuju');
-        Route::post('/petugas/pengajuan/tolak', [PengajuanController::class, 'tolak'])->name('pengajuan.tolak');
+        Route::get('/petugas/pengajuan/tolak/{id}', [PengajuanController::class, 'tolak'])->name('pengajuan.tolak');
 });
 
 // Siswa Route -----------------------------------------------------------------------------------------------------
 Route::middleware('auth')->group(function () {
     Route::get('/siswa/pengajuan', [PengajuanController::class, 'siswa_index'])->name('siswa.pengajuan');
     Route::post('/siswa/pengajuan/add', [PengajuanController::class, 'store'])->name('siswa.ajukan');
-    Route::get('/siswa/riwayat', [PengajuanController::class, 'index'])->name('siswa.riwayat');
+    Route::get('/siswa/riwayat', [PengajuanController::class, 'riwayat'])->name('siswa.riwayat');
+});
+
+// Laporan Route -----------------------------------------------------------------------------------------------------
+Route::middleware('auth')->group(function () {
+    // Laporan Data Petugas ------------------------------------------------------------------------------------------
+    Route::get('/laporan/ptgs', [AdminController::class, 'laporan'])->name('laporan.petugas');
+    Route::get('/exportpetugaspdf', [AdminController::class, 'exportpdf'])->name('export.petugas.pdf');
+    Route::get('/exportpetugasexcel', [AdminController::class, 'exportexcel'])->name('export.petugas.excel');
+    Route::post('/importpetugasexcel', [AdminController::class, 'importexcel'])->name('import.petugas.excel');
+
+    // Laporan Data Siswa --------------------------------------------------------------------------------------------
+    Route::get('/laporan/user', [PetugasController::class, 'laporan'])->name('laporan.siswa');
+    Route::get('/exportsiswapdf', [PetugasController::class, 'exportpdf'])->name('export.siswa.pdf');
+    Route::get('/exportsiswaexcel', [PetugasController::class, 'exportexcel'])->name('export.siswa.excel');
+    Route::post('/importsiswaexcel', [PetugasController::class, 'importexcel'])->name('import.siswa.excel');
+
+    // Laporan Data Pengajuan ----------------------------------------------------------------------------------------
+    Route::get('/laporan/pngjn', [PengajuanController::class, 'laporan'])->name('laporan.pengajuan');
+    Route::get('/exportpengajuanpdf', [PengajuanController::class, 'exportpdf'])->name('export.pengajuan.pdf');
+    Route::get('/exportpengajuanexcel', [PengajuanController::class, 'exportexcel'])->name('export.pengajuan.excel');
+    Route::post('/importpengajuanexcel', [PengajuanController::class, 'importexcel'])->name('import.pengajuan.excel');
+
+    // Laporan Data Tabungan -----------------------------------------------------------------------------------------
+    Route::get('/laporan/transaksi', [TabunganController::class, 'laporan'])->name('laporan.transaksi');
+    Route::get('/exporttransaksipdf', [TabunganController::class, 'exportpdf'])->name('export.transaksi.pdf');
+    Route::get('/exporttransaksiexcel', [TabunganController::class, 'exportexcel'])->name('export.transaksi.excel');
+    Route::post('/importtransaksiexcel', [TabunganController::class, 'importexcel'])->name('import.transaksi.excel');
 });

@@ -17,10 +17,10 @@ class CreateTabungansTable extends Migration
             $table->id();
             $table->string('nama');
             $table->string('kelas')->nullable();
-            $table->string('id_tabungan', 5);
-            $table->integer('jumlah_tabungan')->default(0);
+            $table->string('id_tabungan', 10);
+            $table->integer('saldo_awal')->default(0);
+            $table->integer('saldo_akhir')->default(0);
             $table->string('tipe_transaksi')->nullable();
-            $table->integer('jumlah_dibuku')->default(0);
             $table->integer('jumlah')->default(0);
             $table->integer('premi')->default(0);
             $table->integer('sisa')->default(0);

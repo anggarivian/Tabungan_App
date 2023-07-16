@@ -36,7 +36,7 @@
     @if (Auth::user()->roles_id === 3)
     <li class="nav-item">
       <a class="nav-link" href="{{route('siswa.riwayat')}}">
-        <i class="menu-icon mdi mdi-cash-refund"></i>
+        <i class="menu-icon mdi mdi-cash"></i>
         <span class="menu-title">Tabungan</span>
       </a>
     </li>
@@ -58,10 +58,10 @@
           </a>
           <div class="collapse" id="laporan">
             <ul class="nav flex-column sub-menu">
-              <li class="nav-item "> <a class="nav-link" href="#">Transaksi</a></li>
-              <li class="nav-item"> <a class="nav-link" href="#">Pengajuan</a></li>
-              <li class="nav-item"> <a class="nav-link" href="#">Siswa</a></li>
-              <li class="nav-item"> <a class="nav-link" href="#">Petugas</a></li>
+              <li class="nav-item "> <a class="nav-link" href="{{ route('laporan.transaksi') }}">Transaksi</a></li>
+              <li class="nav-item"> <a class="nav-link" href="{{ route('laporan.pengajuan') }}">Pengajuan</a></li>
+              <li class="nav-item"> <a class="nav-link" href="{{ route('laporan.siswa') }}">Siswa</a></li>
+              <li class="nav-item"> <a class="nav-link" href="{{ route('laporan.petugas') }}">Petugas</a></li>
             </ul>`
           </div>
         </li>
