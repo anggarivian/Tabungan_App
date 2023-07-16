@@ -72,7 +72,7 @@ Route::middleware('auth')->group(function () {
 });
 
 // Laporan Route -----------------------------------------------------------------------------------------------------
-Route::middleware('admin')->group(function () {
+Route::middleware('auth')->group(function () {
 
     // Laporan Data Petugas ------------------------------------------------------------------------------------------
     Route::get('/laporan/ptgs', [AdminController::class, 'laporan'])->name('laporan.petugas');
@@ -85,4 +85,10 @@ Route::middleware('admin')->group(function () {
     Route::get('/exportsiswapdf', [PetugasController::class, 'exportpdf'])->name('export.siswa.pdf');
     Route::get('/exportsiswaexcel', [PetugasController::class, 'exportexcel'])->name('export.siswa.excel');
     Route::post('/importsiswaexcel', [PetugasController::class, 'importexcel'])->name('import.siswa.excel');
+
+    // Laporan Data Pengajuan ----------------------------------------------------------------------------------------
+    Route::get('/laporan/pngjn', [PengajuanController::class, 'laporan'])->name('laporan.pengajuan');
+    Route::get('/exportpengajuanpdf', [PengajuanController::class, 'exportpdf'])->name('export.pengajuan.pdf');
+    Route::get('/exportpengajuanexcel', [PengajuanController::class, 'exportexcel'])->name('export.pengajuan.excel');
+    Route::post('/importpengajuanexcel', [PengajuanController::class, 'importexcel'])->name('import.pengajuan.excel');
 });

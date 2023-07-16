@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
-use App\Models\Pengajuan;
-use App\Models\Tabungan;
+use PDF;
 use App\Models\User;
+use App\Models\Tabungan;
+use App\Models\Pengajuan;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PengajuanController extends Controller
 {
@@ -98,14 +100,13 @@ class PengajuanController extends Controller
     }
     // Laporan Data Pengajuan  -------------------------------------------------------------------------------------------------------
     public function laporan(){
-        $user = User::all();
-        $userPengajuan = User::where('roles_id', '3')->get();
-        return view('laporan.laporanPengajuan', compact('user','userPengajuan'));
+        $pengajuan = Pengajuan::all();
+        return view('laporan.laporanPengajuan', compact('pengajuan'));
     }
     // Export Data Pengajuan PDF ----------------------------------------------------------------------------------------------------
     public function exportpdf(){
-        $user = User::where('roles_id', '3')->get();
-        view()->share('user', $user);
+        $pengajuan = Pengajuan::all();
+        view()->share('pengajuan', $pengajuan);
         $pdf = PDF::loadview('export.pengajuan');
         return $pdf->download('data_pengajuan.pdf');
     }

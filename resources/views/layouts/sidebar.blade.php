@@ -59,7 +59,7 @@
           <div class="collapse" id="laporan">
             <ul class="nav flex-column sub-menu">
               <li class="nav-item "> <a class="nav-link" href="#">Transaksi</a></li>
-              <li class="nav-item"> <a class="nav-link" href="#">Pengajuan</a></li>
+              <li class="nav-item"> <a class="nav-link" href="{{ route('laporan.pengajuan') }}">Pengajuan</a></li>
               <li class="nav-item"> <a class="nav-link" href="{{ route('laporan.siswa') }}">Siswa</a></li>
               <li class="nav-item"> <a class="nav-link" href="{{ route('laporan.petugas') }}">Petugas</a></li>
             </ul>`
