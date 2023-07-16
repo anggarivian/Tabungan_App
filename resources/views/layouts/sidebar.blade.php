@@ -61,7 +61,7 @@
               <li class="nav-item "> <a class="nav-link" href="#">Transaksi</a></li>
               <li class="nav-item"> <a class="nav-link" href="#">Pengajuan</a></li>
               <li class="nav-item"> <a class="nav-link" href="#">Siswa</a></li>
-              <li class="nav-item"> <a class="nav-link" href="#">Petugas</a></li>
+              <li class="nav-item"> <a class="nav-link" href="{{ route('laporan.petugas') }}">Petugas</a></li>
             </ul>`
           </div>
         </li>

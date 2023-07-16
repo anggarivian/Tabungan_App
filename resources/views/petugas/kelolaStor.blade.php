@@ -189,8 +189,6 @@
                                                   <th>Saldo Awal</th>
                                                   <th>Jumlah Stor</th>
                                                   <th>Saldo Akhir</th>
-                                                  <th>ADM</th>
-                                                  <th>Sisa</th>
                                                   <th>Tanggal Dibuat</th>
                                              </tr>
                                         </thead>
@@ -204,8 +202,6 @@
                                                        <td>{{$stors->saldo_awal}}</td>
                                                        <td>{{$stors->jumlah}}</td>
                                                        <td>{{$stors->saldo_akhir}}</td>
-                                                       <td>{{$stors->premi}}</td>
-                                                       <td>{{$stors->sisa}}</td>
                                                        <td>{{ \Carbon\Carbon::parse($stors->created_at)->format('H:i, F d') }}</td>
                                                   </tr>
                                              @endforeach

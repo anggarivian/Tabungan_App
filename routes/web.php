@@ -40,7 +40,6 @@ Route::middleware('admin')->group(function () {
     Route::post('/admin/petugas/add', [AdminController::class, 'store'])->name('petugas.store');
     Route::patch('admin/petugas/update', [AdminController::class, 'edit'])->name('petugas.ubah');
     Route::get('admin/petugas/delete/{id}', [AdminController::class,'destroy'])->name('petugas.hapus');
-    Route::get('/admin/laporan/petugas', [AdminController::class, 'laporan'])->name('laporan.petugas');
 });
 
 // Petugas Route ---------------------------------------------------------------------------------------------------
@@ -49,7 +48,6 @@ Route::middleware('petugas')->group(function () {
     Route::post('/petugas/siswa/add', [PetugasController::class, 'store'])->name('siswa.store');
     Route::patch('petugas/siswa/update', [PetugasController::class, 'edit'])->name('siswa.ubah');
     Route::get('petugas/siswa/delete/{id}', [PetugasController::class,'destroy'])->name('siswa.hapus');
-    // Route::get('/petugas/laporan/siswa', [PetugasController::class, 'laporan'])->name('laporan.siswa');
 
     // Kelola Tabungan ---------------------------------------------------------------------------------------------
         // Stor Tabungan -------------------------------------------------------------------------------------------
@@ -71,4 +69,20 @@ Route::middleware('auth')->group(function () {
     Route::get('/siswa/pengajuan', [PengajuanController::class, 'siswa_index'])->name('siswa.pengajuan');
     Route::post('/siswa/pengajuan/add', [PengajuanController::class, 'store'])->name('siswa.ajukan');
     Route::get('/siswa/riwayat', [PengajuanController::class, 'riwayat'])->name('siswa.riwayat');
+});
+
+// Laporan Route -----------------------------------------------------------------------------------------------------
+Route::middleware('admin')->group(function () {
+
+    // Laporan Data Petugas ------------------------------------------------------------------------------------------
+    Route::get('/laporan/ptgs', [AdminController::class, 'laporan'])->name('laporan.petugas');
+    Route::get('/exportpetugaspdf', [AdminController::class, 'exportpdf'])->name('export.petugas.pdf');
+    Route::get('/exportpetugasexcel', [AdminController::class, 'exportexcel'])->name('export.petugas.excel');
+    Route::post('/importpetugasexcel', [AdminController::class, 'importexcel'])->name('import.petugas.excel');
+
+    // Laporan Data Siswa --------------------------------------------------------------------------------------------
+    Route::get('/laporan/siswai', [PetugasController::class, 'laporan'])->name('laporan.siswa');
+    // Route::get('/exportpetugaspdf', [PetugasController::class, 'exportpdf'])->name('export.petugas.pdf');
+    // Route::get('/exportpetugasexcel', [PetugasController::class, 'exportexcel'])->name('export.petugas.excel');
+    // Route::post('/importpetugasexcel', [PetugasController::class, 'importexcel'])->name('import.petugas.excel');
 });

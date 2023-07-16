@@ -2,10 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\User;
+use PDF;
 use App\Models\Role;
+use App\Models\User;
+use App\Exports\UsersExport;
+// use Maatwebsite\Excel\Excel;
+use Illuminate\Http\Request;
+// use Excel;
+use App\Exports\PetugasExport;
+use App\Imports\PetugasImport;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AdminController extends Controller
 {
@@ -78,5 +85,28 @@ class AdminController extends Controller
             'alert-type' => 'success'
         );
         return redirect()->route('petugas')->with($notification);
+    }
+
+    // Laporan Data Petugas -----------------------------------------------------------------------------------------
+    public function laporan(){
+        $user = User::all();
+        $userPetugas = User::where('roles_id', '2')->get();
+        return view('laporan.laporanPetugas', compact('user','userPetugas'));
+    }
+    public function exportpdf(){
+        $user = User::where('roles_id', '2')->get();
+        view()->share('user', $user);
+        $pdf = PDF::loadview('export.petugas');
+        return $pdf->download('data_petugas.pdf');
+    }
+    public function exportexcel(){
+        return Excel::download(new PetugasExport, 'datapetugas.xlsx');
+    }
+    public function importexcel(Request $req){
+        $data = $req->file('file');
+        $namafile = $data->getClientOriginalName();
+        $data->move('PetugasData',  $namafile);
+        Excel::import(new  PetugasImport, \public_path('/PetugasData/'.$namafile));
+        return \redirect()->back();
     }
 }
