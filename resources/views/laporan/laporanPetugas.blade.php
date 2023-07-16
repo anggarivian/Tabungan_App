@@ -62,8 +62,7 @@
                                                   </tr>
                                              </thead>
                                              <tbody>
-                                                  @php $no=1; @endphp
-                                                       @foreach($userPetugas as $users)
+                                                  @foreach($userPetugas as $users)
                                                        <tr>
                                                             <td>{{$loop->iteration}}</td>
                                                             <td>{{$users->id_tabungan}}</td>

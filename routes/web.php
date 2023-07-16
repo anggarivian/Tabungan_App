@@ -81,8 +81,8 @@ Route::middleware('admin')->group(function () {
     Route::post('/importpetugasexcel', [AdminController::class, 'importexcel'])->name('import.petugas.excel');
 
     // Laporan Data Siswa --------------------------------------------------------------------------------------------
-    Route::get('/laporan/siswai', [PetugasController::class, 'laporan'])->name('laporan.siswa');
-    // Route::get('/exportpetugaspdf', [PetugasController::class, 'exportpdf'])->name('export.petugas.pdf');
-    // Route::get('/exportpetugasexcel', [PetugasController::class, 'exportexcel'])->name('export.petugas.excel');
-    // Route::post('/importpetugasexcel', [PetugasController::class, 'importexcel'])->name('import.petugas.excel');
+    Route::get('/laporan/user', [PetugasController::class, 'laporan'])->name('laporan.siswa');
+    Route::get('/exportsiswapdf', [PetugasController::class, 'exportpdf'])->name('export.siswa.pdf');
+    Route::get('/exportsiswaexcel', [PetugasController::class, 'exportexcel'])->name('export.siswa.excel');
+    Route::post('/importsiswaexcel', [PetugasController::class, 'importexcel'])->name('import.siswa.excel');
 });

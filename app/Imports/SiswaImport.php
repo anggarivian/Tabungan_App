@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Concerns\ToModel;
 
-class PetugasImport implements ToModel
+class SiswaImport implements ToModel
 {
     /**
     * @param array $row
@@ -22,7 +22,10 @@ class PetugasImport implements ToModel
             'id_tabungan' => $row['4'],
             'password' => Hash::make($row['5']),
             'kontak' => $row['6'],
-            'roles_id' => 2 ,
+            'kelas' => $row['7'],
+            'orang_tua' => $row['8'],
+            'alamat' => $row['9'],
+            'roles_id' => 3 ,
         ]);
     }
 }

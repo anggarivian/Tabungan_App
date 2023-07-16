@@ -6,9 +6,7 @@ use PDF;
 use App\Models\Role;
 use App\Models\User;
 use App\Exports\UsersExport;
-// use Maatwebsite\Excel\Excel;
 use Illuminate\Http\Request;
-// use Excel;
 use App\Exports\PetugasExport;
 use App\Imports\PetugasImport;
 use Illuminate\Support\Facades\Hash;
@@ -23,9 +21,7 @@ class AdminController extends Controller
     public function index(){
         $user = User::All();
         $role = Role::All();
-
         $userPetugas = User::where('roles_id', '2')->get();
-
         return view('admin.kelolaPetugas', compact('user','role','userPetugas'));
     }
     // Create Data Petugas ------------------------------------------------------------------------------------------
@@ -86,7 +82,6 @@ class AdminController extends Controller
         );
         return redirect()->route('petugas')->with($notification);
     }
-
     // Laporan Data Petugas -----------------------------------------------------------------------------------------
     public function laporan(){
         $user = User::all();
