@@ -29,10 +29,10 @@ class AdminController extends Controller
         $user = new User;
         $validate = $req->validate([
             'nama' => 'required|max:255',
-            'id_tabungan' => 'required|max:10',
+            'id_tabungan' => 'required|max:5',
             'email' => 'required',
-            'kontak' => 'required',
-            'password' => 'required',
+            'kontak' => 'required|max:10',
+            'password' => 'required|min:8',
             'jenis_kelamin' => 'required',
         ]);
         $user->nama = $req->get('nama');
@@ -60,10 +60,12 @@ class AdminController extends Controller
         $validate = $req->validate([
             'nama' => 'required|max:255',
             'email' => 'required',
+            'kontak' => 'required|max:10',
             'jenis_kelamin' => 'required',
         ]);
         $user->nama = $req->get('nama');
         $user->email = $req->get('email');
+        $user->kontak = $req->get('kontak');
         $user->jenis_kelamin = $req->get('jenis_kelamin');
         $user->save();
         $notification = array(

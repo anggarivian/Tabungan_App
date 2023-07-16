@@ -31,7 +31,7 @@
                                         <div class="card-body" >
                                              <div class="col-sm-12">
                                                   <div class="statistics-details d-flex align-items-center justify-content-between">
-                                                       <h4 class="card-title" >Laporan Petugas</h4>
+                                                       <h4 class="card-title" >Laporan Pengajuan</h4>
                                                        <div>
                                                             <a href="/exportpengajuanexcel" class="btn btn-sm btn-success btn-rounded m-1">
                                                                  Export Excel

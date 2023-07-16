@@ -43,6 +43,15 @@ class PengajuanController extends Controller
     // Crate Data Pengajuan -------------------------------------------------------------------------------------------------------
     public function store(Request $req){
         $pengajuan = new Pengajuan;
+        $validate = $req->validate([
+            'nama' => 'required|max:255',
+            'id_tabungan' => 'required|max:5',
+            'email' => 'required',
+            'kelas' => 'required',
+            'jumlah_tarik' => 'required',
+            'jumlah_tabungan' => 'required',
+            'alasan' => 'required',
+        ]);
         $pengajuan->id_tabungan = $req->get('id_tabungan');
         $pengajuan->nama = $req->get('nama');
         $pengajuan->kelas = $req->get('kelas');

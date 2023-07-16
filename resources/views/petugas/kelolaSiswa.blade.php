@@ -46,7 +46,7 @@
                                                   <thead>
                                                        <tr class="text-center">
                                                             <th>No</th>
-                                                            <th>NISN</th>
+                                                            <th>Kode</th>
                                                             <th>Nama</th>
                                                             <th>Jenis Kelamin</th>
                                                             <th>Kelas</th>
