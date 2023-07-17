@@ -49,6 +49,67 @@
                               </div>
                               <div class="card">
                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                             <h4 class="card-title" >Data Siswa</h4>
+                                             <form action="/laporan/user" method="GET">
+                                                  <!-- @csrf -->
+                                                  <div class="search d-flex">
+                                                       <div class="d-blox justify-content-center m-1">
+                                                            <label for="nama" class="statistics-title mt-1">Filter</label>
+                                                       </div>
+                                                       <div class="d-blox justify-content-center m-1">
+                                                            <div class="form-group">
+                                                                 <input type="text" class="form-control rounded" style="padding-right: 1px" name="id_tabungan" id="id_tabungan" value="{{ request('id_tabungan') }}" placeholder="Kode Tabungan">
+                                                            </div>
+                                                       </div>
+                                                       <div class="d-blox justify-content-center m-1">
+                                                            <div class="form-group">
+                                                                 <input type="text" class="form-control rounded" style="padding-right: 1px" name="nama" id="nama" value="{{ request('nama') }}" placeholder="Nama">
+                                                            </div>
+                                                       </div>
+                                                       <div class="d-blok justify-content-center m-1">
+                                                            <div class="form-group">
+                                                                 <select class="form-select form-select-sm rounded"  name="jenis_kelamin" id="jenis_kelamin">
+                                                                      <option value="" >Jenis Kelamin</option>
+                                                                      <option value="Laki - Laki" {{ request('jenis_kelamin') == 'Laki - Laki' ? 'selected' : '' }} >Laki - Laki</option>
+                                                                      <option value="Perempuan" {{ request('jenis_kelamin') == 'Perempuan' ? 'selected' : '' }} >Perempuan</option>
+                                                                 </select>
+                                                            </div>
+                                                       </div>
+                                                       <div class="d-blok justify-content-center m-1">
+                                                            <div class="form-group">
+                                                                 <select class="form-select form-select-sm rounded"  name="kelas" id="kelas">
+                                                                      <option value="" >Kelas</option>
+                                                                      <option value="1A" {{ request('kelas') == '1A' ? 'selected' : '' }} >1 - A</option>
+                                                                      <option value="1B" {{ request('kelas') == '1B' ? 'selected' : '' }}>1 - B</option>
+                                                                      <option value="2A" {{ request('kelas') == '2A' ? 'selected' : '' }}>2 - A</option>
+                                                                      <option value="2B" {{ request('kelas') == '2B' ? 'selected' : '' }}>2 - B</option>
+                                                                      <option value="3A" {{ request('kelas') == '3A' ? 'selected' : '' }}>3 - A</option>
+                                                                      <option value="3B" {{ request('kelas') == '3B' ? 'selected' : '' }}>3 - B</option>
+                                                                      <option value="4" {{ request('kelas') == '4' ? 'selected' : '' }}>4</option>
+                                                                      <option value="5" {{ request('kelas') == '5' ? 'selected' : '' }}>5</option>
+                                                                      <option value="6" {{ request('kelas') == '6' ? 'selected' : '' }}>6</option>
+                                                                 </select>
+                                                            </div>
+                                                       </div>
+                                                       <div class="d-blox justify-content-center m-1">
+                                                            <div class="form-group">
+                                                                 <input type="text" class="form-control rounded" style="padding-right: 1px" name="kontak" id="kontak" value="{{ request('kontak') }}" placeholder="Kontak">
+                                                            </div>
+                                                       </div>
+                                                       <div class="d-blox justify-content-center m-1">
+                                                            <div class="form-group">
+                                                                 <input type="text" class="form-control rounded" style="padding-right: 1px" name="orang_tua" id="orang_tua" value="{{ request('orang_tua') }}" placeholder="Orang Tua">
+                                                            </div>
+                                                       </div>
+                                                       <div class="d-blok justify-content-center m-1">
+                                                            <button type="submit" class="btn btn-sm btn-primary btn-rounded">
+                                                                 Cari
+                                                            </button>
+                                                       </div>
+                                                  </div>
+                                             </form>
+                                        </div>
                                         <div class="table-responsive">
                                              <table id="table-data " class="table table-striped text-center">
                                                   <thead>
@@ -65,9 +126,9 @@
                                                        </tr>
                                                   </thead>
                                                   <tbody>
-                                                       @foreach($userSiswa as $users)
+                                                       @foreach($siswa as $users)
                                                             <tr>
-                                                                 <td class="text-center">{{$loop->iteration}}</td>
+                                                                 <td>{{$loop->iteration + $siswa->firstItem() - 1}}</td>
                                                                  <td class="text-center">{{$users->id_tabungan}}</td>
                                                                  <td>{{$users->nama}}</td>
                                                                  <td>{{$users->jenis_kelamin}}</td>
@@ -81,6 +142,8 @@
                                                   </tbody>
                                              </div>
                                         </table>
+                                        <!-- Revisi Pagination (Tambahin'vendor.pagination.bootstrap-5') -->
+                                        {{ $siswa->links('vendor.pagination.bootstrap-5') }}
                                    </div>
                               </div>
                               </div>

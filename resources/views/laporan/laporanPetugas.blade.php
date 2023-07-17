@@ -49,6 +49,27 @@
                               </div>
                               <div class="card">
                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                             <h4 class="card-title" >Data Petugas</h4>
+                                             <form action="/laporan/ptgs" method="GET">
+                                                  <!-- @csrf -->
+                                                  <div class="search d-flex">
+                                                       <div class="d-blox justify-content-center m-1">
+                                                            <label for="nama" class="statistics-title mt-1">Filter</label>
+                                                       </div>
+                                                       <div class="d-blox justify-content-center m-1">
+                                                            <div class="form-group">
+                                                                 <input type="text" class="form-control rounded" name="nama" id="nama" value="{{ request('nama') }}" placeholder="Cari Nama...">
+                                                            </div>
+                                                       </div>
+                                                       <div class="d-blok justify-content-center m-1">
+                                                            <button type="submit" class="btn btn-sm btn-primary btn-rounded">
+                                                                 Cari
+                                                            </button>
+                                                       </div>
+                                                  </div>
+                                             </form>
+                                        </div>
                                         <table id="table-data" class="table table-striped text-center">
                                              <thead>
                                                   <tr class="text-center">
@@ -62,9 +83,9 @@
                                                   </tr>
                                              </thead>
                                              <tbody>
-                                                  @foreach($userPetugas as $users)
+                                                  @foreach($tabungan as $users)
                                                        <tr>
-                                                            <td>{{$loop->iteration}}</td>
+                                                            <td>{{$loop->iteration + $tabungan->firstItem() - 1}}</td>
                                                             <td>{{$users->id_tabungan}}</td>
                                                             <td>{{$users->nama}}</td>
                                                             <td>{{$users->jenis_kelamin}}</td>
@@ -75,6 +96,8 @@
                                                   @endforeach
                                              </tbody>
                                         </table>
+                                        <!-- Revisi Pagination (Tambahin'vendor.pagination.bootstrap-5') -->
+                                        {{ $tabungan->links('vendor.pagination.bootstrap-5') }}
                                    </div>
                               </div>
                               </div>
