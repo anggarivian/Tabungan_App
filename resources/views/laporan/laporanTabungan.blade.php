@@ -125,7 +125,7 @@
                                                   <tbody>
                                                        @foreach($tabungan as $tabungans)
                                                             <tr>
-                                                                 <!-- Revisi Pagination (Tambahin '+ $tabungan->firstItem() - 1') --> 
+                                                                 <!-- Revisi Pagination (Tambahin '+ $tabungan->firstItem() - 1') -->
                                                                  <td>{{$loop->iteration + $tabungan->firstItem() - 1}}</td>
                                                                  <td>{{$tabungans->id_tabungan}}</td>
                                                                  <td>{{$tabungans->nama}}</td>
@@ -152,7 +152,7 @@
                                                   </tbody>
                                              </table>
                                              <!-- Revisi Pagination (Tambahin'vendor.pagination.bootstrap-5') -->
-                                             {{ $tabungan->links('vendor.pagination.bootstrap-5') }} 
+                                             {{ $tabungan->links('vendor.pagination.bootstrap-5') }}
                                         </div>
                                    </div>
                               </div>

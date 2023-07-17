@@ -85,10 +85,17 @@ class AdminController extends Controller
         return redirect()->route('petugas')->with($notification);
     }
     // Laporan Data Petugas -----------------------------------------------------------------------------------------
-    public function laporan(){
-        $user = User::all();
-        $userPetugas = User::where('roles_id', '2')->get();
-        return view('laporan.laporanPetugas', compact('user','userPetugas'));
+    public function laporan(Request $request){
+        //Searching
+        $query = User::query()->where('roles_id', 2);
+        $query->select('id','nama','email','id_tabungan','jenis_kelamin','kelas','kontak','password','orang_tua','alamat','roles_id');
+        if(!empty($request->nama)){
+            $query->where('nama', 'LIKE', '%' . $request->nama . '%');
+        }
+        $query->orderBy('created_at','desc');
+        //End Searching
+        $tabungan = $query->paginate(10);
+        return view('laporan.laporanPetugas', compact('tabungan'));
     }
     public function exportpdf(){
         $user = User::where('roles_id', '2')->get();
