@@ -14,17 +14,35 @@ class TabunganSeeder extends Seeder
      */
     public function run()
     {
+        //old
+        // $tabungans = [
+        //     [
+        //         'users_id'          => 1,
+        //         'nama'              => 'Siswa',
+        //         'kelas'             => '4',
+        //         'jumlah_tabungan'   => 0,
+        //         'tipe_transaksi'    => 'Stor',
+        //         'jumlah_dibuku'     => 0,
+        //         'jumlah'            => 0,
+        //         'premi'             => 0.05,
+        //         'sisa'              => 0
+        //     ],
+        // ];
+
+        //new
         $tabungans = [
             [
-                'users_id'          => 1,
+                'id'                => 1,
                 'nama'              => 'Siswa',
                 'kelas'             => '4',
-                'jumlah_tabungan'   => 0,
+                'id_tabungan'       => '1',
+                'saldo_awal'        => '0',
+                'saldo_akhir'       => 0,
                 'tipe_transaksi'    => 'Stor',
-                'jumlah_dibuku'     => 0,
                 'jumlah'            => 0,
                 'premi'             => 0.05,
-                'sisa'              => 0
+                'sisa'              => 0,
+                'roles_id'          => 3
             ],
         ];
         foreach ($tabungans as $key => $tabungan){

@@ -207,8 +207,35 @@ class TabunganController extends Controller
         return redirect()->route('tabungan.tarik')->with($notification);
     }
     // Laporan Data Tabungan --------------------------------------------------------------------------------------------------------
-    public function laporan(Request $req){
-        $tabungan = Tabungan::paginate(10);
+    public function laporan(Request $request){
+
+        //Searching
+        $query = Tabungan::query();
+        $query->select('id','nama','kelas','id_tabungan','saldo_awal','saldo_akhir','tipe_transaksi','jumlah','premi','sisa','roles_id');
+
+        if(!empty($request->id_tabungan)){
+            $query->where('id_tabungan',$request->id_tabungan);    
+        }
+
+        if($request->kelas == "1A" || $request->kelas == "1B" || $request->kelas == "2A"
+            || $request->kelas == "2B" || $request->kelas == "3A" || $request->kelas == "3B"
+            || $request->kelas == "4" || $request->kelas == "5" || $request->kelas == "6"){
+            $query->where('kelas',$request->kelas);    
+        }
+
+        if($request->tipe_transaksi == "Stor" || $request->tipe_transaksi == "Tarik"){
+            $query->where('tipe_transaksi',$request->tipe_transaksi);    
+        }
+
+
+        if(!empty($request->awal_tanggal) && !empty($request->akhir_tanggal)){
+            $query->whereBetween('created_at',[$request->awal_tanggal, $request->akhir_tanggal]);
+        }
+
+        $query->orderBy('created_at','desc');
+        //End Searching
+        
+        $tabungan = $query->paginate(10);
         return view('laporan.laporanTabungan', compact('tabungan'));
     }
     // Export Data Tabungan PDF ----------------------------------------------------------------------------------------------------

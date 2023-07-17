@@ -48,37 +48,37 @@
                                         <div class="card-body">
                                              <div class="d-flex justify-content-between">
                                                   <h4 class="card-title" >Data Transaksi</h4>
-                                                  <form action="/laporan/transaksi/search" method="get">
-                                                       @csrf
+                                                  <form action="/laporan/transaksi" method="GET">
+                                                       <!-- @csrf -->
                                                        <div class="search d-flex">
                                                             <div class="d-blox justify-content-center m-1">
                                                                  <label for="nama" class="statistics-title mt-1">Filter :</label>
                                                             </div>
                                                             <div class="d-blox justify-content-center m-1">
                                                                  <div class="form-group">
-                                                                      <input type="text" class="form-control rounded" name="id_tabungan" placeholder="Kode Tabungan">
+                                                                      <input type="text" class="form-control rounded" name="id_tabungan" id="id_tabungan" value="{{ request('id_tabungan') }}" placeholder="Kode Tabungan">
                                                                  </div>
                                                             </div>
                                                             <div class="d-blok justify-content-center m-1">
                                                                  <div class="form-group">
                                                                       <select class="form-select form-select-sm rounded"  name="kelas" id="kelas">
-                                                                           <option value="1A">1 - A</option>
-                                                                           <option value="1B">1 - B</option>
-                                                                           <option value="2A">2 - A</option>
-                                                                           <option value="2B">2 - B</option>
-                                                                           <option value="3A">3 - A</option>
-                                                                           <option value="3B">3 - B</option>
-                                                                           <option value="4">4</option>
-                                                                           <option value="5">5</option>
-                                                                           <option value="6">6</option>
+                                                                           <option value="1A" {{ request('kelas') == '1A' ? 'selected' : '' }} >1 - A</option>
+                                                                           <option value="1B" {{ request('kelas') == '1B' ? 'selected' : '' }}>1 - B</option>
+                                                                           <option value="2A" {{ request('kelas') == '2A' ? 'selected' : '' }}>2 - A</option>
+                                                                           <option value="2B" {{ request('kelas') == '2B' ? 'selected' : '' }}>2 - B</option>
+                                                                           <option value="3A" {{ request('kelas') == '3A' ? 'selected' : '' }}>3 - A</option>
+                                                                           <option value="3B" {{ request('kelas') == '3B' ? 'selected' : '' }}>3 - B</option>
+                                                                           <option value="4" {{ request('kelas') == '4' ? 'selected' : '' }}>4</option>
+                                                                           <option value="5" {{ request('kelas') == '5' ? 'selected' : '' }}>5</option>
+                                                                           <option value="6" {{ request('kelas') == '6' ? 'selected' : '' }}>6</option>
                                                                       </select>
                                                                  </div>
                                                             </div>
                                                             <div class="d-blok justify-content-center m-1">
                                                                  <div class="form-group">
                                                                       <select class="form-select form-select-sm rounded"  name="tipe_transaksi" id="tipe_transaksi">
-                                                                           <option value="Stor">Stor</option>
-                                                                           <option value="Tarik">Tarik</option>
+                                                                           <option value="Stor" {{ request('tipe_transaksi') == 'Stor' ? 'selected' : '' }} >Stor</option>
+                                                                           <option value="Tarik" {{ request('tipe_transaksi') == 'Tarik' ? 'selected' : '' }} >Tarik</option>
                                                                       </select>
                                                                  </div>
                                                             </div>
@@ -87,7 +87,7 @@
                                                             </div>
                                                             <div class="d-blox justify-content-center m-1">
                                                                  <div class="form-group">
-                                                                      <input type="date" class="form-control rounded" name="awal_tanggal" placeholder="Tanggal">
+                                                                      <input type="date" class="form-control rounded" name="awal_tanggal" id="awal_tanggal" value="{{ request('awal_tanggal') }}" placeholder="Tanggal">
                                                                  </div>
                                                             </div>
                                                             <div class="d-blox justify-content-center m-1">
@@ -95,7 +95,7 @@
                                                             </div>
                                                             <div class="d-blox justify-content-center m-1">
                                                                  <div class="form-group">
-                                                                      <input type="date" class="form-control rounded" name="akhir_tanggal" placeholder="Tanggal">
+                                                                      <input type="date" class="form-control rounded" name="akhir_tanggal" id="akhir_tanggal" value="{{ request('akhir_tanggal') }}" placeholder="Tanggal">
                                                                  </div>
                                                             </div>
                                                             <div class="d-blok justify-content-center m-1">
@@ -125,7 +125,8 @@
                                                   <tbody>
                                                        @foreach($tabungan as $tabungans)
                                                             <tr>
-                                                                 <td>{{$loop->iteration}}</td>
+                                                                 <!-- Revisi Pagination (Tambahin '+ $tabungan->firstItem() - 1') --> 
+                                                                 <td>{{$loop->iteration + $tabungan->firstItem() - 1}}</td>
                                                                  <td>{{$tabungans->id_tabungan}}</td>
                                                                  <td>{{$tabungans->nama}}</td>
                                                                  <td>{{$tabungans->kelas}}</td>
@@ -150,7 +151,8 @@
                                                        @endforeach
                                                   </tbody>
                                              </table>
-                                             {{ $tabungan->links() }}
+                                             <!-- Revisi Pagination (Tambahin'vendor.pagination.bootstrap-5') -->
+                                             {{ $tabungan->links('vendor.pagination.bootstrap-5') }} 
                                         </div>
                                    </div>
                               </div>
