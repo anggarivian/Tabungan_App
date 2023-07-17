@@ -50,12 +50,12 @@
                               <div class="card">
                                    <div class="card-body">
                                         <div class="d-flex justify-content-between">
-                                             <h4 class="card-title" >Data Transaksi</h4>
+                                             <h4 class="card-title" >Data Petugas</h4>
                                              <form action="/laporan/ptgs" method="GET">
                                                   <!-- @csrf -->
                                                   <div class="search d-flex">
                                                        <div class="d-blox justify-content-center m-1">
-                                                            <label for="nama" class="statistics-title mt-1">Filter :</label>
+                                                            <label for="nama" class="statistics-title mt-1">Filter</label>
                                                        </div>
                                                        <div class="d-blox justify-content-center m-1">
                                                             <div class="form-group">

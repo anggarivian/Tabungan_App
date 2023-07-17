@@ -111,10 +111,35 @@ class PetugasController extends Controller
             return redirect()->route('siswa')->with($notification);
         }
         // Laporan Data Siswa  --------------------------------------------------------------------------------------------------
-        public function laporan(){
-            $user = User::all();
-            $userSiswa = User::where('roles_id', '3')->get();
-            return view('laporan.laporanSiswa', compact('user','userSiswa'));
+        public function laporan(Request $request){
+            //Searching
+            $query = User::query()->where('roles_id', 3);
+            $query->select('id','nama','email','id_tabungan','jenis_kelamin','kelas','kontak','password','orang_tua','alamat','roles_id');
+            if(!empty($request->id_tabungan)){
+                $query->where('id_tabungan', 'LIKE', '%' . $request->id_tabungan . '%');
+            }
+            if(!empty($request->nama)){
+                $query->where('nama', 'LIKE', '%' . $request->nama . '%');
+            }
+            if($request->kelas == "1A" || $request->kelas == "1B" || $request->kelas == "2A"
+                || $request->kelas == "2B" || $request->kelas == "3A" || $request->kelas == "3B"
+                || $request->kelas == "4" || $request->kelas == "5" || $request->kelas == "6"){
+                $query->where('kelas',$request->kelas);
+            }
+            if($request->jenis_kelamin == "Laki - Laki" || $request->jenis_kelamin == "Perempuan"){
+                $query->where('jenis_kelamin',$request->jenis_kelamin);
+            }
+            if(!empty($request->kontak)){
+                $query->where('kontak', 'LIKE', '%' . $request->kontak . '%');
+            }
+            if(!empty($request->orang_tua)){
+                $query->where('orang_tua', 'LIKE', '%' . $request->orang_tua . '%');
+            }
+            $query->orderBy('created_at','desc');
+            //End Searching
+            $siswa = $query->paginate(10);
+
+            return view('laporan.laporanSiswa', compact('siswa'));
         }
         // Export Data Siswa PDF ------------------------------------------------------------------------------------------------
         public function exportpdf(){

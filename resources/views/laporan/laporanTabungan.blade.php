@@ -52,7 +52,7 @@
                                                        <!-- @csrf -->
                                                        <div class="search d-flex">
                                                             <div class="d-blox justify-content-center m-1">
-                                                                 <label for="nama" class="statistics-title mt-1">Filter :</label>
+                                                                 <label for="nama" class="statistics-title mt-1">Filter</label>
                                                             </div>
                                                             <div class="d-blox justify-content-center m-1">
                                                                  <div class="form-group">
@@ -62,6 +62,7 @@
                                                             <div class="d-blok justify-content-center m-1">
                                                                  <div class="form-group">
                                                                       <select class="form-select form-select-sm rounded"  name="kelas" id="kelas">
+                                                                           <option value="" >Kelas</option>
                                                                            <option value="1A" {{ request('kelas') == '1A' ? 'selected' : '' }} >1 - A</option>
                                                                            <option value="1B" {{ request('kelas') == '1B' ? 'selected' : '' }}>1 - B</option>
                                                                            <option value="2A" {{ request('kelas') == '2A' ? 'selected' : '' }}>2 - A</option>
@@ -77,6 +78,7 @@
                                                             <div class="d-blok justify-content-center m-1">
                                                                  <div class="form-group">
                                                                       <select class="form-select form-select-sm rounded"  name="tipe_transaksi" id="tipe_transaksi">
+                                                                           <option value="" >Tipe Transaksi</option>
                                                                            <option value="Stor" {{ request('tipe_transaksi') == 'Stor' ? 'selected' : '' }} >Stor</option>
                                                                            <option value="Tarik" {{ request('tipe_transaksi') == 'Tarik' ? 'selected' : '' }} >Tarik</option>
                                                                       </select>
