@@ -53,7 +53,7 @@ Route::middleware('petugas')->group(function () {
         // Stor Tabungan -------------------------------------------------------------------------------------------
         Route::get('/petugas/tabungan/stor-tabungan', [TabunganController::class, 'index_stor'])->name('tabungan.stor');
         Route::patch('/petugas/tabungan/stor-tabungan', [TabunganController::class, 'stor_tabungan'])->name('tabungan.stor.tambah');
-
+        Route::get('/petugas/tabungan/search/{id}', [TabunganController::class, 'search'])->name('tabungan.search');
         // Tarik Tabungan ------------------------------------------------------------------------------------------
         Route::get('/petugas/tabungan/tarik-tabungan', [TabunganController::class, 'index_tarik'])->name('tabungan.tarik');
         Route::patch('/petugas/tabungan/tarik-tabungan', [TabunganController::class, 'tarik_tabungan'])->name('tabungan.tarik.tambah');

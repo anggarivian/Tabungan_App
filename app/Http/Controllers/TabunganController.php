@@ -96,13 +96,13 @@ class TabunganController extends Controller
             'jumlah_stor' => 'required',
             'jumlah_tabungan' => 'required',
         ]);
-        $tabungan->id_tabungan = $req->get('selectuser');
+        $tabungan->id_tabungan = $req->get('searchuser');
         $tabungan->nama = $req->get('nama');
         $tabungan->kelas = $req->get('kelas');
         $tabungan->roles_id = 3 ;
         $tabungan->tipe_transaksi = 'Stor';
         $tabungan->jumlah = $req->get('jumlah_stor');
-        $tabungan->saldo_awal = $req->get('jumlah_tabungan');
+        $tabungan->saldo_awal = $req->get('result-jumlah_tabungan');
         $tabungan->saldo_akhir = $tabungan->saldo_awal + $tabungan->jumlah ;
         $tabungan->premi = $tabungan->saldo_akhir * 0.05 ;
         $tabungan->sisa = $tabungan->saldo_akhir - $tabungan->premi ;
@@ -112,6 +112,12 @@ class TabunganController extends Controller
             'alert-type' => 'success'
         );
         return redirect()->route('tabungan.stor')->with($notification);
+        
+    }
+    // Stor Searching ----------------------------------------------------------------------------------------------------------------
+    public function search($id){
+        $user = Tabungan::find($id);
+        return response()->json($user);
     }
     // Tarik Tabungan ----------------------------------------------------------------------------------------------------------------
     public function index_tarik(){

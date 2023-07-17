@@ -3,7 +3,7 @@
 
     <!-- Plugin js for this page -->
     <script src="{{asset('template/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <!-- inject:js -->
     <script src="{{asset('template/js/off-canvas.js')}}"></script>
     <script src="{{asset('js/app.js')}}"></script>

@@ -110,7 +110,7 @@
                                         <div class="row justify-content-between" >
                                              <div class="form-group col-md-2" >
                                                   <label for="id">Masukan NISN</label>
-                                                  <select name="selectuser" class="form-control" id="selectuser">
+                                                  <!-- <select name="selectuser" class="form-control" id="selectuser">
                                                        <option selected >Pilih NISN</option>
                                                        @foreach($storTerbaru as $key => $value)
                                                             <option value="{{$value->id_tabungan}}" id="getname"
@@ -122,7 +122,9 @@
                                                                  {{$value->id_tabungan}}
                                                             </option>
                                                        @endforeach
-                                                  </select>
+                                                  </select> -->
+                                                  <!-- <input type="text" class="form-control rounded"> -->
+                                                  <input type="text" class="form-control rounded searchuser" id="searchuser" name="searchuser" placeholder="Search User">
                                              </div>
                                              <div class="form-group col-md-3 "style="margin-right: -10px;">
                                                   <label for="nama">Nama Siswa</label>
@@ -219,26 +221,53 @@
      @include('layouts.script')
 
      <script>
-          var selectElement   = document.getElementById('selectuser');
-          var inputId         = document.getElementById('id');
-          var inputNama       = document.getElementById('nama');
-          var inputKelas      = document.getElementById('kelas');
-          var inputTabungan   = document.getElementById('jumlah_tabungan');
-          var inputDibuku     = document.getElementById('jumlah_dibuku');
+          // var selectElement   = document.getElementById('selectuser');
+          // var inputId         = document.getElementById('id');
+          // var inputNama       = document.getElementById('nama');
+          // var inputKelas      = document.getElementById('kelas');
+          // var inputTabungan   = document.getElementById('jumlah_tabungan');
+          // var inputDibuku     = document.getElementById('jumlah_dibuku');
 
-          selectElement.addEventListener('change', function() {
-               var selectedOption  = selectElement.options[selectElement.selectedIndex];
-               var itemID          = selectedOption.getAttribute('data-id');
-               var itemNama        = selectedOption.getAttribute('data-nama');
-               var itemKelas       = selectedOption.getAttribute('data-kelas');
-               var itemTabungan    = selectedOption.getAttribute('data-tabungan');
-               var itemDibuku      = selectedOption.getAttribute('data-dibuku');
-               inputId.value       = itemID;
-               inputNama.value     = itemNama;
-               inputKelas.value    = itemKelas;
-               inputTabungan.value = itemTabungan;
-               inputDibuku.value   = itemDibuku;
+          // selectElement.addEventListener('change', function() {
+          //      var selectedOption  = selectElement.options[selectElement.selectedIndex];
+          //      var itemID          = selectedOption.getAttribute('data-id');
+          //      var itemNama        = selectedOption.getAttribute('data-nama');
+          //      var itemKelas       = selectedOption.getAttribute('data-kelas');
+          //      var itemTabungan    = selectedOption.getAttribute('data-tabungan');
+          //      var itemDibuku      = selectedOption.getAttribute('data-dibuku');
+          //      inputId.value       = itemID;
+          //      inputNama.value     = itemNama;
+          //      inputKelas.value    = itemKelas;
+          //      inputTabungan.value = itemTabungan;
+          //      inputDibuku.value   = itemDibuku;
+          // });
+
+          $(document).ready(function(){
+               $("#searchuser").change(function(){
+                    let id = $(this).val();
+                    alert('change happend');
+                    alert("The text has been changed.");
+                    alert(id);
+                    $.ajax({
+                         type: "get",
+                         url: "{{url('/petugas/tabungan/search')}}/"+id,
+                         dataType: 'json',
+                         success: function(res){
+                              // alert('success');
+                              $('#id').val(res.id);
+                              $('#nama').val(res.nama);
+                              $('#kelas').val(res.kelas);
+                              $('#jumlah_tabungan').val(res.saldo_akhir);
+                              // console.log(res);
+                         },
+                         error: function(xhr, status, error) {
+                              var err = JSON.parse(xhr.responseText);
+                              alert(err.Message);
+                         },
+                    });
+               });
           });
+
      </script>
 
 </body>
