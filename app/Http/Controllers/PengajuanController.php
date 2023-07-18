@@ -14,8 +14,32 @@ use Maatwebsite\Excel\Facades\Excel;
 class PengajuanController extends Controller
 {
     // Read Data Pengajuan -------------------------------------------------------------------------------------------------------
-    public function index(){
+    public function index(Request $request){
         $pengajuan = Pengajuan::All();
+        //Searching
+        $query = Pengajuan::query();
+        $query->select('id','nama','id_tabungan','kelas','jumlah_tabungan','jumlah_penarikan','alasan','status');
+        $searchTerm = $request->input('search');
+
+            if (!empty($searchTerm)) {
+                $query->where(function ($query) use ($searchTerm) {
+                    $query->where('nama', 'LIKE', '%'.$searchTerm.'%')
+                        ->orWhere('id_tabungan', 'LIKE', '%'.$searchTerm.'%');
+                });
+            }
+
+        if($request->kelas == "1A" || $request->kelas == "1B" || $request->kelas == "2A"
+            || $request->kelas == "2B" || $request->kelas == "3A" || $request->kelas == "3B"
+            || $request->kelas == "4" || $request->kelas == "5" || $request->kelas == "6"){
+            $query->where('kelas',$request->kelas);
+        }
+        if($request->status == "Diproses" || $request->status == "Disetujui"){
+            $query->where('status',$request->status);
+        }
+        $query->orderBy('created_at','desc');
+        //End Searching
+        $pengajuan = $query->paginate(10);
+
         return view('pengajuan.pengajuan', compact('pengajuan'));
     }
     public function siswa_index(){

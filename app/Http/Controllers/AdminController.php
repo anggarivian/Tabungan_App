@@ -18,10 +18,30 @@ class AdminController extends Controller
         $this->middleware('auth');
     }
     // Read Data Petugas --------------------------------------------------------------------------------------------
-    public function index(){
+    public function index(Request $request){
         $user = User::All();
         $role = Role::All();
-        $userPetugas = User::where('roles_id', '2')->get();
+
+        //Searching
+        $query = User::query()->where('roles_id', 2);
+        $query->select('id','nama','email','id_tabungan','jenis_kelamin','kelas','kontak','password','orang_tua','alamat','roles_id','created_at','updated_at');
+        $searchTerm = $request->input('search');
+
+        if (!empty($searchTerm)) {
+            $query->where(function ($query) use ($searchTerm) {
+                $query->where('nama', 'LIKE', '%'.$searchTerm.'%')
+                    ->orWhere('email', 'LIKE', '%'.$searchTerm.'%')
+                    ->orWhere('id_tabungan', 'LIKE', '%'.$searchTerm.'%')
+                    ->orWhere('kontak', 'LIKE', '%'.$searchTerm.'%');
+            });
+        }
+        if($request->jenis_kelamin == "Laki - Laki" || $request->jenis_kelamin == "Perempuan"){
+            $query->where('jenis_kelamin',$request->jenis_kelamin);
+        }
+        $query->orderBy('created_at','desc');
+        //End Searching
+        $userPetugas = $query->paginate(10);
+
         return view('admin.kelolaPetugas', compact('user','role','userPetugas'));
     }
     // Create Data Petugas ------------------------------------------------------------------------------------------
