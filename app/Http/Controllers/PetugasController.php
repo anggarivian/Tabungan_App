@@ -20,11 +20,39 @@ class PetugasController extends Controller
             $this->middleware('auth');
         }
         // Read Data Siswa --------------------------------------------------------------------------------------------------------
-        public function index(){
+        public function index(Request $request){
             $user = User::All();
             $role = Role::All();
             $tabungan = Tabungan::All();
-            $userSiswa = User::where('roles_id', '3')->get();
+
+            //Searching
+            $query = User::query()->where('roles_id', 3);
+            $query->select('id','nama','email','id_tabungan','jenis_kelamin','kelas','kontak','password','orang_tua','alamat','roles_id','created_at','updated_at');
+            $searchTerm = $request->input('search');
+
+            if (!empty($searchTerm)) {
+                $query->where(function ($query) use ($searchTerm) {
+                    $query->where('nama', 'LIKE', '%'.$searchTerm.'%')
+                        ->orWhere('email', 'LIKE', '%'.$searchTerm.'%')
+                        ->orWhere('alamat', 'LIKE', '%'.$searchTerm.'%')
+                        ->orWhere('id_tabungan', 'LIKE', '%'.$searchTerm.'%')
+                        ->orWhere('orang_tua', 'LIKE', '%'.$searchTerm.'%')
+                        ->orWhere('kontak', 'LIKE', '%'.$searchTerm.'%')
+                        ->orWhere('alamat', 'LIKE', '%'.$searchTerm.'%');
+                });
+            }
+            if($request->kelas == "1A" || $request->kelas == "1B" || $request->kelas == "2A"
+                || $request->kelas == "2B" || $request->kelas == "3A" || $request->kelas == "3B"
+                || $request->kelas == "4" || $request->kelas == "5" || $request->kelas == "6"){
+                $query->where('kelas',$request->kelas);
+            }
+            if($request->jenis_kelamin == "Laki - Laki" || $request->jenis_kelamin == "Perempuan"){
+                $query->where('jenis_kelamin',$request->jenis_kelamin);
+            }
+            $query->orderBy('created_at','desc');
+            //End Searching
+            $userSiswa = $query->paginate(10);
+
             return view('petugas.kelolaSiswa', compact('user','role','userSiswa'));
         }
         // Create Data Siswa + Tabungan -------------------------------------------------------------------------------------------
