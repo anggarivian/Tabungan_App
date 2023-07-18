@@ -153,13 +153,10 @@
                     <form method="post" action="{{ route('siswa.store')}}" enctype="multipart/form-data">
                          @csrf
                          <div class="row">
-                              <div class="form-group col-md-12">
+                              <div class="form-group col-md-6">
                                    <label for="nama">Nama</label>
                                    <input type="text" class="form-control rounded" id="nama" name="nama" placeholder="Masukan Nama">
-                              </div>
-                              <div class="form-group col-md-6">
-                                   <label for="id_tabungan">NISN</label>
-                                   <input type="text" class="form-control rounded" id="id_tabungan" name="id_tabungan" placeholder="Masukan NISN">
+                                   <input type="text" class="form-control rounded" id="id_tabungan" name="id_tabungan" value="{{$nomor}}" hidden>
                               </div>
                               <div class="form-group col-md-6">
                                    <label for="email">Email Address</label>

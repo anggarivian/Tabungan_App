@@ -109,9 +109,9 @@
                                         @csrf
                                         <div class="row justify-content-between" >
                                              <div class="form-group col-md-2" >
-                                                  <label for="id">Masukan NISN</label>
-                                                  <!-- <select name="selectuser" class="form-control" id="selectuser">
-                                                       <option selected >Pilih NISN</option>
+                                                  <label for="id">Masukan Kode</label>
+                                                  <select name="selectuser" class="form-control" id="selectuser">
+                                                       <option selected >Pilih Kode</option>
                                                        @foreach($storTerbaru as $key => $value)
                                                             <option value="{{$value->id_tabungan}}" id="getname"
                                                                  data-id="{{ $value->id }}"
@@ -122,9 +122,9 @@
                                                                  {{$value->id_tabungan}}
                                                             </option>
                                                        @endforeach
-                                                  </select> -->
+                                                  </select>
                                                   <!-- <input type="text" class="form-control rounded"> -->
-                                                  <input type="text" class="form-control rounded searchuser" id="searchuser" name="searchuser" placeholder="Search User">
+                                                  {{-- <input type="text" class="form-control rounded searchuser" id="searchuser" name="searchuser" placeholder="Search User"> --}}
                                              </div>
                                              <div class="form-group col-md-3 "style="margin-right: -10px;">
                                                   <label for="nama">Nama Siswa</label>
@@ -251,26 +251,26 @@
      @include('layouts.script')
 
      <script>
-          // var selectElement   = document.getElementById('selectuser');
-          // var inputId         = document.getElementById('id');
-          // var inputNama       = document.getElementById('nama');
-          // var inputKelas      = document.getElementById('kelas');
-          // var inputTabungan   = document.getElementById('jumlah_tabungan');
-          // var inputDibuku     = document.getElementById('jumlah_dibuku');
+          var selectElement   = document.getElementById('selectuser');
+          var inputId         = document.getElementById('id');
+          var inputNama       = document.getElementById('nama');
+          var inputKelas      = document.getElementById('kelas');
+          var inputTabungan   = document.getElementById('jumlah_tabungan');
+          var inputDibuku     = document.getElementById('jumlah_dibuku');
 
-          // selectElement.addEventListener('change', function() {
-          //      var selectedOption  = selectElement.options[selectElement.selectedIndex];
-          //      var itemID          = selectedOption.getAttribute('data-id');
-          //      var itemNama        = selectedOption.getAttribute('data-nama');
-          //      var itemKelas       = selectedOption.getAttribute('data-kelas');
-          //      var itemTabungan    = selectedOption.getAttribute('data-tabungan');
-          //      var itemDibuku      = selectedOption.getAttribute('data-dibuku');
-          //      inputId.value       = itemID;
-          //      inputNama.value     = itemNama;
-          //      inputKelas.value    = itemKelas;
-          //      inputTabungan.value = itemTabungan;
-          //      inputDibuku.value   = itemDibuku;
-          // });
+          selectElement.addEventListener('change', function() {
+               var selectedOption  = selectElement.options[selectElement.selectedIndex];
+               var itemID          = selectedOption.getAttribute('data-id');
+               var itemNama        = selectedOption.getAttribute('data-nama');
+               var itemKelas       = selectedOption.getAttribute('data-kelas');
+               var itemTabungan    = selectedOption.getAttribute('data-tabungan');
+               var itemDibuku      = selectedOption.getAttribute('data-dibuku');
+               inputId.value       = itemID;
+               inputNama.value     = itemNama;
+               inputKelas.value    = itemKelas;
+               inputTabungan.value = itemTabungan;
+               inputDibuku.value   = itemDibuku;
+          });
 
           $(document).ready(function(){
                $("#searchuser").change(function(){

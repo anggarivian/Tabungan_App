@@ -7,8 +7,9 @@ use App\Models\User;
 use App\Models\Tabungan;
 use App\Models\Pengajuan;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 
 class PengajuanController extends Controller
@@ -96,7 +97,7 @@ class PengajuanController extends Controller
     }
     // Proses Setuju Pengajuan ------------------------------------------------------------------------------------------------ Demo
     public function setuju(Request $req){
-        $pengajuan = Pengajuan::find($req->get('id'));
+        $pengajuan = new Pengajuan ;
         $pengajuan->id_tabungan = $req->get('id_tabungan');
         $pengajuan->nama = $req->get('nama');
         $pengajuan->kelas = $req->get('kelas');

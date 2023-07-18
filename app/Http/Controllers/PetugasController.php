@@ -25,6 +25,9 @@ class PetugasController extends Controller
             $role = Role::All();
             $tabungan = Tabungan::All();
 
+            // Generate Kode ------------------------------------------------
+            $nomor = str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT);
+
             //Searching
             $query = User::query()->where('roles_id', 3);
             $query->select('id','nama','email','id_tabungan','jenis_kelamin','kelas','kontak','password','orang_tua','alamat','roles_id','created_at','updated_at');
@@ -53,7 +56,7 @@ class PetugasController extends Controller
             //End Searching
             $userSiswa = $query->paginate(10);
 
-            return view('petugas.kelolaSiswa', compact('user','role','userSiswa'));
+            return view('petugas.kelolaSiswa', compact('user','role','userSiswa','nomor'));
         }
         // Create Data Siswa + Tabungan -------------------------------------------------------------------------------------------
         public function store(Request $req){

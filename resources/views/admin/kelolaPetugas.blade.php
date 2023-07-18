@@ -137,7 +137,7 @@
                               </div>
                               <div class="form-group col-md-6">
                                    <label for="id_tabungan">Username</label>
-                                   <input type="text" class="form-control rounded" id="id_tabungan" name="id_tabungan" placeholder="Username">
+                                   <input type="text" class="form-control rounded" id="id_tabungan" name="id_tabungan" placeholder="Username Maks. 10">
                               </div>
                               <div class="form-group col-md-6">
                                    <label for="email">Email Address</label>

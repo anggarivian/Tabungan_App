@@ -109,9 +109,9 @@
                                         @csrf
                                         <div class="row justify-content-between" >
                                              <div class="form-group col-md-2" >
-                                                  <label for="id">Masukan NISN</label>
+                                                  <label for="id">Masukan Kode</label>
                                                   <select name="selectuser" class="form-control" id="selectuser">
-                                                       <option selected >Pilih NISN</option>
+                                                       <option selected >Pilih Kode</option>
                                                        @foreach($tarikTerbaru as $key => $value)
                                                             <option value="{{$value->id_tabungan}}" id="getname"
                                                                  data-id="{{ $value->id }}"
@@ -219,8 +219,6 @@
                                                   <th>Saldo Awal</th>
                                                   <th>Jumlah Tarik</th>
                                                   <th>Saldo Akhir</th>
-                                                  <th>ADM</th>
-                                                  <th>Sisa</th>
                                                   <th>Tanggal Dibuat</th>
                                              </tr>
                                         </thead>
@@ -234,8 +232,6 @@
                                                        <td>{{$tariks->saldo_awal}}</td>
                                                        <td>{{$tariks->jumlah}}</td>
                                                        <td>{{$tariks->saldo_akhir}}</td>
-                                                       <td>{{$tariks->premi}}</td>
-                                                       <td>{{$tariks->sisa}}</td>
                                                        <td>{{ \Carbon\Carbon::parse($tariks->created_at)->format('H:i, F d') }}</td>
                                                   </tr>
                                              @endforeach

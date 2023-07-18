@@ -4,15 +4,16 @@ namespace App\Http\Controllers;
 
 use PDF;
 use Carbon\Carbon;
-use App\Models\User;
 use App\Models\Role;
+use App\Models\User;
 use App\Models\Tabungan;
 use App\Exports\SiswaExport;
 use App\Imports\SiswaImport;
 use Illuminate\Http\Request;
+use App\Exports\TabunganExport;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 
 class TabunganController extends Controller
@@ -113,19 +114,17 @@ class TabunganController extends Controller
         $tabungan = new Tabungan ;
         $validate = $req->validate([
             'nama' => 'required|max:255',
-            'id_tabungan' => 'required|max:5',
-            'email' => 'required',
             'kelas' => 'required',
             'jumlah_stor' => 'required',
             'jumlah_tabungan' => 'required',
         ]);
-        $tabungan->id_tabungan = $req->get('searchuser');
+        $tabungan->id_tabungan = $req->get('selectuser');
         $tabungan->nama = $req->get('nama');
         $tabungan->kelas = $req->get('kelas');
         $tabungan->roles_id = 3 ;
         $tabungan->tipe_transaksi = 'Stor';
         $tabungan->jumlah = $req->get('jumlah_stor');
-        $tabungan->saldo_awal = $req->get('result-jumlah_tabungan');
+        $tabungan->saldo_awal = $req->get('jumlah_tabungan');
         $tabungan->saldo_akhir = $tabungan->saldo_awal + $tabungan->jumlah ;
         $tabungan->premi = $tabungan->saldo_akhir * 0.05 ;
         $tabungan->sisa = $tabungan->saldo_akhir - $tabungan->premi ;
@@ -287,6 +286,6 @@ class TabunganController extends Controller
     }
     // Export Data Tabungan Excel ------------------------------------------------------------------------------------------- Error
     public function exportexcel(){
-        return Excel::download(new TabunganExport, 'datatransaksi.xlsx');
+        return Excel::download(new TabunganExport, 'nama_file.xlsx');
     }
 }
