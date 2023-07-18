@@ -108,8 +108,28 @@ class PengajuanController extends Controller
         return redirect()->route('pengajuan')->with($notification);
     }
     // Laporan Data Pengajuan  -------------------------------------------------------------------------------------------------------
-    public function laporan(){
-        $pengajuan = Pengajuan::all();
+    public function laporan(Request $request){
+         //Searching
+        $query = Pengajuan::query();
+        $query->select('id','nama','id_tabungan','kelas','jumlah_tabungan','jumlah_penarikan','alasan','status');
+        if(!empty($request->id_tabungan)){
+            $query->where('id_tabungan', 'LIKE', '%' . $request->id_tabungan . '%');
+        }
+        if(!empty($request->nama)){
+            $query->where('nama', 'LIKE', '%' . $request->nama . '%');
+        }
+        if($request->kelas == "1A" || $request->kelas == "1B" || $request->kelas == "2A"
+            || $request->kelas == "2B" || $request->kelas == "3A" || $request->kelas == "3B"
+            || $request->kelas == "4" || $request->kelas == "5" || $request->kelas == "6"){
+            $query->where('kelas',$request->kelas);
+        }
+        if($request->status == "Diproses" || $request->status == "Disetujui"){
+            $query->where('status',$request->status);
+        }
+        $query->orderBy('created_at','desc');
+        //End Searching
+        $pengajuan = $query->paginate(10);
+
         return view('laporan.laporanPengajuan', compact('pengajuan'));
     }
     // Export Data Pengajuan PDF ----------------------------------------------------------------------------------------------------
