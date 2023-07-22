@@ -36,9 +36,9 @@
                                                        <button type="button" class="btn btn-sm btn-primary btn-rounded m-1" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                                             Import Excel
                                                        </button>
-                                                       <a href="/exportpetugasexcel" class="btn btn-sm btn-success btn-rounded m-1">
+                                                       {{-- <a href="/exportpetugasexcel" class="btn btn-sm btn-success btn-rounded m-1">
                                                             Export Excel
-                                                       </a>
+                                                       </a> --}}
                                                        <a href="/exportpetugaspdf" class="btn btn-sm btn-danger btn-rounded m-1">
                                                             Export PDF
                                                        </a>

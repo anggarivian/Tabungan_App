@@ -109,9 +109,9 @@
                                         @csrf
                                         <div class="row justify-content-between" >
                                              <div class="form-group col-md-2" >
-                                                  <label for="id">Masukan NISN</label>
-                                                  <!-- <select name="selectuser" class="form-control" id="selectuser">
-                                                       <option selected >Pilih NISN</option>
+                                                  <label for="id">Masukan Kode</label>
+                                                  <select name="selectuser" class="form-control" id="selectuser">
+                                                       <option selected >Pilih Kode</option>
                                                        @foreach($storTerbaru as $key => $value)
                                                             <option value="{{$value->id_tabungan}}" id="getname"
                                                                  data-id="{{ $value->id }}"
@@ -122,9 +122,9 @@
                                                                  {{$value->id_tabungan}}
                                                             </option>
                                                        @endforeach
-                                                  </select> -->
+                                                  </select>
                                                   <!-- <input type="text" class="form-control rounded"> -->
-                                                  <input type="text" class="form-control rounded searchuser" id="searchuser" name="searchuser" placeholder="Search User">
+                                                  {{-- <input type="text" class="form-control rounded searchuser" id="searchuser" name="searchuser" placeholder="Search User"> --}}
                                              </div>
                                              <div class="form-group col-md-3 "style="margin-right: -10px;">
                                                   <label for="nama">Nama Siswa</label>
@@ -159,10 +159,40 @@
                               <div class="col-lg-12 d-flex  justify-content-between">
                                    <h4 class="card-title mt-2">Data Stor Tabungan</h4>
                                    <div class="d-flex justify-content-between">
-                                        <input type="text" class="form-control btn-sm rounded h-auto m-1" id="nama" name="nama" placeholder="Cari Nama Siswa">
-                                        <button type="button" class="btn btn-sm btn-primary m-1 btn-rounded">
-                                             Search
-                                        </button>
+                                        <form action="/petugas/tabungan/stor-tabungan" method="GET">
+                                             <!-- @csrf -->
+                                             <div class="search d-flex">
+                                                  <div class="d-blox justify-content-center m-1">
+                                                       <label for="nama" class="statistics-title mt-1">Filter</label>
+                                                  </div>
+                                                  <div class="d-blox justify-content-center m-1">
+                                                       <div class="form-group">
+                                                            <input type="text" class="form-control rounded" style="padding-right: 1px" name="search" id="search" value="{{ request('search') }}" placeholder="Cari...">
+                                                       </div>
+                                                  </div>
+                                                  <div class="d-blok justify-content-center m-1">
+                                                       <div class="form-group">
+                                                            <select class="form-select form-select-sm rounded"  name="kelas" id="kelas">
+                                                                 <option value="" >Kelas</option>
+                                                                 <option value="1A" {{ request('kelas') == '1A' ? 'selected' : '' }} >1 - A</option>
+                                                                 <option value="1B" {{ request('kelas') == '1B' ? 'selected' : '' }}>1 - B</option>
+                                                                 <option value="2A" {{ request('kelas') == '2A' ? 'selected' : '' }}>2 - A</option>
+                                                                 <option value="2B" {{ request('kelas') == '2B' ? 'selected' : '' }}>2 - B</option>
+                                                                 <option value="3A" {{ request('kelas') == '3A' ? 'selected' : '' }}>3 - A</option>
+                                                                 <option value="3B" {{ request('kelas') == '3B' ? 'selected' : '' }}>3 - B</option>
+                                                                 <option value="4" {{ request('kelas') == '4' ? 'selected' : '' }}>4</option>
+                                                                 <option value="5" {{ request('kelas') == '5' ? 'selected' : '' }}>5</option>
+                                                                 <option value="6" {{ request('kelas') == '6' ? 'selected' : '' }}>6</option>
+                                                            </select>
+                                                       </div>
+                                                  </div>
+                                                  <div class="d-blok justify-content-center m-1">
+                                                       <button type="submit" class="btn btn-sm btn-primary btn-rounded">
+                                                            Cari
+                                                       </button>
+                                                  </div>
+                                             </div>
+                                        </form>
                                    </div>
                               </div>
                               {{-- Row 2 --}}
@@ -221,26 +251,26 @@
      @include('layouts.script')
 
      <script>
-          // var selectElement   = document.getElementById('selectuser');
-          // var inputId         = document.getElementById('id');
-          // var inputNama       = document.getElementById('nama');
-          // var inputKelas      = document.getElementById('kelas');
-          // var inputTabungan   = document.getElementById('jumlah_tabungan');
-          // var inputDibuku     = document.getElementById('jumlah_dibuku');
+          var selectElement   = document.getElementById('selectuser');
+          var inputId         = document.getElementById('id');
+          var inputNama       = document.getElementById('nama');
+          var inputKelas      = document.getElementById('kelas');
+          var inputTabungan   = document.getElementById('jumlah_tabungan');
+          var inputDibuku     = document.getElementById('jumlah_dibuku');
 
-          // selectElement.addEventListener('change', function() {
-          //      var selectedOption  = selectElement.options[selectElement.selectedIndex];
-          //      var itemID          = selectedOption.getAttribute('data-id');
-          //      var itemNama        = selectedOption.getAttribute('data-nama');
-          //      var itemKelas       = selectedOption.getAttribute('data-kelas');
-          //      var itemTabungan    = selectedOption.getAttribute('data-tabungan');
-          //      var itemDibuku      = selectedOption.getAttribute('data-dibuku');
-          //      inputId.value       = itemID;
-          //      inputNama.value     = itemNama;
-          //      inputKelas.value    = itemKelas;
-          //      inputTabungan.value = itemTabungan;
-          //      inputDibuku.value   = itemDibuku;
-          // });
+          selectElement.addEventListener('change', function() {
+               var selectedOption  = selectElement.options[selectElement.selectedIndex];
+               var itemID          = selectedOption.getAttribute('data-id');
+               var itemNama        = selectedOption.getAttribute('data-nama');
+               var itemKelas       = selectedOption.getAttribute('data-kelas');
+               var itemTabungan    = selectedOption.getAttribute('data-tabungan');
+               var itemDibuku      = selectedOption.getAttribute('data-dibuku');
+               inputId.value       = itemID;
+               inputNama.value     = itemNama;
+               inputKelas.value    = itemKelas;
+               inputTabungan.value = itemTabungan;
+               inputDibuku.value   = itemDibuku;
+          });
 
           $(document).ready(function(){
                $("#searchuser").change(function(){

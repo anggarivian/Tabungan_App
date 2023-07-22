@@ -96,4 +96,5 @@ Route::middleware('auth')->group(function () {
     Route::get('/exporttransaksipdf', [TabunganController::class, 'exportpdf'])->name('export.transaksi.pdf');
     Route::get('/exporttransaksiexcel', [TabunganController::class, 'exportexcel'])->name('export.transaksi.excel');
     Route::post('/importtransaksiexcel', [TabunganController::class, 'importexcel'])->name('import.transaksi.excel');
+    // Route::get('/export-excel', 'TabunganController@exportexcel');
 });

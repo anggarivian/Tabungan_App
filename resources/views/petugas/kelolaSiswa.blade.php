@@ -41,6 +41,52 @@
                               </div>
                               <div class="card">
                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                             <h4 class="card-title" >Data Siswa</h4>
+                                             <form action="/petugas/siswa" method="GET">
+                                                  <!-- @csrf -->
+                                                  <div class="search d-flex">
+                                                       <div class="d-blox justify-content-center m-1">
+                                                            <label for="nama" class="statistics-title mt-1">Filter</label>
+                                                       </div>
+                                                       <div class="d-blox justify-content-center m-1">
+                                                            <div class="form-group">
+                                                                 <input type="text" class="form-control rounded" style="padding-right: 1px" name="search" id="search" value="{{ request('search') }}" placeholder="Cari...">
+                                                            </div>
+                                                       </div>
+                                                       <div class="d-blok justify-content-center m-1">
+                                                            <div class="form-group">
+                                                                 <select class="form-select form-select-sm rounded"  name="jenis_kelamin" id="jenis_kelamin">
+                                                                      <option value="" >Jenis Kelamin</option>
+                                                                      <option value="laki - Laki" {{ request('jenis_kelamin') == 'laki - Laki' ? 'selected' : '' }} >laki - Laki</option>
+                                                                      <option value="Perempuan" {{ request('jenis_kelamin') == 'Perempuan' ? 'selected' : '' }} >Perempuan</option>
+                                                                 </select>
+                                                            </div>
+                                                       </div>
+                                                       <div class="d-blok justify-content-center m-1">
+                                                            <div class="form-group">
+                                                                 <select class="form-select form-select-sm rounded"  name="kelas" id="kelas">
+                                                                      <option value="" >Kelas</option>
+                                                                      <option value="1A" {{ request('kelas') == '1A' ? 'selected' : '' }} >1 - A</option>
+                                                                      <option value="1B" {{ request('kelas') == '1B' ? 'selected' : '' }}>1 - B</option>
+                                                                      <option value="2A" {{ request('kelas') == '2A' ? 'selected' : '' }}>2 - A</option>
+                                                                      <option value="2B" {{ request('kelas') == '2B' ? 'selected' : '' }}>2 - B</option>
+                                                                      <option value="3A" {{ request('kelas') == '3A' ? 'selected' : '' }}>3 - A</option>
+                                                                      <option value="3B" {{ request('kelas') == '3B' ? 'selected' : '' }}>3 - B</option>
+                                                                      <option value="4" {{ request('kelas') == '4' ? 'selected' : '' }}>4</option>
+                                                                      <option value="5" {{ request('kelas') == '5' ? 'selected' : '' }}>5</option>
+                                                                      <option value="6" {{ request('kelas') == '6' ? 'selected' : '' }}>6</option>
+                                                                 </select>
+                                                            </div>
+                                                       </div>
+                                                       <div class="d-blok justify-content-center m-1">
+                                                            <button type="submit" class="btn btn-sm btn-primary btn-rounded">
+                                                                 Cari
+                                                            </button>
+                                                       </div>
+                                                  </div>
+                                             </form>
+                                        </div>
                                         <div class="table-responsive">
                                              <table id="table-data " class="table table-striped text-center">
                                                   <thead>
@@ -107,13 +153,10 @@
                     <form method="post" action="{{ route('siswa.store')}}" enctype="multipart/form-data">
                          @csrf
                          <div class="row">
-                              <div class="form-group col-md-12">
+                              <div class="form-group col-md-6">
                                    <label for="nama">Nama</label>
                                    <input type="text" class="form-control rounded" id="nama" name="nama" placeholder="Masukan Nama">
-                              </div>
-                              <div class="form-group col-md-6">
-                                   <label for="id_tabungan">NISN</label>
-                                   <input type="text" class="form-control rounded" id="id_tabungan" name="id_tabungan" placeholder="Masukan NISN">
+                                   <input type="text" class="form-control rounded" id="id_tabungan" name="id_tabungan" value="{{$nomor}}" hidden>
                               </div>
                               <div class="form-group col-md-6">
                                    <label for="email">Email Address</label>

@@ -30,7 +30,7 @@
                               <div class="card">
                                    <div class="card-body">
                                         <h4 class="card-title" >Identitas Siswa</h4>
-                                             <div class="table-responsive">
+                                        <div class="table-responsive">
                                                   <table id="table-data" class="table table-striped">
                                                   <tr>
                                                        <td>NISN</td>

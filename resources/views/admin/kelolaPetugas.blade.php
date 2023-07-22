@@ -41,6 +41,36 @@
                               </div>
                               <div class="card">
                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                             <h4 class="card-title" >Data Siswa</h4>
+                                             <form action="/admin/petugas" method="GET">
+                                                  <!-- @csrf -->
+                                                  <div class="search d-flex">
+                                                       <div class="d-blox justify-content-center m-1">
+                                                            <label for="nama" class="statistics-title mt-1">Filter</label>
+                                                       </div>
+                                                       <div class="d-blox justify-content-center m-1">
+                                                            <div class="form-group">
+                                                                 <input type="text" class="form-control rounded" style="padding-right: 1px" name="search" id="search" value="{{ request('search') }}" placeholder="Cari...">
+                                                            </div>
+                                                       </div>
+                                                       <div class="d-blok justify-content-center m-1">
+                                                            <div class="form-group">
+                                                                 <select class="form-select form-select-sm rounded"  name="jenis_kelamin" id="jenis_kelamin">
+                                                                      <option value="" >Jenis Kelamin</option>
+                                                                      <option value="Laki - Laki" {{ request('jenis_kelamin') == 'Laki - Laki' ? 'selected' : '' }} >Laki - Laki</option>
+                                                                      <option value="Perempuan" {{ request('jenis_kelamin') == 'Perempuan' ? 'selected' : '' }} >Perempuan</option>
+                                                                 </select>
+                                                            </div>
+                                                       </div>
+                                                       <div class="d-blok justify-content-center m-1">
+                                                            <button type="submit" class="btn btn-sm btn-primary btn-rounded">
+                                                                 Cari
+                                                            </button>
+                                                       </div>
+                                                  </div>
+                                             </form>
+                                        </div>
                                         <div class="table-responsive">
                                              <table id="table-data" class="table table-striped text-center">
                                                   <thead>
@@ -107,7 +137,7 @@
                               </div>
                               <div class="form-group col-md-6">
                                    <label for="id_tabungan">Username</label>
-                                   <input type="text" class="form-control rounded" id="id_tabungan" name="id_tabungan" placeholder="Username">
+                                   <input type="text" class="form-control rounded" id="id_tabungan" name="id_tabungan" placeholder="Username Maks. 10">
                               </div>
                               <div class="form-group col-md-6">
                                    <label for="email">Email Address</label>

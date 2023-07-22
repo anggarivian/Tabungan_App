@@ -4,29 +4,53 @@ namespace App\Http\Controllers;
 
 use PDF;
 use Carbon\Carbon;
-use App\Models\User;
 use App\Models\Role;
+use App\Models\User;
 use App\Models\Tabungan;
 use App\Exports\SiswaExport;
 use App\Imports\SiswaImport;
 use Illuminate\Http\Request;
+use App\Exports\TabunganExport;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 
 class TabunganController extends Controller
 {
     // Read Tabungan ----------------------------------------------------------------------------------------------------------------
-    public function index_stor(){
+    public function index_stor(Request $request){
         $stor = Tabungan::All();
         $user = User::All();
         $role = Role::All();
 
+        //Searching
+        $query = Tabungan::query()->where('tipe_transaksi', 'Stor');
+        $query->select('id','nama','kelas','id_tabungan','saldo_awal','saldo_akhir','tipe_transaksi','jumlah','premi','sisa','roles_id');
+        if (!empty($searchTerm)) {
+            $query->where(function ($query) use ($searchTerm) {
+                $query->where('nama', 'LIKE', '%'.$searchTerm.'%')
+                    ->orWhere('email', 'LIKE', '%'.$searchTerm.'%')
+                    ->orWhere('alamat', 'LIKE', '%'.$searchTerm.'%')
+                    ->orWhere('id_tabungan', 'LIKE', '%'.$searchTerm.'%')
+                    ->orWhere('orang_tua', 'LIKE', '%'.$searchTerm.'%')
+                    ->orWhere('kontak', 'LIKE', '%'.$searchTerm.'%')
+                    ->orWhere('alamat', 'LIKE', '%'.$searchTerm.'%');
+            });
+        }
+        if($request->kelas == "1A" || $request->kelas == "1B" || $request->kelas == "2A"
+            || $request->kelas == "2B" || $request->kelas == "3A" || $request->kelas == "3B"
+            || $request->kelas == "4" || $request->kelas == "5" || $request->kelas == "6"){
+            $query->where('kelas',$request->kelas);
+        }
+        $query->orderBy('created_at','desc')->whereDate('created_at', Carbon::today());
+        //End Searching
+        $storTabel = $query->paginate(10);
+
         // Tabel Stor Tabungan ------------------------------------------------------------------------------------------------------
-        $startDate = now()->startOfMonth(); // Mulai bulan ini
-        $endDate = now()->endOfMonth(); // Akhir bulan ini
-        $storTabel = Tabungan::whereBetween('created_at', [$startDate, $endDate])->where('tipe_transaksi', 'Stor')->paginate(30);
+        // $startDate = now()->startOfMonth(); // Mulai bulan ini
+        // $endDate = now()->endOfMonth(); // Akhir bulan ini
+        // $storTabel = Tabungan::whereBetween('created_at', [$startDate, $endDate])->where('tipe_transaksi', 'Stor')->paginate(30);
 
         // Total Tabungan -----------------------------------------------------------------------------------------------------------
         $hitungTotalSaldo = Tabungan::sum('saldo_akhir');
@@ -90,19 +114,17 @@ class TabunganController extends Controller
         $tabungan = new Tabungan ;
         $validate = $req->validate([
             'nama' => 'required|max:255',
-            'id_tabungan' => 'required|max:5',
-            'email' => 'required',
             'kelas' => 'required',
             'jumlah_stor' => 'required',
             'jumlah_tabungan' => 'required',
         ]);
-        $tabungan->id_tabungan = $req->get('searchuser');
+        $tabungan->id_tabungan = $req->get('selectuser');
         $tabungan->nama = $req->get('nama');
         $tabungan->kelas = $req->get('kelas');
         $tabungan->roles_id = 3 ;
         $tabungan->tipe_transaksi = 'Stor';
         $tabungan->jumlah = $req->get('jumlah_stor');
-        $tabungan->saldo_awal = $req->get('result-jumlah_tabungan');
+        $tabungan->saldo_awal = $req->get('jumlah_tabungan');
         $tabungan->saldo_akhir = $tabungan->saldo_awal + $tabungan->jumlah ;
         $tabungan->premi = $tabungan->saldo_akhir * 0.05 ;
         $tabungan->sisa = $tabungan->saldo_akhir - $tabungan->premi ;
@@ -120,14 +142,35 @@ class TabunganController extends Controller
         return response()->json($user);
     }
     // Tarik Tabungan ----------------------------------------------------------------------------------------------------------------
-    public function index_tarik(){
+    public function index_tarik(Request $request){
         $tarik = Tabungan::All();
         $user = User::All();
         $role = Role::All();
+
+        //Searching
+        $query = Tabungan::query()->where('tipe_transaksi', 'Tarik');
+        $query->select('id','nama','kelas','id_tabungan','saldo_awal','saldo_akhir','tipe_transaksi','jumlah','premi','sisa','roles_id');
+        $searchTerm = $request->input('search');
+
+        if (!empty($searchTerm)) {
+            $query->where(function ($query) use ($searchTerm) {
+                $query->where('nama', 'LIKE', '%'.$searchTerm.'%')
+                    ->orWhere('id_tabungan', 'LIKE', '%'.$searchTerm.'%');
+            });
+        }
+        if($request->kelas == "1A" || $request->kelas == "1B" || $request->kelas == "2A"
+            || $request->kelas == "2B" || $request->kelas == "3A" || $request->kelas == "3B"
+            || $request->kelas == "4" || $request->kelas == "5" || $request->kelas == "6"){
+            $query->where('kelas',$request->kelas);
+        }
+        $query->orderBy('created_at','desc')->whereDate('created_at', Carbon::today());
+        //End Searching
+        $tarikTabel = $query->paginate(10);
+
         // Tabel Tarik Tabungan -------------------------------------------------------------------------------------------------------
-        $startDate = now()->startOfMonth(); // Mulai bulan ini
-        $endDate = now()->endOfMonth(); // Akhir bulan ini
-        $tarikTabel = Tabungan::whereBetween('created_at', [$startDate, $endDate])->where('tipe_transaksi', 'Tarik')->paginate(30);
+        // $startDate = now()->startOfMonth(); // Mulai bulan ini
+        // $endDate = now()->endOfMonth(); // Akhir bulan ini
+        // $tarikTabel = Tabungan::whereBetween('created_at', [$startDate, $endDate])->where('tipe_transaksi', 'Tarik')->paginate(30);
 
         // Total Tabungan --------------------------------------------------------------------------------------------------------------
         $hitungTotalSaldo = Tabungan::sum('saldo_akhir');
@@ -189,10 +232,8 @@ class TabunganController extends Controller
         $tabungan = new Tabungan ;
         $validate = $req->validate([
             'nama' => 'required|max:255',
-            'id_tabungan' => 'required|max:5',
-            'email' => 'required',
             'kelas' => 'required',
-            'jumlah_stor' => 'required',
+            'jumlah_tarik' => 'required',
             'jumlah_tabungan' => 'required',
         ]);
         $tabungan->id_tabungan = $req->get('selectuser');
@@ -245,6 +286,6 @@ class TabunganController extends Controller
     }
     // Export Data Tabungan Excel ------------------------------------------------------------------------------------------- Error
     public function exportexcel(){
-        return Excel::download(new TabunganExport, 'datatransaksi.xlsx');
+        return Excel::download(new TabunganExport, 'nama_file.xlsx');
     }
 }

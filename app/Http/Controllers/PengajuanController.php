@@ -7,15 +7,40 @@ use App\Models\User;
 use App\Models\Tabungan;
 use App\Models\Pengajuan;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 
 class PengajuanController extends Controller
 {
     // Read Data Pengajuan -------------------------------------------------------------------------------------------------------
-    public function index(){
+    public function index(Request $request){
         $pengajuan = Pengajuan::All();
+        //Searching
+        $query = Pengajuan::query();
+        $query->select('id','nama','id_tabungan','kelas','jumlah_tabungan','jumlah_penarikan','alasan','status');
+        $searchTerm = $request->input('search');
+
+            if (!empty($searchTerm)) {
+                $query->where(function ($query) use ($searchTerm) {
+                    $query->where('nama', 'LIKE', '%'.$searchTerm.'%')
+                        ->orWhere('id_tabungan', 'LIKE', '%'.$searchTerm.'%');
+                });
+            }
+
+        if($request->kelas == "1A" || $request->kelas == "1B" || $request->kelas == "2A"
+            || $request->kelas == "2B" || $request->kelas == "3A" || $request->kelas == "3B"
+            || $request->kelas == "4" || $request->kelas == "5" || $request->kelas == "6"){
+            $query->where('kelas',$request->kelas);
+        }
+        if($request->status == "Diproses" || $request->status == "Disetujui"){
+            $query->where('status',$request->status);
+        }
+        $query->orderBy('created_at','desc');
+        //End Searching
+        $pengajuan = $query->paginate(10);
+
         return view('pengajuan.pengajuan', compact('pengajuan'));
     }
     public function siswa_index(){
@@ -72,7 +97,7 @@ class PengajuanController extends Controller
     }
     // Proses Setuju Pengajuan ------------------------------------------------------------------------------------------------ Demo
     public function setuju(Request $req){
-        $pengajuan = Pengajuan::find($req->get('id'));
+        $pengajuan = new Pengajuan ;
         $pengajuan->id_tabungan = $req->get('id_tabungan');
         $pengajuan->nama = $req->get('nama');
         $pengajuan->kelas = $req->get('kelas');
@@ -108,8 +133,28 @@ class PengajuanController extends Controller
         return redirect()->route('pengajuan')->with($notification);
     }
     // Laporan Data Pengajuan  -------------------------------------------------------------------------------------------------------
-    public function laporan(){
-        $pengajuan = Pengajuan::all();
+    public function laporan(Request $request){
+         //Searching
+        $query = Pengajuan::query();
+        $query->select('id','nama','id_tabungan','kelas','jumlah_tabungan','jumlah_penarikan','alasan','status');
+        if(!empty($request->id_tabungan)){
+            $query->where('id_tabungan', 'LIKE', '%' . $request->id_tabungan . '%');
+        }
+        if(!empty($request->nama)){
+            $query->where('nama', 'LIKE', '%' . $request->nama . '%');
+        }
+        if($request->kelas == "1A" || $request->kelas == "1B" || $request->kelas == "2A"
+            || $request->kelas == "2B" || $request->kelas == "3A" || $request->kelas == "3B"
+            || $request->kelas == "4" || $request->kelas == "5" || $request->kelas == "6"){
+            $query->where('kelas',$request->kelas);
+        }
+        if($request->status == "Diproses" || $request->status == "Disetujui"){
+            $query->where('status',$request->status);
+        }
+        $query->orderBy('created_at','desc');
+        //End Searching
+        $pengajuan = $query->paginate(10);
+
         return view('laporan.laporanPengajuan', compact('pengajuan'));
     }
     // Export Data Pengajuan PDF ----------------------------------------------------------------------------------------------------

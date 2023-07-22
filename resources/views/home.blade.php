@@ -34,8 +34,14 @@
                                         <div class="col-sm-12">
                                             <div class="statistics-details d-flex align-items-center justify-content-between">
                                                 <div>
-                                                    <p class="statistics-title">Jumlah Saldo Keseluruhan</p>
-                                                    <h3 class="rate-percentage">Rp. 1.500.000</h3>
+                                                    @if ( Auth::user()->roles_id === 2 || Auth::user()->roles_id === 1)
+                                                        <p class="statistics-title">Jumlah Saldo Keseluruhan</p>
+                                                        <h3 class="rate-percentage">Rp. {{$totalTabungan}}</h3>
+                                                    @endif
+                                                    @if ( Auth::user()->roles_id === 3)
+                                                        <p class="statistics-title">Jumlah Saldo Keseluruhan</p>
+                                                        <h3 class="rate-percentage">Rp. {{$data->saldo_akhir}}</h3>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -48,8 +54,14 @@
                                         <div class="col-sm-12">
                                             <div class="statistics-details d-flex align-items-center justify-content-between">
                                                 <div>
-                                                    <p class="statistics-title">Jumlah Pemasukan 1 Bulan Terakhir</p>
-                                                    <h3 class="rate-percentage">Rp. 1.500.000</h3>
+                                                    @if ( Auth::user()->roles_id === 2 || Auth::user()->roles_id === 1)
+                                                        <p class="statistics-title">Jumlah Pemasukan 1 Bulan Terakhir</p>
+                                                        <h3 class="rate-percentage">Rp. {{$bulanStor}}</h3>
+                                                    @endif
+                                                    @if ( Auth::user()->roles_id === 3)
+                                                        <p class="statistics-title">Jumlah Pemasukan 1 Bulan Terakhir</p>
+                                                        <h3 class="rate-percentage">Rp. {{$totalStorSiswa}}</h3>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -62,8 +74,14 @@
                                         <div class="col-sm-12">
                                             <div class="statistics-details d-flex align-items-center justify-content-between">
                                                 <div>
-                                                    <p class="statistics-title">Jumlah Pemasukan 1 Bulan Terakhir</p>
-                                                    <h3 class="rate-percentage">Rp. 1.500.000</h3>
+                                                    @if ( Auth::user()->roles_id === 2 || Auth::user()->roles_id === 1)
+                                                        <p class="statistics-title">Jumlah Pengeluaran 1 Bulan Terakhir</p>
+                                                        <h3 class="rate-percentage">Rp. {{$bulanTarik}}</h3>
+                                                    @endif
+                                                    @if ( Auth::user()->roles_id === 3)
+                                                        <p class="statistics-title">Jumlah Pengeluaran 1 Bulan Terakhir</p>
+                                                        <h3 class="rate-percentage">Rp. {{$totalTarikSiswa}}</h3>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -72,56 +90,68 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-2 grid-margin">
+                        <div class="col-lg-3 grid-margin">
                             <div class="card">
                                 <div class="card-body">
                                         <div class="col-sm-12">
                                             <div class="statistics-details d-flex align-items-center justify-content-between">
                                                 <div>
-                                                    <p class="statistics-title">Total Pemasukan</p>
-                                                    <h3 class="rate-percentage">213</h3>
+                                                    @if ( Auth::user()->roles_id === 2 || Auth::user()->roles_id === 1)
+                                                        <p class="statistics-title">Total Pemasukan</p>
+                                                        <h3 class="rate-percentage">{{$totalStor}}x</h3>
+                                                    @endif
+                                                    @if ( Auth::user()->roles_id === 3)
+                                                        <p class="statistics-title">Total Pemasukan</p>
+                                                        <h3 class="rate-percentage">{{$totalStorSiswa}}x</h3>
+                                                    @endif
                                                 </div>
                                             </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-2 grid-margin">
+                        <div class="col-lg-3 grid-margin">
                             <div class="card">
                                 <div class="card-body">
                                         <div class="col-sm-12">
                                             <div class="statistics-details d-flex align-items-center justify-content-between">
                                                 <div>
-                                                    <p class="statistics-title">Total Pemasukan</p>
-                                                    <h3 class="rate-percentage">213</h3>
+                                                    @if ( Auth::user()->roles_id === 2 || Auth::user()->roles_id === 1)
+                                                        <p class="statistics-title">Total Pengeluaran</p>
+                                                        <h3 class="rate-percentage">{{$totalTarik}}x</h3>
+                                                    @endif
+                                                    @if ( Auth::user()->roles_id === 3)
+                                                        <p class="statistics-title">Total Pengeluaran</p>
+                                                        <h3 class="rate-percentage">{{$totalTarikSiswa}}x</h3>
+                                                    @endif
                                                 </div>
                                             </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-2 grid-margin">
+                        <div class="col-lg-3 grid-margin">
                             <div class="card">
                                 <div class="card-body">
                                         <div class="col-sm-12">
                                             <div class="statistics-details d-flex align-items-center justify-content-between">
                                                 <div>
                                                     <p class="statistics-title">Jumlah Siswa</p>
-                                                    <h3 class="rate-percentage ">{{$usercount}}</h3>
+                                                    <h3 class="rate-percentage ">{{$totalSiswa}}</h3>
                                                 </div>
                                             </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6 grid-margin">
+                        <div class="col-lg-3 grid-margin">
                             <div class="card">
                                 <div class="card-body">
                                         <div class="col-sm-12">
                                             <div class="statistics-details d-flex align-items-center justify-content-between">
                                                 <div>
-                                                    <p class="statistics-title">Profil Sekolah</p>
-                                                    <h3 class="rate-percentage">1</h3>
+                                                    <p class="statistics-title">Jumlah Kelas</p>
+                                                    <h3 class="rate-percentage ">9</h3>
                                                 </div>
                                             </div>
                                     </div>

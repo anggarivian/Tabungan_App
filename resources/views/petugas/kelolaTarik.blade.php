@@ -109,9 +109,9 @@
                                         @csrf
                                         <div class="row justify-content-between" >
                                              <div class="form-group col-md-2" >
-                                                  <label for="id">Masukan NISN</label>
+                                                  <label for="id">Masukan Kode</label>
                                                   <select name="selectuser" class="form-control" id="selectuser">
-                                                       <option selected >Pilih NISN</option>
+                                                       <option selected >Pilih Kode</option>
                                                        @foreach($tarikTerbaru as $key => $value)
                                                             <option value="{{$value->id_tabungan}}" id="getname"
                                                                  data-id="{{ $value->id }}"
@@ -155,12 +155,42 @@
                     <div class="card">
                          <div class="card-body">
                               <div class="col-lg-12 d-flex  justify-content-between">
-                                   <h4 class="card-title mt-2">Data Tarik Tabungan</h4>
+                                   <h4 class="card-title mt-2">Data Stor Tabungan</h4>
                                    <div class="d-flex justify-content-between">
-                                        <input type="text" class="form-control btn-sm rounded h-auto m-1" id="nama" name="nama" placeholder="Cari Nama Siswa">
-                                        <button type="button" class="btn btn-sm btn-primary m-1 btn-rounded">
-                                             Search
-                                        </button>
+                                        <form action="/petugas/tabungan/tarik-tabungan" method="GET">
+                                             <!-- @csrf -->
+                                             <div class="search d-flex">
+                                                  <div class="d-blox justify-content-center m-1">
+                                                       <label for="nama" class="statistics-title mt-1">Filter</label>
+                                                  </div>
+                                                  <div class="d-blox justify-content-center m-1">
+                                                       <div class="form-group">
+                                                            <input type="text" class="form-control rounded" style="padding-right: 1px" name="search" id="search" value="{{ request('search') }}" placeholder="Cari...">
+                                                       </div>
+                                                  </div>
+                                                  <div class="d-blok justify-content-center m-1">
+                                                       <div class="form-group">
+                                                            <select class="form-select form-select-sm rounded"  name="kelas" id="kelas">
+                                                                 <option value="" >Kelas</option>
+                                                                 <option value="1A" {{ request('kelas') == '1A' ? 'selected' : '' }} >1 - A</option>
+                                                                 <option value="1B" {{ request('kelas') == '1B' ? 'selected' : '' }}>1 - B</option>
+                                                                 <option value="2A" {{ request('kelas') == '2A' ? 'selected' : '' }}>2 - A</option>
+                                                                 <option value="2B" {{ request('kelas') == '2B' ? 'selected' : '' }}>2 - B</option>
+                                                                 <option value="3A" {{ request('kelas') == '3A' ? 'selected' : '' }}>3 - A</option>
+                                                                 <option value="3B" {{ request('kelas') == '3B' ? 'selected' : '' }}>3 - B</option>
+                                                                 <option value="4" {{ request('kelas') == '4' ? 'selected' : '' }}>4</option>
+                                                                 <option value="5" {{ request('kelas') == '5' ? 'selected' : '' }}>5</option>
+                                                                 <option value="6" {{ request('kelas') == '6' ? 'selected' : '' }}>6</option>
+                                                            </select>
+                                                       </div>
+                                                  </div>
+                                                  <div class="d-blok justify-content-center m-1">
+                                                       <button type="submit" class="btn btn-sm btn-primary btn-rounded">
+                                                            Cari
+                                                       </button>
+                                                  </div>
+                                             </div>
+                                        </form>
                                    </div>
                               </div>
                               {{-- Row 2 --}}
@@ -189,8 +219,6 @@
                                                   <th>Saldo Awal</th>
                                                   <th>Jumlah Tarik</th>
                                                   <th>Saldo Akhir</th>
-                                                  <th>ADM</th>
-                                                  <th>Sisa</th>
                                                   <th>Tanggal Dibuat</th>
                                              </tr>
                                         </thead>
@@ -204,8 +232,6 @@
                                                        <td>{{$tariks->saldo_awal}}</td>
                                                        <td>{{$tariks->jumlah}}</td>
                                                        <td>{{$tariks->saldo_akhir}}</td>
-                                                       <td>{{$tariks->premi}}</td>
-                                                       <td>{{$tariks->sisa}}</td>
                                                        <td>{{ \Carbon\Carbon::parse($tariks->created_at)->format('H:i, F d') }}</td>
                                                   </tr>
                                              @endforeach

@@ -30,7 +30,7 @@
                               <div class="card">
                                    <div class="card-body">
                                         <h4 class="card-title" >Ajukan Penarikan Tabungan</h4>
-                                             @if ( $cekData == 0 )
+                                             {{-- @if ( $cekData == 0 )
                                              <form method="post" action="{{ route('siswa.ajukan') }}" enctype="multipart/form-data">
                                                   @csrf
                                                   <div class="form-group">
@@ -59,14 +59,14 @@
                                                   </div>
                                              </form>
                                              @endif
-                                             @if ( $cekData >= 1 )
+                                             @if ( $cekData >= 1 )--}}
                                              <div class="text-center p-5">
-                                                  <p>Pengajuan Penarikan Tabungan Dalam Proses</p>
-                                                  <h5 style="color: green">PENDING</h5>
-                                                  <p>Tunggu 24 Jam Untuk Keputusanya</p>
+                                                  <p>Pengajuan Penarikan Tabungan Dalam Pembuatan</p>
+                                                  <h5 style="color: green">SEGERA HADIR</h5>
+                                                  <p>Mohon Dukungannya</p>
                                              </div>
-                                             @endif
-                                             {{-- @if ( $validasi2 == 'Diproses' )
+                                             {{-- @endif
+                                             @if ( $validasi2 == 'Diproses' )
                                                   <div class="text-center p-5">
                                                        <p>Pengajuan Penarikan Tabungan</p>
                                                        <h5 style="color: red">TIDAK BISA DILAKUKAN</h5>
