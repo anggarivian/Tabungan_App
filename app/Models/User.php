@@ -57,24 +57,21 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public static function getDataUsers(){
+    public static function getDataPetugas(){
 
-        $user = User::all();
-
+        $petugas = User::all();
         $user_filter = [];
 
-        $no = 1;
-
-        for($i = 0; $i < $user->count(); $i++){
-            $user_filter[$i]['no'] = $no++ ;
-            $user_filter[$i]['username'] = $user[$i]->username ;
-            $user_filter[$i]['name'] = $user[$i]->name ;
-            $user_filter[$i]['email'] = $user[$i]->email ;
-            $user_filter[$i]['kontak'] = $user[$i]->kontak ;
-            $user_filter[$i]['password'] = $user[$i]->password ;
-            $user_filter[$i]['jenis_kelamin'] = $user[$i]->jenis_kelamin ;
+        foreach ($petugas as $index => $petugas) {
+            $petugas_filter[$index]['No'] = $index + 1;
+            $petugas_filter[$index]['Username'] = $petugas->id_tabungan;
+            $petugas_filter[$index]['Nama'] = $petugas->nama;
+            $petugas_filter[$index]['Jenis Kelamin'] = $petugas->jenis_kelamin;
+            $petugas_filter[$index]['Email'] = $petugas->email;
+            $petugas_filter[$index]['Kontak'] = $petugas->kontak;
+            $petugas_filter[$index]['Password'] = $petugas->password;
         }
 
-        return $user_filter;
+    return $user_filter;
     }
 }
