@@ -33,9 +33,9 @@
                                                   <div class="statistics-details d-flex align-items-center justify-content-between">
                                                        <h4 class="card-title" >Laporan Transaksi</h4>
                                                        <div>
-                                                            {{-- <a href="/exporttransaksiexcel" class="btn btn-sm btn-success btn-rounded m-1">
+                                                            <a href="/exporttransaksiexcel" class="btn btn-sm btn-success btn-rounded m-1">
                                                                  Export Excel
-                                                            </a> --}}
+                                                            </a>
                                                             <a href="/exporttransaksipdf" class="btn btn-sm btn-danger btn-rounded m-1">
                                                                  Export PDF
                                                             </a>
