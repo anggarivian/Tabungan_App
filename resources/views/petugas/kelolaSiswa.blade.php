@@ -58,7 +58,7 @@
                                                             <div class="form-group">
                                                                  <select class="form-select form-select-sm rounded"  name="jenis_kelamin" id="jenis_kelamin">
                                                                       <option value="" >Jenis Kelamin</option>
-                                                                      <option value="laki - Laki" {{ request('jenis_kelamin') == 'laki - Laki' ? 'selected' : '' }} >laki - Laki</option>
+                                                                      <option value="Laki - Laki" {{ request('jenis_kelamin') == 'Laki - Laki' ? 'selected' : '' }} >Laki - Laki</option>
                                                                       <option value="Perempuan" {{ request('jenis_kelamin') == 'Perempuan' ? 'selected' : '' }} >Perempuan</option>
                                                                  </select>
                                                             </div>
@@ -92,14 +92,14 @@
                                                   <thead>
                                                        <tr class="text-center">
                                                             <th>No</th>
-                                                            <th>Kode</th>
+                                                            <th>ID</th>
                                                             <th>Nama</th>
                                                             <th>Jenis Kelamin</th>
                                                             <th>Kelas</th>
                                                             <th>Kontak</th>
                                                             <th>Orang Tua</th>
                                                             <th>Alamat</th>
-                                                            <th>Email</th>
+                                                            {{-- <th>Email</th> --}}
                                                             <th>Tanggal Dibuat</th>
                                                             <th>Opsi</th>
                                                        </tr>
@@ -115,7 +115,7 @@
                                                                  <td>{{$users->kontak}}</td>
                                                                  <td>{{$users->orang_tua}}</td>
                                                                  <td>{{$users->alamat}}</td>
-                                                                 <td>{{$users->email}}</td>
+                                                                 {{-- <td>{{$users->email}}</td> --}}
                                                                  <td>{{$users->created_at}}</td>
                                                                  <td class="text-center">
                                                                       <button type="button" class="btn btn-warning btn-sm btn-rounded" data-id="{{ $users->id }}" id="btn-edit-user" data-bs-toggle="modal" data-bs-target="#editModal">
@@ -158,10 +158,10 @@
                                    <input type="text" class="form-control rounded" id="nama" name="nama" placeholder="Masukan Nama">
                                    <input type="text" class="form-control rounded" id="id_tabungan" name="id_tabungan" value="{{$nomor}}" hidden>
                               </div>
-                              <div class="form-group col-md-6">
+                              {{-- <div class="form-group col-md-6">
                                    <label for="email">Email Address</label>
                                    <input type="email" class="form-control rounded" id="email" name="email" placeholder="Masukan Email">
-                              </div>
+                              </div> --}}
                               <div class="form-group col-md-6">
                                    <label for="kontak">Nomor Telepon</label>
                                    <input type="text" class="form-control rounded" id="kontak" name="kontak" placeholder="Masukan Kontak">
@@ -195,7 +195,7 @@
                                    <label for="orang_tua">Nama Orang Tua</label>
                                    <input type="text" class="form-control rounded" id="orang_tua" name="orang_tua" placeholder="Masukan Orang Tua">
                               </div>
-                              <div class="form-group col-md-6">
+                              <div class="form-group col-md-12">
                                    <label for="alamat">Alamat</label>
                                    <input type="text" class="form-control rounded" id="alamat" name="alamat" placeholder="Masukan Alamat">
                               </div>
@@ -226,19 +226,19 @@
                               {{-- <div class="form-group col-md-6">
                                    <label for="id">Id</label> --}}
                                    <input type="text" class="form-control rounded" id="edit-id" name="id" placeholder="Id" readonly hidden>
+                                   <input type="text" class="form-control rounded" id="edit-id_tabungan" name="id_tabungan" readonly hidden >
                               {{-- </div> --}}
                               <div class="form-group col-md-6">
                                    <label for="nama">Nama</label>
                                    <input type="text" class="form-control rounded" id="edit-nama" name="nama" placeholder="Masukan Nama">
                               </div>
-                              <div class="form-group col-md-6">
+                              {{-- <div class="form-group col-md-6">
                                    <label for="id">NISN</label>
-                                   <input type="text" class="form-control rounded" id="edit-id_tabungan" name="id_tabungan" placeholder="Masukan NISN"  >
                               </div>
                               <div class="form-group col-md-6">
                                    <label for="email">Email Address</label>
                                    <input type="email" class="form-control rounded" id="edit-email" name="email" placeholder="Masukan Email">
-                              </div>
+                              </div> --}}
                               <div class="form-group col-md-6">
                                    <label for="kontak">Nomor Telepon</label>
                                    <input type="text" class="form-control rounded" id="edit-kontak" name="kontak" placeholder="Masukan Kontak">

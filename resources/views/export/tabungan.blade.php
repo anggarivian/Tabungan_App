@@ -1,6 +1,6 @@
 <html>
 <head>
-     <title> Laporan Data Pengajuan </title>
+     <title> Laporan Tabungan Siswa </title>
      <style>
             * {
             box-sizing: border-box;
@@ -154,7 +154,7 @@
             <span class="v1_6">KECAMATAN SUKANAGARA</span>
         </div>
         <hr>
-        <h3>Laporan Data Transaksi Keluar Masuk Tabungan Siswa</h3>
+     <h3>Data Tabungan Siswa</h3>
 
      <table id="user">
           <thead>
@@ -163,13 +163,10 @@
                     <th>Kode</th>
                     <th>Nama</th>
                     <th>Kelas</th>
-                    <th>Saldo Awal</th>
                     <th>Saldo Akhir</th>
-                    <th>Stor</th>
-                    <th>Tarik</th>
                     <th>Biaya</th>
                     <th>Sisa</th>
-                    <th>Dibuat</th>
+                    <th>Terakhir Menabung</th>
                </tr>
           </thead>
           <tbody>
@@ -179,20 +176,7 @@
                          <td>{{$tabungans->id_tabungan}}</td>
                          <td>{{$tabungans->nama}}</td>
                          <td>{{$tabungans->kelas}}</td>
-                         <td>{{$tabungans->saldo_awal}}</td>
                          <td>{{$tabungans->saldo_akhir}}</td>
-                         @if ($tabungans->tipe_transaksi == null)
-                              <td>-</td>
-                              <td>-</td>
-                         @endif
-                         @if ($tabungans->tipe_transaksi == 'Stor')
-                              <td>{{$tabungans->jumlah}}</td>
-                              <td>-</td>
-                         @endif
-                         @if ($tabungans->tipe_transaksi == 'Tarik')
-                              <td>-</td>
-                              <td>{{$tabungans->jumlah}}</td>
-                         @endif
                          <td>{{$tabungans->premi}}</td>
                          <td>{{$tabungans->sisa}}</td>
                          <td>{{ \Carbon\Carbon::parse($tabungans->created_at)->format('H:i, F d y') }}</td>

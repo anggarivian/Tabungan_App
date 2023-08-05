@@ -33,12 +33,13 @@ Route::get('/admin', [HomeController::class, 'index'])->name('admin')->middlewar
 
 Route::get('admin/ajaxadmin/dataUser/{id}', [AdminController::class, 'getDataUser'])->middleware('auth');
 Route::get('petugas/ajaxpetugas/dataPengajuan/{id}', [PengajuanController::class, 'getDataPengajuan'])->middleware('auth');
+Route::get('petugas/ajaxpetugas/dataTransaksi/{id}', [TabunganController::class, 'getDataTransaksi'])->middleware('auth');
 
 // Admin Route -----------------------------------------------------------------------------------------------------
 Route::middleware('admin')->group(function () {
-    Route::get('/admin/petugas', [AdminController::class, 'index'])->name('petugas');
-    Route::post('/admin/petugas/add', [AdminController::class, 'store'])->name('petugas.store');
-    Route::patch('admin/petugas/update', [AdminController::class, 'edit'])->name('petugas.ubah');
+    Route::get('/amdin/petugas', [AdminController::class, 'index'])->name('petugas');
+    Route::post('/amdin/petugas/add', [AdminController::class, 'store'])->name('petugas.store');
+    Route::patch('amdin/petugas/update', [AdminController::class, 'edit'])->name('petugas.ubah');
     Route::get('admin/petugas/delete/{id}', [AdminController::class,'destroy'])->name('petugas.hapus');
 });
 
@@ -52,11 +53,13 @@ Route::middleware('petugas')->group(function () {
     // Kelola Tabungan ---------------------------------------------------------------------------------------------
         // Stor Tabungan -------------------------------------------------------------------------------------------
         Route::get('/petugas/tabungan/stor-tabungan', [TabunganController::class, 'index_stor'])->name('tabungan.stor');
-        Route::patch('/petugas/tabungan/stor-tabungan', [TabunganController::class, 'stor_tabungan'])->name('tabungan.stor.tambah');
-        Route::get('/petugas/tabungan/search/{id}', [TabunganController::class, 'search'])->name('tabungan.search');
+        Route::patch('/petugas/tabungan/stor-tabungan/add', [TabunganController::class, 'stor_tabungan'])->name('tabungan.stor.tambah');
+        Route::patch('/petugas/tabungan/stor-tabungan/update', [TabunganController::class, 'ubah_stor'])->name('stor.ubah');
+
         // Tarik Tabungan ------------------------------------------------------------------------------------------
         Route::get('/petugas/tabungan/tarik-tabungan', [TabunganController::class, 'index_tarik'])->name('tabungan.tarik');
-        Route::patch('/petugas/tabungan/tarik-tabungan', [TabunganController::class, 'tarik_tabungan'])->name('tabungan.tarik.tambah');
+        Route::patch('/petugas/tabungan/tarik-tabungan/add', [TabunganController::class, 'tarik_tabungan'])->name('tabungan.tarik.tambah');
+        Route::patch('/petugas/tabungan/tarik-tabungan/update', [TabunganController::class, 'ubah_tarik'])->name('tarik.ubah');
 
         // Kelola Pengajuan ----------------------------------------------------------------------------------------
         Route::get('/petugas/pengajuan', [PengajuanController::class, 'index'])->name('pengajuan');
@@ -96,5 +99,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/exporttransaksipdf', [TabunganController::class, 'exportpdf'])->name('export.transaksi.pdf');
     Route::get('/exporttransaksiexcel', [TabunganController::class, 'exportexcel'])->name('export.transaksi.excel');
     Route::post('/importtransaksiexcel', [TabunganController::class, 'importexcel'])->name('import.transaksi.excel');
-    // Route::get('/export-excel', 'TabunganController@exportexcel');
+
+    // Laporan Data Tabungan Siswa -----------------------------------------------------------------------------------
+    Route::get('/laporan/tabungn', [TabunganController::class, 'laporanTabungan'])->name('laporan.tabungan');
+    Route::get('/exporttabunganpdf', [TabunganController::class, 'exportpdftabungan'])->name('export.tabungan.pdf');
+    Route::get('/exporttabunganexcel', [TabunganController::class, 'exportexceltabungan'])->name('export.tabungan.excel');
 });

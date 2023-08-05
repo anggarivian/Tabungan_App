@@ -56,7 +56,7 @@
                                                             </div>
                                                             <div class="d-blox justify-content-center m-1">
                                                                  <div class="form-group">
-                                                                      <input type="text" class="form-control rounded" style="padding-right: 1px" name="id_tabungan" id="id_tabungan" value="{{ request('id_tabungan') }}" placeholder="Kode Tabungan">
+                                                                      <input type="text" class="form-control rounded" style="padding-right: 1px" name="id_tabungan" id="id_tabungan" value="{{ request('id_tabungan') }}" placeholder="ID Tabungan">
                                                                  </div>
                                                             </div>
                                                             <div class="d-blox justify-content-center m-1">
@@ -101,7 +101,7 @@
                                                   <thead>
                                                        <tr class="text-center">
                                                             <th>No</th>
-                                                            <th>Kode</th>
+                                                            <th>ID</th>
                                                             <th>Nama</th>
                                                             <th>Kelas</th>
                                                             <th>Jumlah Saldo</th>

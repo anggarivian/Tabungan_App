@@ -33,7 +33,7 @@
                                         <div class="table-responsive">
                                                   <table id="table-data" class="table table-striped">
                                                   <tr>
-                                                       <td>NISN</td>
+                                                       <td>ID Tabungan</td>
                                                        <td>{{Auth::user()->id_tabungan}}</td>
                                                   </tr>
                                                   <tr>

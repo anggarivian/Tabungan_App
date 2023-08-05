@@ -63,7 +63,7 @@ class PetugasController extends Controller
             $user = new User;
             $validate = $req->validate([
                 'nama' => 'required|max:255',
-                'email' => 'required',
+                // 'email' => 'required',
                 'kontak' => 'required|max:12',
                 'password' => 'required|min:8',
                 'kelas' => 'required',
@@ -73,7 +73,7 @@ class PetugasController extends Controller
             ]);
             $user->id_tabungan = $req->get('id_tabungan');
             $user->nama = $req->get('nama');
-            $user->email = $req->get('email');
+            $user->email = $req->get('id_tabungan').'@mail.com';
             $user->kontak = $req->get('kontak');
             $user->orang_tua = $req->get('orang_tua');
             $user->alamat = $req->get('alamat');
@@ -100,7 +100,7 @@ class PetugasController extends Controller
 
             $validate = $req->validate([
                 'nama' => 'required|max:255',
-                'email' => 'required',
+                // 'email' => 'required',
                 'kontak' => 'required|max:12',
                 'kelas' => 'required',
                 'orang_tua' => 'required',
@@ -109,7 +109,7 @@ class PetugasController extends Controller
             ]);
             $user->id_tabungan = $req->get('id_tabungan');
             $user->nama = $req->get('nama');
-            $user->email = $req->get('email');
+            // $user->email = $req->get('email');
             $user->kontak = $req->get('kontak');
             $user->kelas = $req->get('kelas');
             $user->orang_tua = $req->get('orang_tua');

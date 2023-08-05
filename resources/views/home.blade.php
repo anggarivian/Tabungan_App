@@ -102,7 +102,7 @@
                                                     @endif
                                                     @if ( Auth::user()->roles_id === 3)
                                                         <p class="statistics-title">Total Pemasukan</p>
-                                                        <h3 class="rate-percentage">{{$totalStorSiswa}}x</h3>
+                                                        <h3 class="rate-percentage">{{$kaliStorSiswa}}x</h3>
                                                     @endif
                                                 </div>
                                             </div>
@@ -122,7 +122,7 @@
                                                     @endif
                                                     @if ( Auth::user()->roles_id === 3)
                                                         <p class="statistics-title">Total Pengeluaran</p>
-                                                        <h3 class="rate-percentage">{{$totalTarikSiswa}}x</h3>
+                                                        <h3 class="rate-percentage">{{$kaliTarikSiswa}}x</h3>
                                                     @endif
                                                 </div>
                                             </div>

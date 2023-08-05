@@ -42,8 +42,8 @@
                               <div class="card">
                                    <div class="card-body">
                                         <div class="d-flex justify-content-between">
-                                             <h4 class="card-title" >Data Siswa</h4>
-                                             <form action="/admin/petugas" method="GET">
+                                             <h4 class="card-title" >Data Petugas</h4>
+                                             <form action="/amdin/petugas" method="GET">
                                                   <!-- @csrf -->
                                                   <div class="search d-flex">
                                                        <div class="d-blox justify-content-center m-1">

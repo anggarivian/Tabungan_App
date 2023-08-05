@@ -4,7 +4,7 @@
 <head>
      <meta charset="utf-8">
      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-     <title>Laporan Transaksi</title>
+     <title>Laporan Tabungan Siswa</title>
 
      @include('layouts.head')
 
@@ -31,12 +31,12 @@
                                         <div class="card-body" >
                                              <div class="col-sm-12">
                                                   <div class="statistics-details d-flex align-items-center justify-content-between">
-                                                       <h4 class="card-title" >Laporan Transaksi</h4>
+                                                       <h4 class="card-title" >Laporan Tabungan Siswa</h4>
                                                        <div>
-                                                            <!-- <a href="/exporttransaksiexcel" class="btn btn-sm btn-success btn-rounded m-1">
+                                                            <!-- <a href="/exporttabunganexcel" class="btn btn-sm btn-success btn-rounded m-1">
                                                                  Export Excel
                                                             </a> -->
-                                                            <a href="/exporttransaksipdf" class="btn btn-sm btn-danger btn-rounded m-1">
+                                                            <a href="/exporttabunganpdf" class="btn btn-sm btn-danger btn-rounded m-1">
                                                                  Export PDF
                                                             </a>
                                                        </div>
@@ -48,7 +48,7 @@
                                         <div class="card-body">
                                              <div class="d-flex justify-content-between">
                                                   <h4 class="card-title" >Data Transaksi</h4>
-                                                  <form action="/laporan/transaksi" method="GET">
+                                                  <form action="/laporan/tabungn" method="GET">
                                                        <!-- @csrf -->
                                                        <div class="search d-flex">
                                                             <div class="d-blox justify-content-center m-1">
@@ -76,31 +76,6 @@
                                                                  </div>
                                                             </div>
                                                             <div class="d-blok justify-content-center m-1">
-                                                                 <div class="form-group">
-                                                                      <select class="form-select form-select-sm rounded"  name="tipe_transaksi" id="tipe_transaksi">
-                                                                           <option value="" >Tipe Transaksi</option>
-                                                                           <option value="Stor" {{ request('tipe_transaksi') == 'Stor' ? 'selected' : '' }} >Stor</option>
-                                                                           <option value="Tarik" {{ request('tipe_transaksi') == 'Tarik' ? 'selected' : '' }} >Tarik</option>
-                                                                      </select>
-                                                                 </div>
-                                                            </div>
-                                                            <div class="d-blox justify-content-center m-1">
-                                                                 <label for="" class="statistics-title mt-1">Dari</label>
-                                                            </div>
-                                                            <div class="d-blox justify-content-center m-1">
-                                                                 <div class="form-group">
-                                                                      <input type="date" class="form-control rounded" name="awal_tanggal" id="awal_tanggal" value="{{ request('awal_tanggal') }}" placeholder="Tanggal">
-                                                                 </div>
-                                                            </div>
-                                                            <div class="d-blox justify-content-center m-1">
-                                                                 <label for="" class="statistics-title mt-1">s/d</label>
-                                                            </div>
-                                                            <div class="d-blox justify-content-center m-1">
-                                                                 <div class="form-group">
-                                                                      <input type="date" class="form-control rounded" name="akhir_tanggal" id="akhir_tanggal" value="{{ request('akhir_tanggal') }}" placeholder="Tanggal">
-                                                                 </div>
-                                                            </div>
-                                                            <div class="d-blok justify-content-center m-1">
                                                                  <button type="submit" class="btn btn-sm btn-primary btn-rounded">
                                                                       Cari
                                                                  </button>
@@ -115,37 +90,21 @@
                                                             <th>ID</th>
                                                             <th>Nama</th>
                                                             <th>Kelas</th>
-                                                            <th>Saldo Awal</th>
                                                             <th>Saldo Akhir</th>
-                                                            <th>Stor</th>
-                                                            <th>Tarik</th>
                                                             <th>Biaya</th>
                                                             <th>Sisa</th>
-                                                            <th>Dibuat</th>
+                                                            <th>Terakhir Menabung</th>
                                                        </tr>
                                                   </thead>
                                                   <tbody>
-                                                       @foreach($tabungan as $tabungans)
+                                                       @foreach($laporanTabungan as $tabungans)
                                                             <tr>
                                                                  <!-- Revisi Pagination (Tambahin '+ $tabungan->firstItem() - 1') -->
                                                                  <td>{{$loop->iteration + $tabungan->firstItem() - 1}}</td>
                                                                  <td>{{$tabungans->id_tabungan}}</td>
                                                                  <td>{{$tabungans->nama}}</td>
                                                                  <td>{{$tabungans->kelas}}</td>
-                                                                 <td>{{$tabungans->saldo_awal}}</td>
                                                                  <td>{{$tabungans->saldo_akhir}}</td>
-                                                                 @if ($tabungans->tipe_transaksi == null)
-                                                                      <td>-</td>
-                                                                      <td>-</td>
-                                                                 @endif
-                                                                 @if ($tabungans->tipe_transaksi == 'Stor')
-                                                                      <td>{{$tabungans->jumlah}}</td>
-                                                                      <td>-</td>
-                                                                 @endif
-                                                                 @if ($tabungans->tipe_transaksi == 'Tarik')
-                                                                      <td>-</td>
-                                                                      <td>{{$tabungans->jumlah}}</td>
-                                                                 @endif
                                                                  <td>{{$tabungans->premi}}</td>
                                                                  <td>{{$tabungans->sisa}}</td>
                                                                  <td>{{ \Carbon\Carbon::parse($tabungans->created_at)->format('H:i, F d y') }}</td>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use PDF;
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Tabungan;
 use App\Models\Pengajuan;
@@ -17,6 +18,7 @@ class PengajuanController extends Controller
     // Read Data Pengajuan -------------------------------------------------------------------------------------------------------
     public function index(Request $request){
         $pengajuan = Pengajuan::All();
+
         //Searching
         $query = Pengajuan::query();
         $query->select('id','nama','id_tabungan','kelas','jumlah_tabungan','jumlah_penarikan','alasan','status');
@@ -34,9 +36,7 @@ class PengajuanController extends Controller
             || $request->kelas == "4" || $request->kelas == "5" || $request->kelas == "6"){
             $query->where('kelas',$request->kelas);
         }
-        if($request->status == "Diproses" || $request->status == "Disetujui"){
-            $query->where('status',$request->status);
-        }
+
         $query->orderBy('created_at','desc');
         //End Searching
         $pengajuan = $query->paginate(10);
@@ -49,8 +49,21 @@ class PengajuanController extends Controller
         $test = $user->id_tabungan ;
         // Ambil Data Dari Tabungan -----------------------------------------------------------------------------------------------
         $data = Tabungan::where('id_tabungan', $test)->latest('created_at')->first();
+        $data1 = Pengajuan::where('id_tabungan', $test)->latest('created_at')->first();
+        $dataStatus = null ;
+        $selisihHari = null ;
+        if ($data1 != null) {
+            $dataStatus = $data1->status ;
+        }
         $cekData = Pengajuan::count();
-        return view('pengajuan.siswaPengajuan', compact('pengajuan','data','cekData'));
+        $dataTerakhir = Pengajuan::where('id_tabungan', $test)->latest('created_at')->first();
+        if ($dataTerakhir) {
+        $tanggalTerakhir = Carbon::parse($dataTerakhir->created_at);
+        $tanggalSaatIni = Carbon::now();
+        $selisihHari = $tanggalSaatIni->diffInDays($tanggalTerakhir);
+        }
+        // dd($selisihHari);
+        return view('pengajuan.siswaPengajuan', compact('pengajuan','data','data1','cekData','dataStatus','selisihHari'));
     }
     // Read Data Siswa + Tabungan -------------------------------------------------------------------------------------------------
     public function riwayat(Request $req){
@@ -71,23 +84,30 @@ class PengajuanController extends Controller
         $validate = $req->validate([
             'nama' => 'required|max:255',
             'id_tabungan' => 'required|max:5',
-            'email' => 'required',
+            // 'email' => 'required',
             'kelas' => 'required',
             'jumlah_tarik' => 'required',
             'jumlah_tabungan' => 'required',
             'alasan' => 'required',
         ]);
-        $pengajuan->id_tabungan = $req->get('id_tabungan');
-        $pengajuan->nama = $req->get('nama');
-        $pengajuan->kelas = $req->get('kelas');
-        $pengajuan->jumlah_tabungan = $req->get('jumlah_tabungan');
-        $pengajuan->jumlah_penarikan = $req->get('jumlah_tarik');
-        $pengajuan->alasan = $req->get('alasan');
-        $pengajuan->status = 'Diproses';
-        $pengajuan->save();
-        $notification = array(
-            'message' =>'Penarikan Berhasil Diajukan', 'alert-type' =>'success'
-        );
+        if ($req->get('jumlah_tabungan') != 0){
+
+            $pengajuan->id_tabungan = $req->get('id_tabungan');
+            $pengajuan->nama = $req->get('nama');
+            $pengajuan->kelas = $req->get('kelas');
+            $pengajuan->jumlah_tabungan = $req->get('jumlah_tabungan');
+            $pengajuan->jumlah_penarikan = $req->get('jumlah_tarik');
+            $pengajuan->alasan = $req->get('alasan');
+            $pengajuan->status = 'Diproses';
+            $pengajuan->save();
+            $notification = array(
+                'message' =>'Penarikan Berhasil Diajukan', 'alert-type' =>'success'
+            );
+        } else {
+            $notification = array(
+                'message' =>'Saldo Anda Kosong', 'alert-type' =>'warning'
+            );
+        }
         return redirect()->route('siswa.pengajuan')->with($notification);
     }
     // Ambil Data Pengajuan -------------------------------------------------------------------------------------------------------
@@ -118,9 +138,11 @@ class PengajuanController extends Controller
         $tabungan->premi = $tabungan->saldo_akhir * 0.05 ;
         $tabungan->sisa = $tabungan->saldo_akhir - $tabungan->premi ;
         $tabungan->save();
+
         $notification = array(
-            'message' =>'Data Siswa berhasil ditambahkan', 'alert-type' =>'success'
+            'message' =>'Pengajuan berhasil disetujui', 'alert-type' =>'success'
         );
+
         return redirect()->route('pengajuan')->with($notification);
     }
     // Proses Tolak Pengajuan ----------------------------------------------------------------------------------------------- Demo

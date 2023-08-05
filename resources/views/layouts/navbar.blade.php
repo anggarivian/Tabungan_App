@@ -19,12 +19,12 @@
       </li>
     </ul>
     <ul class="navbar-nav ms-auto">
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <form class="search-form" action="#">
           <i class="icon-search"></i>
           <input type="search" class="form-control" placeholder="Search Here" title="Search here">
         </form>
-      </li>
+      </li> -->
       <li class="nav-item dropdown">
         <img id="navbarDropdown" class="dropdown-toggle img-xs rounded-circle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre src="{{asset('template/images/sd.jpg')}}" alt="Profile image"> </a>
         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">

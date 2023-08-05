@@ -44,15 +44,6 @@
                                                             </div>
                                                             <div class="d-blok justify-content-center m-1">
                                                                  <div class="form-group">
-                                                                      <select class="form-select form-select-sm rounded"  name="status" id="status">
-                                                                           <option value="" >Status</option>
-                                                                           <option value="Diproses" {{ request('status') == 'Diproses' ? 'selected' : '' }} >Diproses</option>
-                                                                           <option value="Disetujui" {{ request('status') == 'Disetujui' ? 'selected' : '' }} >Disetujui</option>
-                                                                      </select>
-                                                                 </div>
-                                                            </div>
-                                                            <div class="d-blok justify-content-center m-1">
-                                                                 <div class="form-group">
                                                                       <select class="form-select form-select-sm rounded"  name="kelas" id="kelas">
                                                                            <option value="" >Kelas</option>
                                                                            <option value="1A" {{ request('kelas') == '1A' ? 'selected' : '' }} >1 - A</option>
@@ -80,27 +71,30 @@
                                                        <thead>
                                                             <tr class="text-center">
                                                                  <th>No</th>
-                                                                 <th>NISN</th>
+                                                                 <th>ID</th>
                                                                  <th>Nama</th>
                                                                  <th>Kelas</th>
                                                                  <th>Jumlah Saldo</th>
                                                                  <th>Jumlah Penarikan</th>
                                                                  <th>Alasan</th>
+                                                                 <th>Status</th>
                                                                  <th>Diajukan</th>
                                                                  <th>Opsi</th>
                                                             </tr>
                                                        </thead>
                                                        <tbody>
+                                                            @php $no=1; @endphp
                                                             @foreach($pengajuan as $pengajuans)
-                                                            @if ($pengajuans->status == 'Diproses')
+                                                                 @if ($pengajuans->status == 'Diproses')
                                                                  <tr>
-                                                                      <td class="text-center">{{$loop->iteration}}</td>
+                                                                      <td class="text-center">{{$no++}}</td>
                                                                       <td class="text-center">{{$pengajuans->id_tabungan}}</td>
                                                                       <td>{{$pengajuans->nama}}</td>
                                                                       <td>{{$pengajuans->kelas}}</td>
                                                                       <td>{{$pengajuans->jumlah_tabungan}}</td>
                                                                       <td>{{$pengajuans->jumlah_penarikan}}</td>
                                                                       <td>{{$pengajuans->alasan}}</td>
+                                                                      <td>{{$pengajuans->status}}</td>
                                                                       <td>{{ \Carbon\Carbon::parse($pengajuans->created_at)->format('H:i, F d') }}</td>
                                                                       <td class="text-center">
                                                                            <button type="button" class="btn btn-primary btn-sm btn-rounded" data-id="{{ $pengajuans->id }}" id="btn-edit-user" data-bs-toggle="modal" data-bs-target="#editModal">
@@ -109,7 +103,7 @@
                                                                            <a href="/petugas/pengajuan/tolak/{{ $pengajuans->id }}" class="btn btn-warning btn-sm btn-rounded" type="button" class="btn btn-secondary btn-rounded">Tolak</a>
                                                                       </td>
                                                                  </tr>
-                                                            @endif
+                                                                 @endif
                                                             @endforeach
                                                        </tbody>
                                                   </table>
@@ -129,7 +123,7 @@
      <div class="modal-dialog">
           <div class="modal-content">
                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Data Petugas</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Lihat Data Pengajuan</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                </div>
                <div class="modal-body">

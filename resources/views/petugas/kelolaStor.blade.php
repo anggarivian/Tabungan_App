@@ -215,13 +215,14 @@
                                         <thead>
                                              <tr class="text-center">
                                                   <th>No</th>
-                                                  <th>NISN</th>
+                                                  <th>ID</th>
                                                   <th>Nama</th>
                                                   <th>Kelas</th>
                                                   <th>Saldo Awal</th>
                                                   <th>Jumlah Stor</th>
                                                   <th>Saldo Akhir</th>
-                                                  <th>Tanggal Dibuat</th>
+                                                  <th>Dibuat</th>
+                                                  <th>Aksi</th>
                                              </tr>
                                         </thead>
                                         <tbody>
@@ -235,6 +236,11 @@
                                                        <td>{{$stors->jumlah}}</td>
                                                        <td>{{$stors->saldo_akhir}}</td>
                                                        <td>{{ \Carbon\Carbon::parse($stors->created_at)->format('H:i, F d') }}</td>
+                                                       <td class="text-center">
+                                                            <button type="button" class="btn btn-warning btn-sm btn-rounded" data-id="{{ $stors->id }}" id="btn-edit-user" data-bs-toggle="modal" data-bs-target="#editModal">
+                                                                 Edit
+                                                            </button>
+                                                       </td>
                                                   </tr>
                                              @endforeach
                                         </tbody>
@@ -247,6 +253,39 @@
      </div>
 </div>
 
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+     <div class="modal-dialog">
+          <div class="modal-content">
+               <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Data Transaksi Stor</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               </div>
+               <div class="modal-body">
+                    <form method="post" action="{{ route('stor.ubah')}}" enctype="multipart/form-data">
+                         @method ('PATCH')
+                         @csrf
+                         <div class="row">
+                                   <input type="text" class="form-control rounded" id="edit-id" name="id" placeholder="Id" readonly hidden>
+                              <div class="form-group col-md-6">
+                                   <label for="nama">Nama</label>
+                                   <input type="text" class="form-control rounded" id="edit-nama" name="nama" placeholder="Masukan Nama" readonly>
+                              </div>
+                              <div class="form-group col-md-6">
+                                   <label for="jumlah Stor">Jumlah Stor</label>
+                                   <input type="text" class="form-control rounded" id="edit-jumlah_Stor" name="jumlah_Stor" placeholder="Masukan Jumlah Stor">
+                              </div>
+                         </div>
+                         <div class="modal-footer justify-content-center">
+                              <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">Batal</button>
+                              <button type="submit" class="btn btn-primary btn-rounded">Simpan</button>
+                         </div>
+                    </form>
+               </div>
+          </div>
+     </div>
+</div>
+<!-- End Modal -->
      <!-- Script -->
      @include('layouts.script')
 
@@ -272,31 +311,23 @@
                inputDibuku.value   = itemDibuku;
           });
 
-          $(document).ready(function(){
-               $("#searchuser").change(function(){
-                    let id = $(this).val();
-                    alert('change happend');
-                    alert("The text has been changed.");
-                    alert(id);
-                    $.ajax({
-                         type: "get",
-                         url: "{{url('/petugas/tabungan/search')}}/"+id,
-                         dataType: 'json',
-                         success: function(res){
-                              // alert('success');
-                              $('#id').val(res.id);
-                              $('#nama').val(res.nama);
-                              $('#kelas').val(res.kelas);
-                              $('#jumlah_tabungan').val(res.saldo_akhir);
-                              // console.log(res);
-                         },
-                         error: function(xhr, status, error) {
-                              var err = JSON.parse(xhr.responseText);
-                              alert(err.Message);
-                         },
-                    });
+          $(function(){
+          $(document).on('click','#btn-edit-user', function(){
+
+               let id = $(this).data('id');
+
+               $.ajax({
+                    type: "get",
+                    url: "{{url('/petugas/ajaxpetugas/dataTransaksi')}}/"+id,
+                    dataType: 'json',
+                    success: function(res){
+                         $('#edit-id').val(res.id);
+                         $('#edit-nama').val(res.nama);
+                         $('#edit-jumlah_Stor').val(res.jumlah);
+                    },
                });
           });
+     });
 
      </script>
 

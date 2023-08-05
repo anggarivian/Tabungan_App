@@ -48,7 +48,7 @@ class HomeController extends Controller
         // Total Tarik Tabungan bulan Ini ---------------------------------------------------------------------------------------------
         $totalTarik = Tabungan::where('tipe_transaksi', 'Tarik')->count();
         // Total Siswa  ---------------------------------------------------------------------------------------------------------------
-        $totalSiswa = Tabungan::where('roles_id', 3)->count();
+        $totalSiswa = User::where('roles_id', 3)->count();
 
         // Untuk Siswa ----------------------------------------------------------------------------------------------------------------
         $user = Auth::user();
@@ -56,9 +56,9 @@ class HomeController extends Controller
         $data = Tabungan::where('id_tabungan', $test)->latest('created_at')->first();
         $totalStorSiswa = Tabungan::where('id_tabungan', $test)->where('tipe_transaksi', 'Stor')->sum('jumlah');
         $totalTarikSiswa = Tabungan::where('id_tabungan', $test)->where('tipe_transaksi', 'Tarik')->sum('jumlah');
-        $totalStorSiswa = Tabungan::where('id_tabungan', $test)->where('tipe_transaksi', 'Stor')->count();
-        $totalTarikSiswa = Tabungan::where('id_tabungan', $test)->where('tipe_transaksi', 'Tarik')->count();
+        $kaliStorSiswa = Tabungan::where('id_tabungan', $test)->where('tipe_transaksi', 'Stor')->count();
+        $kaliTarikSiswa = Tabungan::where('id_tabungan', $test)->where('tipe_transaksi', 'Tarik')->count();
 
-        return view('home', compact('bulanStor','bulanTarik','totalStor','totalTarik','totalSiswa','totalTabungan','totalTarikSiswa','totalStorSiswa','data'));
+        return view('home', compact('bulanStor','bulanTarik','totalStor','totalTarik','totalSiswa','totalTabungan','totalTarikSiswa','totalStorSiswa','data','kaliStorSiswa','kaliTarikSiswa'));
     }
 }

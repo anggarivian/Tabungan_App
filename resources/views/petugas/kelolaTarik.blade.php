@@ -49,7 +49,7 @@
                                         <div class="col-sm-12">
                                              <div class="statistics-details d-flex align-items-center justify-content-between">
                                                   <div>
-                                                       <p class="statistics-title">Total Keseluruhan Uang Masuk</p>
+                                                       <p class="statistics-title">Total Keseluruhan Uang Keluar</p>
                                                        <h4 class="rate-percentage">Rp. {{$hitungTotalTarik}}</h4>
                                                   </div>
                                              </div>
@@ -155,7 +155,7 @@
                     <div class="card">
                          <div class="card-body">
                               <div class="col-lg-12 d-flex  justify-content-between">
-                                   <h4 class="card-title mt-2">Data Stor Tabungan</h4>
+                                   <h4 class="card-title mt-2">Data Tarik Tabungan</h4>
                                    <div class="d-flex justify-content-between">
                                         <form action="/petugas/tabungan/tarik-tabungan" method="GET">
                                              <!-- @csrf -->
@@ -213,13 +213,14 @@
                                         <thead>
                                              <tr class="text-center">
                                                   <th>No</th>
-                                                  <th>NISN</th>
+                                                  <th>ID</th>
                                                   <th>Nama</th>
                                                   <th>Kelas</th>
                                                   <th>Saldo Awal</th>
                                                   <th>Jumlah Tarik</th>
                                                   <th>Saldo Akhir</th>
-                                                  <th>Tanggal Dibuat</th>
+                                                  <th>Dibuat</th>
+                                                  <th>Aksi</th>
                                              </tr>
                                         </thead>
                                         <tbody>
@@ -233,6 +234,11 @@
                                                        <td>{{$tariks->jumlah}}</td>
                                                        <td>{{$tariks->saldo_akhir}}</td>
                                                        <td>{{ \Carbon\Carbon::parse($tariks->created_at)->format('H:i, F d') }}</td>
+                                                       <td class="text-center">
+                                                            <button type="button" class="btn btn-warning btn-sm btn-rounded" data-id="{{ $tariks->id }}" id="btn-edit-user" data-bs-toggle="modal" data-bs-target="#editModal">
+                                                                 Edit
+                                                            </button>
+                                                       </td>
                                                   </tr>
                                              @endforeach
                                         </tbody>
@@ -244,6 +250,40 @@
           </div>
      </div>
 </div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+     <div class="modal-dialog">
+          <div class="modal-content">
+               <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Data Transaksi Tarik</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               </div>
+               <div class="modal-body">
+                    <form method="post" action="{{ route('tarik.ubah')}}" enctype="multipart/form-data">
+                         @method ('PATCH')
+                         @csrf
+                         <div class="row">
+                                   <input type="text" class="form-control rounded" id="edit-id" name="id" placeholder="Id" readonly hidden>
+                              <div class="form-group col-md-6">
+                                   <label for="nama">Nama</label>
+                                   <input type="text" class="form-control rounded" id="edit-nama" name="nama" placeholder="Masukan Nama" readonly>
+                              </div>
+                              <div class="form-group col-md-6">
+                                   <label for="jumlah Tarik">Jumlah Tarik</label>
+                                   <input type="text" class="form-control rounded" id="edit-jumlah_Tarik" name="jumlah_Tarik" placeholder="Masukan Jumlah Tarik">
+                              </div>
+                         </div>
+                         <div class="modal-footer justify-content-center">
+                              <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">Batal</button>
+                              <button type="submit" class="btn btn-primary btn-rounded">Simpan</button>
+                         </div>
+                    </form>
+               </div>
+          </div>
+     </div>
+</div>
+<!-- End Modal -->
 
      <!-- Script -->
      @include('layouts.script')
@@ -269,6 +309,24 @@
                inputTabungan.value = itemTabungan;
                inputDibuku.value   = itemDibuku;
           });
+
+          $(function(){
+          $(document).on('click','#btn-edit-user', function(){
+
+               let id = $(this).data('id');
+
+               $.ajax({
+                    type: "get",
+                    url: "{{url('/petugas/ajaxpetugas/dataTransaksi')}}/"+id,
+                    dataType: 'json',
+                    success: function(res){
+                         $('#edit-id').val(res.id);
+                         $('#edit-nama').val(res.nama);
+                         $('#edit-jumlah_Tarik').val(res.jumlah);
+                    },
+               });
+          });
+     });
      </script>
 
 </body>

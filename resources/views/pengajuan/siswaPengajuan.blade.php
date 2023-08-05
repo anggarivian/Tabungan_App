@@ -30,7 +30,7 @@
                               <div class="card">
                                    <div class="card-body">
                                         <h4 class="card-title" >Ajukan Penarikan Tabungan</h4>
-                                             {{-- @if ( $cekData == 0 )
+                                             @if ( $cekData == 0 || $dataStatus == null || $selisihHari >= 1 )
                                              <form method="post" action="{{ route('siswa.ajukan') }}" enctype="multipart/form-data">
                                                   @csrf
                                                   <div class="form-group">
@@ -59,14 +59,28 @@
                                                   </div>
                                              </form>
                                              @endif
-                                             @if ( $cekData >= 1 )--}}
+                                             @if ( $dataStatus == 'Diproses' && $selisihHari < 1 )
                                              <div class="text-center p-5">
-                                                  <p>Pengajuan Penarikan Tabungan Dalam Pembuatan</p>
-                                                  <h5 style="color: green">SEGERA HADIR</h5>
-                                                  <p>Mohon Dukungannya</p>
+                                                  <p>Pengajuan Penarikan Tabungan</p>
+                                                  <h5 style="color: green">Sedang di Tinjau</h5>
+                                                  <p>Mohon Menunggu</p>
                                              </div>
-                                             {{-- @endif
-                                             @if ( $validasi2 == 'Diproses' )
+                                             @endif
+                                             @if ( $dataStatus == 'Disetujui' && $selisihHari < 1 )
+                                             <div class="text-center p-5">
+                                                  <p>Pengajuan Penarikan Tabungan</p>
+                                                  <h5 style="color: green">DISETUJUI</h5>
+                                                  <p>Segera Menghadap Ke Petugas Tabungan</p>
+                                             </div>
+                                             @endif
+                                             @if ( $dataStatus == 'Ditolak' && $selisihHari < 1 )
+                                             <div class="text-center p-5">
+                                                  <p>Pengajuan Penarikan Tabungan</p>
+                                                  <h5 style="color: red">DITOLAK</h5>
+                                                  <p>Anda Dapat Melakukan Pengajuan 1 Bulan Lagi</p>
+                                             </div>
+                                             @endif
+                                             {{-- @if ( $validasi2 == 'Diproses' )
                                                   <div class="text-center p-5">
                                                        <p>Pengajuan Penarikan Tabungan</p>
                                                        <h5 style="color: red">TIDAK BISA DILAKUKAN</h5>

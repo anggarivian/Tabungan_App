@@ -115,7 +115,7 @@ class TabunganController extends Controller
         $validate = $req->validate([
             'nama' => 'required|max:255',
             'kelas' => 'required',
-            'jumlah_stor' => 'required',
+            'jumlah_stor' => 'required|numeric',
             'jumlah_tabungan' => 'required',
         ]);
         $tabungan->id_tabungan = $req->get('selectuser');
@@ -236,21 +236,29 @@ class TabunganController extends Controller
             'jumlah_tarik' => 'required',
             'jumlah_tabungan' => 'required',
         ]);
-        $tabungan->id_tabungan = $req->get('selectuser');
-        $tabungan->nama = $req->get('nama');
-        $tabungan->kelas = $req->get('kelas');
-        $tabungan->roles_id = 3 ;
-        $tabungan->tipe_transaksi = 'Tarik';
-        $tabungan->jumlah = $req->get('jumlah_tarik');
-        $tabungan->saldo_awal = $req->get('jumlah_tabungan');
-        $tabungan->saldo_akhir = $tabungan->saldo_awal - $tabungan->jumlah ;
-        $tabungan->premi = $tabungan->saldo_akhir * 0.05 ;
-        $tabungan->sisa = $tabungan->saldo_akhir - $tabungan->premi ;
-        $tabungan->save();
-        $notification = array(
-            'message' => 'Transaksi Tarik Tabungan Berhasil',
-            'alert-type' => 'success'
-        );
+
+        if ($req->get('jumlah_tabungan') != 0){
+            $tabungan->id_tabungan = $req->get('selectuser');
+            $tabungan->nama = $req->get('nama');
+            $tabungan->kelas = $req->get('kelas');
+            $tabungan->roles_id = 3 ;
+            $tabungan->tipe_transaksi = 'Tarik';
+            $tabungan->jumlah = $req->get('jumlah_tarik');
+            $tabungan->saldo_awal = $req->get('jumlah_tabungan');
+            $tabungan->saldo_akhir = $tabungan->saldo_awal - $tabungan->jumlah ;
+            $tabungan->premi = $tabungan->saldo_akhir * 0.05 ;
+            $tabungan->sisa = $tabungan->saldo_akhir - $tabungan->premi ;
+            $tabungan->save();
+            $notification = array(
+                'message' => 'Transaksi Tarik Tabungan Berhasil',
+                'alert-type' => 'success'
+            );
+        } else {
+            $notification = array(
+                'message' => 'Tidak Dapat Melakukan Transaksi',
+                'alert-type' => 'warning'
+            );
+        }
         return redirect()->route('tabungan.tarik')->with($notification);
     }
     // Laporan Data Tabungan --------------------------------------------------------------------------------------------------------
@@ -277,6 +285,84 @@ class TabunganController extends Controller
         $tabungan = $query->paginate(10);
         return view('laporan.laporanTabungan', compact('tabungan'));
     }
+    public function ubah_stor(Request $req){
+        $tabungan = Tabungan::find($req->get('id'));
+
+        $validate = $req->validate([
+            'jumlah_Stor' => 'required|numeric',
+        ]);
+        $tabungan->jumlah =  $req->get('jumlah_Stor');
+        $tabungan->saldo_akhir = $tabungan->saldo_awal + $tabungan->jumlah ;
+        $tabungan->premi = $tabungan->saldo_akhir * 0.05 ;
+        $tabungan->sisa = $tabungan->saldo_akhir - $tabungan->premi ;
+        $tabungan->save();
+
+        $notification = array(
+            'message' => 'Data Stor berhasil diubah',
+            'alert-type' => 'success'
+        );
+        return redirect()->route('tabungan.stor')->with($notification);
+    }
+    public function ubah_tarik(Request $req){
+        $tabungan = Tabungan::find($req->get('id'));
+
+        $validate = $req->validate([
+            'jumlah_Tarik' => 'required|numeric',
+        ]);
+        $tabungan->jumlah =  $req->get('jumlah_Tarik');
+        $tabungan->saldo_akhir = $tabungan->saldo_awal - $tabungan->jumlah ;
+        $tabungan->premi = $tabungan->saldo_akhir * 0.05 ;
+        $tabungan->sisa = $tabungan->saldo_akhir - $tabungan->premi ;
+        $tabungan->save();
+
+        $notification = array(
+            'message' => 'Data Tarik berhasil diubah',
+            'alert-type' => 'success'
+        );
+        return redirect()->route('tabungan.tarik')->with($notification);
+    }
+    // Ambil Data Pengajuan -------------------------------------------------------------------------------------------------------
+    public function getDataTransaksi($id){
+        $tabungan = Tabungan::find($id);
+        return response()->json($tabungan);
+    }
+    // Laporan Data Tabungan --------------------------------------------------------------------------------------------------------
+    public function laporanTabungan(Request $request){
+        //Searching
+        $query = Tabungan::query();
+        $query->select('id','nama','kelas','id_tabungan','saldo_awal','saldo_akhir','tipe_transaksi','jumlah','premi','sisa','roles_id');
+        if(!empty($request->id_tabungan)){
+            $query->where('id_tabungan',$request->id_tabungan);
+        }
+        if($request->kelas == "1A" || $request->kelas == "1B" || $request->kelas == "2A"
+            || $request->kelas == "2B" || $request->kelas == "3A" || $request->kelas == "3B"
+            || $request->kelas == "4" || $request->kelas == "5" || $request->kelas == "6"){
+            $query->where('kelas',$request->kelas);
+        }
+        if(!empty($request->awal_tanggal) && !empty($request->akhir_tanggal)){
+            $query->whereBetween('created_at',[$request->awal_tanggal, $request->akhir_tanggal]);
+        }
+        $query->orderBy('created_at','desc');
+        //End Searching
+        $tabungan = $query->paginate(10);
+
+        $laporanTabungan = [];
+        $result = [];
+        $result2 = [];
+        $ambilDataTerakhir = Tabungan::pluck('id_tabungan');
+
+        foreach ($ambilDataTerakhir as $index => $value) {
+            $result[$value] = $index;
+        }
+        foreach ($result as $index => $value) {
+            $result2[$value] = $index;
+        }
+        foreach ($result2 as $index => $value) {
+            $laporanTabungan[$value] = Tabungan::where('id_tabungan', $value )->latest('id')->first();
+        }
+
+        return view('laporan.tabungan', compact('tabungan','laporanTabungan'));
+    }
     // Export Data Tabungan PDF ----------------------------------------------------------------------------------------------------
     public function exportpdf(){
         $tabungan = Tabungan::all();
@@ -286,6 +372,32 @@ class TabunganController extends Controller
     }
     // Export Data Tabungan Excel ------------------------------------------------------------------------------------------- Error
     public function exportexcel(){
+        return Excel::download(new TabunganExport, 'nama_file.xlsx');
+    }
+    // Export Data Tabungan PDF ----------------------------------------------------------------------------------------------------
+    public function exportpdftabungan(){
+
+        $tabungan = [];
+        $result = [];
+        $result2 = [];
+        $ambilDataTerakhir = Tabungan::pluck('id_tabungan');
+
+        foreach ($ambilDataTerakhir as $index => $value) {
+            $result[$value] = $index;
+        }
+        foreach ($result as $index => $value) {
+            $result2[$value] = $index;
+        }
+        foreach ($result2 as $index => $value) {
+            $tabungan[$value] = Tabungan::where('id_tabungan', $value )->latest('id')->first();
+        }
+
+        view()->share('tabungan', $tabungan);
+        $pdf = PDF::loadview('export.tabungan');
+        return $pdf->download('data_tabungan.pdf');
+    }
+    // Export Data Tabungan Excel ------------------------------------------------------------------------------------------- Error
+    public function exportexceltabungan(){
         return Excel::download(new TabunganExport, 'nama_file.xlsx');
     }
 }
